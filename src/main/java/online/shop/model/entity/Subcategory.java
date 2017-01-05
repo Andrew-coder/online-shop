@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by andri on 1/1/2017.
  */
-public class Subcategory {
+public class Subcategory extends BaseEntity {
     private String title;
 
     public Subcategory() {

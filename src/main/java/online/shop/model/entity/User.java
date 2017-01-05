@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by andri on 1/1/2017.
  */
-public class User {
+public class User extends BaseEntity{
     private String name;
     private String surname;
     private String email;
