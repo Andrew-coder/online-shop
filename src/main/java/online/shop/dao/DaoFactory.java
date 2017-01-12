@@ -4,6 +4,7 @@ import online.shop.model.entity.Subcategory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.util.Properties;
 
 /**
@@ -33,6 +34,7 @@ public abstract class DaoFactory {
         return instance;
     }
 
+    public abstract ConnectionWrapper getConnection();
     public abstract CategoryDao getCategoryDao();
     public abstract SubcategoryDao getSubcategoryDao();
     public abstract UserDao getUserDao();
