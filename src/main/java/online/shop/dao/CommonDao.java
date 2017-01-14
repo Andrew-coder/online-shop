@@ -8,7 +8,7 @@ import java.util.List;
  * Created by andri on 1/4/2017.
  */
 public interface CommonDao<E extends BaseEntity> {
-    E find(int id);
+    E findById(int id);
     List<E> findAll();
     void create(E e);
     void update(E e);
