@@ -6,15 +6,17 @@ package online.shop.model.entity;
 public class Goods extends BaseEntity{
     private String title;
     private double price;
+    private String description;
     private Subcategory subcategory;
     private boolean ends;
 
     public Goods() {
     }
 
-    public Goods(String title, double price, Subcategory subcategory, boolean ends) {
+    public Goods(String title, double price, String description, Subcategory subcategory, boolean ends) {
         this.title = title;
         this.price = price;
+        this.description = description;
         this.subcategory = subcategory;
         this.ends = ends;
     }
@@ -51,27 +53,40 @@ public class Goods extends BaseEntity{
         this.ends = ends;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public static class Builder{
         Goods instance = new Goods();
 
-        public Goods setTitle(String title){
+        public Builder setTitle(String title){
             instance.title = title;
-            return instance;
+            return this;
         }
 
-        public Goods setPrice(double price){
+        public Builder setPrice(double price){
             instance.price = price;
-            return instance;
+            return this;
         }
 
-        public Goods setSubcategory(Subcategory subcategory){
+        public Builder setDescription(String description){
+            instance.description = description;
+            return this;
+        }
+
+        public Builder setSubcategory(Subcategory subcategory){
             instance.subcategory = subcategory;
-            return instance;
+            return this;
         }
 
-        public Goods setEnds(boolean ends){
+        public Builder setEnds(boolean ends){
             instance.ends = ends;
-            return instance;
+            return this;
         }
 
         public Goods build(){
