@@ -16,6 +16,7 @@ import java.util.Objects;
 public class CategoryDaoImpl implements CategoryDao {
     private static final String GET_ALL_CATEGORIES = "select categoryID, categoryTitle from categories ";
     private static final String FILTER_BY_ID = "where categoryID=?;";
+    private static final String FILTER_BY_TITLE = "where categoryTitle=?;";
     private static final String CREATE_CATEGORY = "insert into categories (categoryTitle) values (?);";
     private static final String DELETE_CATEGORY = "delete from categories ";
     private Connection connection;
@@ -26,7 +27,14 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public Category findCategoryByTitle(String title) {
-        return null;
+        try(PreparedStatement statement = connection.prepareStatement(GET_ALL_CATEGORIES+ FILTER_BY_TITLE)){
+            statement.setString(1,title);
+            List<Category> categories = parseResultSet(statement.executeQuery());
+            return categories.get(0);
+        }
+        catch(SQLException ex){
+            throw new DaoException("dao exception occured when retrieving category by title", ex);
+        }
     }
 
     @Override
