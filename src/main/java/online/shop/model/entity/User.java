@@ -9,36 +9,38 @@ public class User extends BaseEntity{
     private String name;
     private String surname;
     private String email;
+    private String password;
     private Date birthDate;
     private boolean worker;
     private RoleType role;
 
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public RoleType getRole() {
+        return role;
+    }
+
     public User() {
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public void setWorker(boolean worker) {
-        this.worker = worker;
-    }
-
-    public void setRole(RoleType role) {
-        this.role = role;
-    }
 
     public boolean isWorker(){
         return worker;
@@ -47,34 +49,44 @@ public class User extends BaseEntity{
     public static class Builder{
         User instance = new User();
 
-        public User setName(String name){
+        public Builder setId(int id){
+            instance.setId(id);
+            return this;
+        }
+
+        public Builder setName(String name){
             instance.name = name;
-            return instance;
+            return this;
         }
 
-        public User setSurname(String surname){
+        public Builder setSurname(String surname){
             instance.surname = surname;
-            return instance;
+            return this;
         }
 
-        public User setEmail(String email){
+        public Builder setEmail(String email){
             instance.email = email;
-            return instance;
+            return this;
         }
 
-        public User setBirthDate(Date birthDate){
+        public Builder setPassword(String password){
+            instance.password=password;
+            return this;
+        }
+
+        public Builder setBirthDate(Date birthDate){
             instance.birthDate = birthDate;
-            return instance;
+            return this;
         }
 
-        public User setWorker(boolean worker){
+        public Builder setWorker(boolean worker){
             instance.worker = worker;
-            return instance;
+            return this;
         }
 
-        public User setRole(RoleType role){
+        public Builder setRole(RoleType role){
             instance.role = role;
-            return instance;
+            return this;
         }
 
         public User build(){
