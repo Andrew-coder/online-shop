@@ -2,6 +2,8 @@ package online.shop.dao.jdbc;
 
 import online.shop.dao.CategoryDao;
 import online.shop.dao.exception.DaoException;
+import online.shop.dao.utils.ResultSetExtractor;
+import online.shop.dao.utils.impl.CategoryResultSetExtractor;
 import online.shop.model.entity.Category;
 import online.shop.model.entity.Subcategory;
 
@@ -20,17 +22,23 @@ public class CategoryDaoImpl implements CategoryDao {
     private static final String CREATE_CATEGORY = "insert into categories (categoryTitle) values (?);";
     private static final String DELETE_CATEGORY = "delete from categories ";
     private Connection connection;
+    private CategoryResultSetExtractor extractor;
 
     public CategoryDaoImpl(Connection connection) {
         this.connection = connection;
+        extractor = new CategoryResultSetExtractor();
     }
 
     @Override
     public Category findCategoryByTitle(String title) {
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_CATEGORIES+ FILTER_BY_TITLE)){
             statement.setString(1,title);
-            List<Category> categories = parseResultSet(statement.executeQuery());
-            return categories.get(0);
+            Category category = null;
+            ResultSet set = statement.executeQuery();
+            if(set.next()){
+                category = extractor.extract(set);
+            }
+            return category;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving category by title", ex);
@@ -41,8 +49,12 @@ public class CategoryDaoImpl implements CategoryDao {
     public Category findById(int id) {
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_CATEGORIES+ FILTER_BY_ID)){
             statement.setInt(1,id);
-            List<Category> categories = parseResultSet(statement.executeQuery());
-            return categories.get(0);
+            Category category = null;
+            ResultSet set = statement.executeQuery();
+            if(set.next()){
+                category = extractor.extract(set);
+            }
+            return category;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving category by id", ex);
@@ -52,8 +64,12 @@ public class CategoryDaoImpl implements CategoryDao {
     @Override
     public List<Category> findAll() {
         try(Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(GET_ALL_CATEGORIES)){
-            return parseResultSet(resultSet);
+            ResultSet set = statement.executeQuery(GET_ALL_CATEGORIES)){
+            List<Category> categories = new ArrayList<>();
+            if(set.next()){
+                categories.add(extractor.extract(set));
+            }
+            return categories;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving all categories", ex);
@@ -88,16 +104,5 @@ public class CategoryDaoImpl implements CategoryDao {
         catch (SQLException ex){
             throw new DaoException("Error occured when deleting category!", ex);
         }
-    }
-
-    public List<Category> parseResultSet(ResultSet set) throws SQLException {
-        List<Category> categories = new ArrayList<>();
-        while(set.next()){
-            Category category = new Category();
-            category.setId(set.getInt("categoryID"));
-            category.setTitle(set.getString("categoryTitle"));
-            categories.add(category);
-        }
-        return categories;
     }
 }

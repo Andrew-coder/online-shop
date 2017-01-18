@@ -103,7 +103,7 @@ public class SubcategoryDaoImpl implements SubcategoryDao{
         }
     }
 
-    public List<Subcategory> parseResultSet(ResultSet set) throws SQLException{
+    private List<Subcategory> parseResultSet(ResultSet set) throws SQLException{
         List<Subcategory> subcategories = new ArrayList<>();
         while(set.next()){
             Subcategory subcategory = new Subcategory();

@@ -107,7 +107,7 @@ public class GoodsDaoImpl implements GoodsDao {
         }
     }
 
-    public List<Goods> parseResultSet(ResultSet set) throws SQLException{
+    private List<Goods> parseResultSet(ResultSet set) throws SQLException{
         List<Goods> goods = new ArrayList<>();
         while(set.next()){
             Goods g = new Goods.Builder()
