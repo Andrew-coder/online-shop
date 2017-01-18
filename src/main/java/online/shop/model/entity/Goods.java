@@ -1,5 +1,7 @@
 package online.shop.model.entity;
 
+
+
 /**
  * Created by andri on 1/1/2017.
  */
@@ -8,9 +10,29 @@ public class Goods extends BaseEntity{
     private double price;
     private String description;
     private Subcategory subcategory;
+    private byte[] image;
     private boolean ends;
 
     public Goods() {
+    }
+
+    public Goods(String title, double price, String description, Subcategory subcategory, byte[] image, boolean ends) {
+        this.title = title;
+        this.price = price;
+        this.description = description;
+        this.subcategory = subcategory;
+        this.image = image;
+        this.ends = ends;
+    }
+
+    public Goods(int id, String title, double price, String description, Subcategory subcategory, byte[] image, boolean ends) {
+        super(id);
+        this.title = title;
+        this.price = price;
+        this.description = description;
+        this.subcategory = subcategory;
+        this.image = image;
+        this.ends = ends;
     }
 
     public Goods(String title, double price, String description, Subcategory subcategory, boolean ends) {
@@ -61,6 +83,14 @@ public class Goods extends BaseEntity{
         this.description = description;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     public static class Builder{
         Goods instance = new Goods();
 
@@ -81,6 +111,11 @@ public class Goods extends BaseEntity{
 
         public Builder setSubcategory(Subcategory subcategory){
             instance.subcategory = subcategory;
+            return this;
+        }
+
+        public Builder setImage(byte[] image){
+            instance.image=image;
             return this;
         }
 

@@ -2,6 +2,7 @@ package online.shop.dao.jdbc;
 
 import online.shop.dao.UserDao;
 import online.shop.dao.exception.DaoException;
+import online.shop.dao.utils.impl.UserResultSetExtractor;
 import online.shop.model.entity.RoleType;
 import online.shop.model.entity.User;
 
@@ -23,6 +24,7 @@ public class UserDaoImpl implements UserDao{
     private static final String DELETE_USER = "delete from users ";
     private static final String CREATE_USER = "insert into users (`name`, `surname`, `email`, `password`, `birthDate`) VALUES (?,?,?,?,?);";
     private Connection connection;
+    private UserResultSetExtractor extractor;
 
     public UserDaoImpl(Connection connection) {
         this.connection = connection;
@@ -32,8 +34,12 @@ public class UserDaoImpl implements UserDao{
     public User findUserByEmail(String email) {
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS+ FILTER_BY_EMAIL)){
             statement.setString(1,email);
-            List<User> users = parseResultSet(statement.executeQuery());
-            return users.get(0);
+            User user = null;
+            ResultSet set = statement.executeQuery();
+            if(set.next()){
+                user = extractor.extract(set);
+            }
+            return user;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving user by email", ex);
@@ -44,8 +50,12 @@ public class UserDaoImpl implements UserDao{
     public User findById(int id) {
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS+ FILTER_BY_ID)){
             statement.setInt(1,id);
-            List<User> users = parseResultSet(statement.executeQuery());
-            return users.get(0);
+            User user = null;
+            ResultSet set = statement.executeQuery();
+            if(set.next()){
+                user = extractor.extract(set);
+            }
+            return user;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving user by id", ex);
@@ -55,8 +65,12 @@ public class UserDaoImpl implements UserDao{
     @Override
     public List<User> findAll() {
         try(Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(GET_ALL_USERS)){
-            return parseResultSet(resultSet);
+            ResultSet set = statement.executeQuery(GET_ALL_USERS)){
+            List<User> users = new ArrayList<>();
+            if(set.next()){
+                users.add(extractor.extract(set));
+            }
+            return users;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving all users", ex);
@@ -67,7 +81,12 @@ public class UserDaoImpl implements UserDao{
     public List<User> findWorkersByRole(String role) {
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS+ FILTER_BY_ROLE)){
             statement.setString(1,role);
-            return parseResultSet(statement.executeQuery());
+            List<User> users = new ArrayList<>();
+            ResultSet set = statement.executeQuery();
+            if(set.next()){
+                users.add(extractor.extract(set));
+            }
+            return users;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving workers by role", ex);
@@ -107,23 +126,5 @@ public class UserDaoImpl implements UserDao{
         catch (SQLException ex){
             throw new DaoException("Error occured when deleting user!", ex);
         }
-    }
-
-    private List<User> parseResultSet(ResultSet set) throws SQLException {
-        List<User> users = new ArrayList<>();
-        while(set.next()){
-            User user = new User.Builder()
-                            .setId(set.getInt("UserID"))
-                            .setName(set.getString("name"))
-                            .setSurname(set.getString("surname"))
-                            .setEmail(set.getString("email"))
-                            .setPassword(set.getString("password"))
-                            .setBirthDate(set.getDate("birthDate"))
-                            .setWorker(set.getBoolean("worker"))
-                            .setRole(RoleType.getRole(set.getString("roleName")))
-                            .build();
-            users.add(user);
-        }
-        return users;
     }
 }

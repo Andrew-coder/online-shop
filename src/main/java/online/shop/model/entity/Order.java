@@ -36,4 +36,20 @@ public class Order extends BaseEntity{
     public void addGoods(Goods goods, int amount){
         goodsItems.put(goods, amount);
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Map<Goods, Integer> getGoodsItems() {
+        return goodsItems;
+    }
+
+    public void setGoodsItems(Map<Goods, Integer> goodsItems) {
+        this.goodsItems = goodsItems;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
 }

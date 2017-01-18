@@ -2,6 +2,7 @@ package online.shop.dao.jdbc;
 
 import online.shop.dao.SubcategoryDao;
 import online.shop.dao.exception.DaoException;
+import online.shop.dao.utils.impl.SubcategoryResultSetExtractor;
 import online.shop.model.entity.Category;
 import online.shop.model.entity.Subcategory;
 
@@ -21,17 +22,23 @@ public class SubcategoryDaoImpl implements SubcategoryDao{
     private static final String CREATE_SUBCATEGORY = "insert into subcategories (subcategoryTitle) values (?);";
     private static final String DELETE_SUBCATEGORY = "delete from subcategory_list ";
     private Connection connection;
+    private SubcategoryResultSetExtractor extractor;
 
     public SubcategoryDaoImpl(Connection connection) {
         this.connection = connection;
+        extractor = new SubcategoryResultSetExtractor();
     }
 
     @Override
     public Subcategory findById(int id) {
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_SUBCATEGORIES+ FILTER_BY_ID)){
             statement.setInt(1,id);
-            List<Subcategory> subcategories = parseResultSet(statement.executeQuery());
-            return subcategories.get(0);
+            Subcategory subcategory = null;
+            ResultSet set = statement.executeQuery();
+            if(set.next()){
+                subcategory = extractor.extract(set);
+            }
+            return subcategory;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving subcategory by id", ex);
@@ -41,8 +48,12 @@ public class SubcategoryDaoImpl implements SubcategoryDao{
     @Override
     public List<Subcategory> findAll() {
         try(Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(GET_ALL_SUBCATEGORIES)){
-            return parseResultSet(resultSet);
+            ResultSet set = statement.executeQuery(GET_ALL_SUBCATEGORIES)){
+            List<Subcategory> subcategories = new ArrayList<>();
+            if(set.next()){
+                subcategories.add(extractor.extract(set));
+            }
+            return subcategories;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving all subcategories", ex);
@@ -65,8 +76,12 @@ public class SubcategoryDaoImpl implements SubcategoryDao{
     public Subcategory findSubcategoryByTitle(String title) {
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_SUBCATEGORIES+ FILTER_BY_TITLE)){
             statement.setString(1,title);
-            List<Subcategory> subcategories = parseResultSet(statement.executeQuery());
-            return subcategories.get(0);
+            Subcategory subcategory = null;
+            ResultSet set = statement.executeQuery();
+            if(set.next()){
+                subcategory = extractor.extract(set);
+            }
+            return subcategory;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving subcategory by title", ex);
@@ -94,23 +109,16 @@ public class SubcategoryDaoImpl implements SubcategoryDao{
     @Override
     public List<Subcategory> findSubcategoriesByCategory(Category category) {
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_SUBCATEGORIES+ FILTER_BY_CATEGORY)){
-            statement.setInt(1,category.getId());
-            List<Subcategory> subcategories = parseResultSet(statement.executeQuery());
+            statement.setInt(1, category.getId());
+            List<Subcategory> subcategories = new ArrayList<>();
+            ResultSet set = statement.executeQuery();
+            if(set.next()){
+                subcategories.add(extractor.extract(set));
+            }
             return subcategories;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving subcategories by category", ex);
         }
-    }
-
-    private List<Subcategory> parseResultSet(ResultSet set) throws SQLException{
-        List<Subcategory> subcategories = new ArrayList<>();
-        while(set.next()){
-            Subcategory subcategory = new Subcategory();
-            subcategory.setId(set.getInt("subcategoryID"));
-            subcategory.setTitle(set.getString("subcategoryTitle"));
-            subcategories.add(subcategory);
-        }
-        return subcategories;
     }
 }
