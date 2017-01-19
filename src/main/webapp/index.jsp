@@ -19,7 +19,7 @@
   <script type="text/javascript">
 
     ddsmoothmenu.init({
-      mainmenuid: "top_nav", 
+      mainmenuid: "top_nav",
       orientation: 'h',
       classname: 'ddsmoothmenu',
       contentsource: "markup"
