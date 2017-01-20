@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created by andri on 1/5/2017.
@@ -30,15 +31,16 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public Category findCategoryByTitle(String title) {
+    public Optional<Category> findCategoryByTitle(String title) {
+        Optional<Category> result = Optional.empty();
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_CATEGORIES+ FILTER_BY_TITLE)){
             statement.setString(1,title);
-            Category category = null;
             ResultSet set = statement.executeQuery();
             if(set.next()){
-                category = extractor.extract(set);
+                Category category = extractor.extract(set);
+                result = Optional.of(category);
             }
-            return category;
+            return result;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving category by title", ex);
@@ -46,15 +48,16 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public Category findById(int id) {
+    public Optional<Category> findById(int id) {
+        Optional<Category> result = Optional.empty();
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_CATEGORIES+ FILTER_BY_ID)){
             statement.setInt(1,id);
-            Category category = null;
             ResultSet set = statement.executeQuery();
             if(set.next()){
-                category = extractor.extract(set);
+                Category category = extractor.extract(set);
+                result = Optional.of(category);
             }
-            return category;
+            return result;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving category by id", ex);
@@ -66,7 +69,7 @@ public class CategoryDaoImpl implements CategoryDao {
         try(Statement statement = connection.createStatement();
             ResultSet set = statement.executeQuery(GET_ALL_CATEGORIES)){
             List<Category> categories = new ArrayList<>();
-            if(set.next()){
+            while(set.next()){
                 categories.add(extractor.extract(set));
             }
             return categories;
@@ -95,8 +98,6 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public void delete(int id) {
-        Category category = findById(id);
-        Objects.requireNonNull(category, "Category with such id wasn't found");
         try(PreparedStatement statement = connection.prepareStatement(DELETE_CATEGORY+FILTER_BY_ID)){
             statement.setInt(1,id);
             statement.executeUpdate();

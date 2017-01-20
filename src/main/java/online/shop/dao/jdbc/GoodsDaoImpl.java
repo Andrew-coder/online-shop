@@ -11,14 +11,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created by andri on 1/5/2017.
  */
 public class GoodsDaoImpl implements GoodsDao {
     private static final String GET_ALL_GOODS = "select goodsID, title, price, ends, description, image, subcategoryID, subcategoryTitle from(" +
-            "goods join subcategory_list using(subcategoryID)" +
-            ") ";
+            "goods join subcategory_list using(subcategoryID)) ";
     private static final String FILTER_BY_ID = " where goodsID=?;";
     private static final String FILTER_BY_SUBCATEGORY = " where subcategoryID=?;";
     private static final String FILTER_BY_PRICE_RANGE = " where price >=? and price <=?;";
@@ -33,15 +33,16 @@ public class GoodsDaoImpl implements GoodsDao {
     }
 
     @Override
-    public Goods findById(int id) {
+    public Optional<Goods> findById(int id) {
+        Optional<Goods> result = Optional.empty();
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_GOODS+ FILTER_BY_ID)){
             statement.setInt(1,id);
-            Goods goods = null;
             ResultSet set = statement.executeQuery();
             if(set.next()){
-                goods = extractor.extract(set);
+                Goods goods = extractor.extract(set);
+                result = Optional.of(goods);
             }
-            return goods;
+            return result;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving goods by id", ex);
@@ -53,7 +54,7 @@ public class GoodsDaoImpl implements GoodsDao {
         try(Statement statement = connection.createStatement();
             ResultSet set = statement.executeQuery(GET_ALL_GOODS)){
             List<Goods> goods = new ArrayList<>();
-            if(set.next()){
+            while(set.next()){
                 goods.add(extractor.extract(set));
             }
             return goods;
@@ -64,14 +65,14 @@ public class GoodsDaoImpl implements GoodsDao {
     }
 
     @Override
-    public Goods findGoodsByPriceRange(double minPrice, double maxPrice) {
+    public List<Goods> findGoodsByPriceRange(double minPrice, double maxPrice) {
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_GOODS+ FILTER_BY_PRICE_RANGE)){
             statement.setDouble(1, minPrice);
             statement.setDouble(2, maxPrice);
             ResultSet set = statement.executeQuery();
-            Goods goods = null;
-            if(set.next()){
-                goods = extractor.extract(set);
+            List<Goods> goods = new ArrayList<>();
+            while(set.next()){
+                goods.add(extractor.extract(set));
             }
             return goods;
         }
@@ -102,8 +103,6 @@ public class GoodsDaoImpl implements GoodsDao {
 
     @Override
     public void delete(int id) {
-        Goods goods = findById(id);
-        Objects.requireNonNull(goods, "Goods with such id wasn't found");
         try(PreparedStatement statement = connection.prepareStatement(DELETE_GOODS+FILTER_BY_ID)){
             statement.setInt(1,id);
             statement.executeUpdate();
@@ -119,7 +118,7 @@ public class GoodsDaoImpl implements GoodsDao {
             statement.setInt(1,subcategory.getId());
             ResultSet set = statement.executeQuery();
             List<Goods> goods = new ArrayList<>();
-            if(set.next()){
+            while(set.next()){
                 goods.add(extractor.extract(set));
             }
             return goods;

@@ -4,6 +4,7 @@ import online.shop.dao.UserDao;
 import online.shop.dao.exception.DaoException;
 import online.shop.dao.utils.impl.UserResultSetExtractor;
 import online.shop.model.entity.RoleType;
+
 import online.shop.model.entity.User;
 
 import java.sql.*;
@@ -11,6 +12,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created by andri on 1/5/2017.
@@ -31,15 +33,16 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) {
+        Optional<User> result = Optional.empty();
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS+ FILTER_BY_EMAIL)){
             statement.setString(1,email);
-            User user = null;
             ResultSet set = statement.executeQuery();
             if(set.next()){
-                user = extractor.extract(set);
+                User user = extractor.extract(set);
+                result = Optional.of(user);
             }
-            return user;
+            return result;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving user by email", ex);
@@ -47,15 +50,16 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User findById(int id) {
+    public Optional<User> findById(int id) {
+        Optional<User> result = Optional.empty();
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS+ FILTER_BY_ID)){
             statement.setInt(1,id);
-            User user = null;
             ResultSet set = statement.executeQuery();
             if(set.next()){
-                user = extractor.extract(set);
+                User user = extractor.extract(set);
+                result = Optional.of(user);
             }
-            return user;
+            return result;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving user by id", ex);
@@ -67,7 +71,7 @@ public class UserDaoImpl implements UserDao{
         try(Statement statement = connection.createStatement();
             ResultSet set = statement.executeQuery(GET_ALL_USERS)){
             List<User> users = new ArrayList<>();
-            if(set.next()){
+            while(set.next()){
                 users.add(extractor.extract(set));
             }
             return users;
@@ -83,7 +87,7 @@ public class UserDaoImpl implements UserDao{
             statement.setString(1,role);
             List<User> users = new ArrayList<>();
             ResultSet set = statement.executeQuery();
-            if(set.next()){
+            while(set.next()){
                 users.add(extractor.extract(set));
             }
             return users;
@@ -117,8 +121,6 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public void delete(int id) {
-        User user = findById(id);
-        Objects.requireNonNull(user, "User with such id wasn't found");
         try(PreparedStatement statement = connection.prepareStatement(DELETE_USER+FILTER_BY_ID)){
             statement.setInt(1,id);
             statement.executeUpdate();

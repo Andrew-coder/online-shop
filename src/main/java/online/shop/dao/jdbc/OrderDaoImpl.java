@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by andri on 1/5/2017.
@@ -36,16 +37,17 @@ public class OrderDaoImpl implements OrderDao{
     }
 
     @Override
-    public Order findById(int id) {
+    public Optional<Order> findById(int id) {
+        Optional<Order> result = Optional.empty();
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_ORDERS+ FILTER_BY_ID)){
             statement.setInt(1,id);
-            Order order = null;
             ResultSet set = statement.executeQuery();
             if(set.next()){
-                order = extractor.extract(set);
+                Order order = extractor.extract(set);
                 order.setGoodsItems(findGoodsItems(order.getId()));
+                result = Optional.of(order);
             }
-            return order;
+            return result;
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving order by id", ex);
@@ -57,7 +59,7 @@ public class OrderDaoImpl implements OrderDao{
         try(Statement statement = connection.createStatement();
             ResultSet set = statement.executeQuery(GET_ALL_ORDERS)){
             List<Order> orders = new ArrayList<>();
-            if(set.next()){
+            while(set.next()){
                 Order order = extractor.extract(set);
                 order.setGoodsItems(findGoodsItems(order.getId()));
                 orders.add(order);

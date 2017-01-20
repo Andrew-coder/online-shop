@@ -8,15 +8,11 @@ import java.util.List;
  */
 public class Category extends BaseEntity {
     private String title;
-    private List<Subcategory> subcategories;
 
-    public Category() {
-        subcategories = new ArrayList<>();
-    }
+    public Category(){}
 
-    public Category(String title, List<Subcategory> subcategories) {
+    public Category(String title) {
         this.title = title;
-        this.subcategories = subcategories;
     }
 
     public String getTitle() {
@@ -25,13 +21,5 @@ public class Category extends BaseEntity {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<Subcategory> getSubcategories() {
-        return subcategories;
-    }
-
-    public void setSubcategories(List<Subcategory> subcategories) {
-        this.subcategories = subcategories;
     }
 }

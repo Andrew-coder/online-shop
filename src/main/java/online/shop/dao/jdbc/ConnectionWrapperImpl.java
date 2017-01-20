@@ -48,6 +48,11 @@ public class ConnectionWrapperImpl implements ConnectionWrapper {
         }
     }
 
+    @Override
+    public void close(){
+
+    }
+
     public Connection getConnection() {
         return connection;
     }
