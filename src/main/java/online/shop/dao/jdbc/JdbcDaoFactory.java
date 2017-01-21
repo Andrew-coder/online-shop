@@ -12,17 +12,7 @@ import java.sql.SQLException;
 public class JdbcDaoFactory extends DaoFactory {
     private DataSource dataSource = DataSourceProvider.setupDataSource();
 
-    private static JdbcDaoFactory instance;
-
-    private JdbcDaoFactory() {
-
-    }
-
-    public static DaoFactory getInstance(){
-        if(instance==null){
-            instance = new JdbcDaoFactory();
-        }
-        return instance;
+    public JdbcDaoFactory() {
     }
 
     @Override
@@ -38,27 +28,32 @@ public class JdbcDaoFactory extends DaoFactory {
     }
 
     @Override
-    public CategoryDao getCategoryDao() {
-        return null;
+    public CategoryDao getCategoryDao(ConnectionWrapper wrapper) {
+        return new CategoryDaoImpl(extractSqlConnection(wrapper));
     }
 
     @Override
-    public SubcategoryDao getSubcategoryDao() {
-        return null;
+    public SubcategoryDao getSubcategoryDao(ConnectionWrapper wrapper) {
+        return new SubcategoryDaoImpl(extractSqlConnection(wrapper));
     }
 
     @Override
-    public UserDao getUserDao() {
-        return null;
+    public UserDao getUserDao(ConnectionWrapper wrapper) {
+        return new UserDaoImpl(extractSqlConnection(wrapper));
     }
 
     @Override
-    public OrderDao getOrderDao() {
-        return null;
+    public OrderDao getOrderDao(ConnectionWrapper wrapper) {
+        return new OrderDaoImpl(extractSqlConnection(wrapper));
     }
 
     @Override
-    public GoodsDao getGoodsDao() {
-        return null;
+    public GoodsDao getGoodsDao(ConnectionWrapper wrapper) {
+        return new GoodsDaoImpl(extractSqlConnection(wrapper));
+    }
+
+    public Connection extractSqlConnection(ConnectionWrapper wrapper) {
+        ConnectionWrapperImpl connectionWrapper = (ConnectionWrapperImpl) wrapper;
+        return connectionWrapper.getConnection();
     }
 }

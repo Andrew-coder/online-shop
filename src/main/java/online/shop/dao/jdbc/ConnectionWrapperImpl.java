@@ -10,6 +10,7 @@ import java.sql.SQLException;
  */
 public class ConnectionWrapperImpl implements ConnectionWrapper {
     private Connection connection;
+    private boolean inTransaction = false;
 
     public ConnectionWrapperImpl(Connection connection) {
         this.connection = connection;
@@ -20,6 +21,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper {
         try{
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             connection.setAutoCommit(false);
+            inTransaction=true;
         }catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -30,6 +32,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper {
         try {
             connection.commit();
             connection.setAutoCommit(true);
+            inTransaction=false;
         }
         catch (SQLException ex){
             ex.printStackTrace();
@@ -41,7 +44,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper {
         try {
             connection.rollback();
             connection.setAutoCommit(true);
-
+            inTransaction=false;
         }
         catch (SQLException ex){
             ex.printStackTrace();
@@ -50,7 +53,14 @@ public class ConnectionWrapperImpl implements ConnectionWrapper {
 
     @Override
     public void close(){
-
+        if(inTransaction) {
+            rollbackTransaction();
+        }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Connection getConnection() {

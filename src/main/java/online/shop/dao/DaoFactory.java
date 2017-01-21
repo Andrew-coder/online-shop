@@ -35,9 +35,9 @@ public abstract class DaoFactory {
     }
 
     public abstract ConnectionWrapper getConnection();
-    public abstract CategoryDao getCategoryDao();
-    public abstract SubcategoryDao getSubcategoryDao();
-    public abstract UserDao getUserDao();
-    public abstract OrderDao getOrderDao();
-    public abstract GoodsDao getGoodsDao();
+    public abstract CategoryDao getCategoryDao(ConnectionWrapper wrapper);
+    public abstract SubcategoryDao getSubcategoryDao(ConnectionWrapper wrapper);
+    public abstract UserDao getUserDao(ConnectionWrapper wrapper);
+    public abstract OrderDao getOrderDao(ConnectionWrapper wrapper);
+    public abstract GoodsDao getGoodsDao(ConnectionWrapper wrapper);
 }

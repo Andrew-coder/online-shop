@@ -8,6 +8,7 @@ import online.shop.model.entity.Category;
 import online.shop.model.entity.Subcategory;
 import online.shop.services.CategoryService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -16,18 +17,23 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService{
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
-    private static class Holder{
-        static final CategoryService INSTANCE = new CategoryServiceImpl();
-    }
+    private CategoryServiceImpl(){}
 
-    public static CategoryService getInstance(){
-        return Holder.INSTANCE;
+    private static CategoryService instance;
+
+    public static synchronized  CategoryService getInstance(){
+        if(instance==null){
+            instance = new CategoryServiceImpl();
+        }
+        return instance;
     }
 
     @Override
     public Category findById(int id) {
-        CategoryDao categoryDao = daoFactory.getCategoryDao();
-        return categoryDao.findById(id).get();
+        try(ConnectionWrapper connection = daoFactory.getConnection()) {
+            CategoryDao categoryDao = daoFactory.getCategoryDao(connection);
+            return categoryDao.findById(id).get();
+        }
     }
 
     @Override
@@ -38,9 +44,8 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     public List<Category> findAll() {
         try(ConnectionWrapper connection = daoFactory.getConnection()){
-            CategoryDao categoryDao = daoFactory.getCategoryDao();
-            SubcategoryDao subcategoryDao = daoFactory.getSubcategoryDao();
-            List<Category> categories = categoryDao.findAll();
+            CategoryDao categoryDao = daoFactory.getCategoryDao(connection);
+            return categoryDao.findAll();
         }
 
     }

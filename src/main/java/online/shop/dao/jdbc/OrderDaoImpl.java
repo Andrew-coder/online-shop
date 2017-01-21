@@ -2,8 +2,7 @@ package online.shop.dao.jdbc;
 
 import online.shop.dao.OrderDao;
 import online.shop.dao.exception.DaoException;
-import online.shop.dao.utils.impl.OrderResultSetExtractor;
-import online.shop.model.entity.Category;
+import online.shop.utils.extractors.impl.OrderResultSetExtractor;
 import online.shop.model.entity.Goods;
 import online.shop.model.entity.Order;
 

@@ -2,8 +2,7 @@ package online.shop.dao.jdbc;
 
 import online.shop.dao.UserDao;
 import online.shop.dao.exception.DaoException;
-import online.shop.dao.utils.impl.UserResultSetExtractor;
-import online.shop.model.entity.RoleType;
+import online.shop.utils.extractors.impl.UserResultSetExtractor;
 
 import online.shop.model.entity.User;
 

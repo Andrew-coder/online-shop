@@ -1,6 +1,6 @@
-package online.shop.utils.impl;
+package online.shop.utils.extractors.impl;
 
-import online.shop.utils.ResultSetExtractor;
+import online.shop.utils.extractors.ResultSetExtractor;
 import online.shop.model.entity.Goods;
 import online.shop.model.entity.Order;
 

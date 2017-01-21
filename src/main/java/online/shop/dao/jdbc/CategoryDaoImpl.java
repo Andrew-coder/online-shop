@@ -2,10 +2,8 @@ package online.shop.dao.jdbc;
 
 import online.shop.dao.CategoryDao;
 import online.shop.dao.exception.DaoException;
-import online.shop.dao.utils.ResultSetExtractor;
-import online.shop.dao.utils.impl.CategoryResultSetExtractor;
+import online.shop.utils.extractors.impl.CategoryResultSetExtractor;
 import online.shop.model.entity.Category;
-import online.shop.model.entity.Subcategory;
 
 import java.sql.*;
 import java.util.ArrayList;

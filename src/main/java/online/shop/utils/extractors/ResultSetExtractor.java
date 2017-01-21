@@ -1,4 +1,4 @@
-package online.shop.utils;
+package online.shop.utils.extractors;
 
 import online.shop.model.entity.BaseEntity;
 

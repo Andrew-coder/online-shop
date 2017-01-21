@@ -1,3 +1,5 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -85,24 +87,11 @@
           <h3>Categories</h3>
           <div class="content">
             <ul class="sidebar_list">
-              <%--<li class="first"><a href="#">Sed eget purus</a></li>
-              <li><a href="#">Vestibulum eleifend</a></li>
-              <li><a href="#">Nulla odio ipsum</a></li>
-              <li><a href="#">Suspendisse posuere</a></li>
-              <li><a href="#">Nunc a dui sed</a></li>
-              <li><a href="#">Curabitur ac mauris</a></li>
-              <li><a href="#">Mauris nulla tortor</a></li>
-              <li><a href="#">Nullam ultrices</a></li>
-              <li><a href="#">Nulla odio ipsum</a></li>
-              <li><a href="#">Suspendisse posuere</a></li>
-              <li><a href="#">Nunc a dui sed</a></li>
-              <li><a href="#">Curabitur ac mauris</a></li>
-              <li><a href="#">Mauris nulla tortor</a></li>
-              <li><a href="#">Nullam ultrices</a></li>
-              <li class="last"><a href="#">Sed eget purus</a></li>--%>
-              <c:forEach items="${list}" var="value">
-                <li><c:out value="${value.title}"/></li>
+
+              <c:forEach items="${categories}" var="value">
+                <li><a href="#">${value.title}</a></li>
               </c:forEach>
+
             </ul>
           </div>
         </div>

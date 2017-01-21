@@ -12,6 +12,10 @@ public class Subcategory extends BaseEntity {
     public Subcategory() {
     }
 
+    public Subcategory(int id) {
+        super(id);
+    }
+
     public Subcategory(Category category, String title) {
         this.category = category;
         this.title = title;
