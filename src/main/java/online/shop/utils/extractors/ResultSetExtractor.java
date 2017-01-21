@@ -1,10 +1,9 @@
-package online.shop.dao.utils;
+package online.shop.utils;
 
 import online.shop.model.entity.BaseEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Created by andri on 1/17/2017.

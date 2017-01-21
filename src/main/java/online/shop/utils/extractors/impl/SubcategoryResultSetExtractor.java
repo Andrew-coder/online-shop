@@ -1,7 +1,6 @@
-package online.shop.dao.utils.impl;
+package online.shop.utils.impl;
 
-import online.shop.dao.utils.ResultSetExtractor;
-import online.shop.model.entity.Category;
+import online.shop.utils.ResultSetExtractor;
 import online.shop.model.entity.Subcategory;
 
 import java.sql.ResultSet;
