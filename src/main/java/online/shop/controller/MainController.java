@@ -37,8 +37,7 @@ public class MainController extends HttpServlet {
         String key = method+":"+path;
         Command command = commands.getOrDefault(key, (req , resp)->PagesPaths.HOME_PAGE );
         String viewPage = command.execute(request, response);
-        request.getRequestDispatcher(viewPage).
-                forward(request, response);
+        request.getRequestDispatcher(viewPage).forward(request, response);
         //response.sendRedirect(viewPage);
     }
 

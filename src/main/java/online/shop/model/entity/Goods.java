@@ -1,7 +1,5 @@
 package online.shop.model.entity;
 
-
-
 /**
  * Created by andri on 1/1/2017.
  */
