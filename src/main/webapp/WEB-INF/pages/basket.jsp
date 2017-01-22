@@ -1,18 +1,18 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Shoes Store - Products</title>
+    <title>Online-shop</title>
     <meta name="keywords" content="" />
     <meta name="description" content="" />
-    <link href="templatemo_style.css" rel="stylesheet" type="text/css" />
+    <link href="/css/templatemo_style.css" rel="stylesheet" type="text/css" />
 
-    <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
+    <link rel="stylesheet" type="text/css" href="/css/ddsmoothmenu.css" />
 
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/ddsmoothmenu.js">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/ddsmoothmenu.js">
+
 
     </script>
 
@@ -35,23 +35,13 @@
 <div id="templatemo_body_wrapper">
     <div id="templatemo_wrapper">
 
-        <div id="templatemo_header">
-            <div id="site_title"><h1><a href="#">Online Shoes Store</a></h1></div>
-            <div id="header_right">
-                <p>
-                    <a href="#">My Account</a> | <a href="#">My Wishlist</a> | <a href="#">My Cart</a> | <a href="#">Checkout</a> | <a href="#">Log In</a></p>
-                <p>
-                    Shopping Cart: <strong>3 items</strong> ( <a href="shoppingcart.html">Show Cart</a> )
-                </p>
-            </div>
-            <div class="cleaner"></div>
-        </div> <!-- END of templatemo_header -->
+        <jsp:include page="/WEB-INF/pages/header.jsp" />
 
         <div id="templatemo_menubar">
             <div id="top_nav" class="ddsmoothmenu">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="products.html" class="selected">Products</a>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="products.html">Products</a>
                         <ul>
                             <li><a href="#submenu1">Sub menu 1</a></li>
                             <li><a href="#submenu2">Sub menu 2</a></li>
@@ -105,62 +95,71 @@
                         </ul>
                     </div>
                 </div>
-                <div class="sidebar_box"><span class="bottom"></span>
-                    <h3>Bestsellers </h3>
-                    <div class="content">
-                        <div class="bs_box">
-                            <a href="#"><img src="images/templatemo_image_01.jpg" alt="image" /></a>
-                            <h4><a href="#">Donec nunc nisl</a></h4>
-                            <p class="price">$10</p>
-                            <div class="cleaner"></div>
-                        </div>
-                        <div class="bs_box">
-                            <a href="#"><img src="images/templatemo_image_01.jpg" alt="image" /></a>
-                            <h4><a href="#">Lorem ipsum dolor sit</a></h4>
-                            <p class="price">$12</p>
-                            <div class="cleaner"></div>
-                        </div>
-                        <div class="bs_box">
-                            <a href="#"><img src="images/templatemo_image_01.jpg" alt="image" /></a>
-                            <h4><a href="#">Phasellus ut dui</a></h4>
-                            <p class="price">$20</p>
-                            <div class="cleaner"></div>
-                        </div>
-                        <div class="bs_box">
-                            <a href="#"><img src="images/templatemo_image_01.jpg" alt="image" /></a>
-                            <h4><a href="#">Vestibulum ante</a></h4>
-                            <p class="price">$8</p>
-                            <div class="cleaner"></div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <div id="content" class="float_r">
-                <h1> Products</h1>
-                <c:forEach items="${goods}" var="value">
-                    <div class="product_box">
-                        <h3>${value.title}</h3>
-                        <a href="productdetail.html"><img src="images/product/01.jpg" alt="Shoes 1" /></a>
-                        <p> ${value.description} </p>
-                        <p class="product_price">${value.price}</p>
-                        <a href="shoppingcart.html" class="addtocart"></a>
-                        <a href="productdetail.html" class="detail"></a>
+                <h1>Shopping Cart</h1>
+                <table width="680px" cellspacing="0" cellpadding="5">
+                    <tr bgcolor="#ddd">
+                        <th width="220" align="left">Image </th>
+                        <th width="180" align="left">Description </th>
+                        <th width="100" align="center">Quantity </th>
+                        <th width="60" align="right">Price </th>
+                        <th width="60" align="right">Total </th>
+                        <th width="90"> </th>
+
+                    </tr>
+                    <tr>
+                        <td><img src="images/product/01.jpg" alt="image 1" /></td>
+                        <td>Etiam in tellus (Validate <a href="http://validator.w3.org/check?uri=referer" rel="nofollow">XHTML</a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer" rel="nofollow">CSS</a>)</td>
+                        <td align="center"><input type="text" value="1" style="width: 20px; text-align: right" /> </td>
+                        <td align="right">$100 </td>
+                        <td align="right">$100 </td>
+                        <td align="center"> <a href="#"><img src="images/remove_x.gif" alt="remove" /><br />Remove</a> </td>
+                    </tr>
+                    <tr>
+                        <td><img src="images/product/02.jpg" alt="image 2" /> </td>
+                        <td>Second Red Shoes</td>
+                        <td align="center"><input type="text" value="1" style="width: 20px; text-align: right" />  </td>
+                        <td align="right">$80  </td>
+                        <td align="right">$80 </td>
+                        <td align="center"> <a href="#"><img src="images/remove_x.gif" alt="remove" /><br />Remove</a>  </td>
+                    </tr>
+                    <tr>
+                        <td><img src="images/product/03.jpg" alt="image 3" /> </td>
+                        <td>Hendrerit justo</td>
+                        <td align="center"><input type="text" value="1" style="width: 20px; text-align: right" />  </td>
+                        <td align="right">$60  </td>
+                        <td align="right">$60 </td>
+                        <td align="center"> <a href="#"><img src="images/remove_x.gif" alt="remove" /><br />Remove</a>  </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" align="right"  height="30px">Have you modified your basket? Please click here to <a href="shoppingcart.html"><strong>Update</strong></a>&nbsp;&nbsp;</td>
+                        <td align="right" style="background:#ddd; font-weight:bold"> Total </td>
+                        <td align="right" style="background:#ddd; font-weight:bold">$240 </td>
+                        <td style="background:#ddd; font-weight:bold"> </td>
+                    </tr>
+                </table>
+                <div style="float:right; width: 215px; margin-top: 20px;">
+
+                    <p><a href="checkout.html">Proceed to checkout</a></p>
+                    <p><a href="javascript:history.back()">Continue shopping</a></p>
+
                 </div>
-                </c:forEach>
             </div>
             <div class="cleaner"></div>
-        </div>
+        </div> <!-- END of templatemo_main -->
 
         <div id="templatemo_footer">
             <p><a href="#">Home</a> | <a href="#">Products</a> | <a href="#">About</a> | <a href="#">FAQs</a> | <a href="#">Checkout</a> | <a href="#">Contact Us</a>
             </p>
 
+            Copyright © 2072 <a href="#">Your Company Name</a> <!-- Credit: www.templatemo.com -->
 
-            Copyright © 2017 <a href="#">Andrew Ivanyuk</a>
-        </div>
+        </div> <!-- END of templatemo_footer -->
 
-    </div>
-</div>
+    </div> <!-- END of templatemo_wrapper -->
+</div> <!-- END of templatemo_body_wrapper -->
 
 </body>
 </html>

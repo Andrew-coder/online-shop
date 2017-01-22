@@ -1,20 +1,18 @@
 package online.shop.controller.commands;
 
-import online.shop.utils.constants.PagesPaths;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static online.shop.utils.constants.PagesPaths.LOGIN_PAGE;
+import static online.shop.utils.constants.PagesPaths.BASKET_PAGE;
 
 /**
- * Created by andri on 1/21/2017.
+ * Created by andri on 1/22/2017.
  */
-public class LoginCommand implements Command {
+public class ShowBasketCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        return LOGIN_PAGE;
+        return BASKET_PAGE;
     }
 }

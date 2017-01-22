@@ -18,7 +18,7 @@ import java.util.Optional;
  */
 public class UserDaoImpl implements UserDao{
     private static final String GET_ALL_USERS = "select userID, name, surname, email, password, birthDate, worker, r.roleName as role from users " +
-                                                "inner join roles r on users.role=r.roleID";
+                                                "left join roles r on users.role=r.roleID";
     private static final String FILTER_BY_ID = " where userID = ?;";
     private static final String FILTER_BY_EMAIL = " where email=?;";
     private static final String FILTER_BY_ROLE = " inner join roles on users.role=roles.roleID where roles.roleName=?;";
@@ -29,6 +29,7 @@ public class UserDaoImpl implements UserDao{
 
     public UserDaoImpl(Connection connection) {
         this.connection = connection;
+        extractor = new UserResultSetExtractor();
     }
 
     @Override

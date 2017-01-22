@@ -22,6 +22,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
-        <url-pattern>/app/*</url-pattern>
+        <url-pattern>/online-shop/*</url-pattern>
     </servlet-mapping>
 </web-app>

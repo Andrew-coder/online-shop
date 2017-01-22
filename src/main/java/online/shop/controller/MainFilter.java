@@ -16,7 +16,7 @@ public class MainFilter implements Filter {
     @Override
     public void init(FilterConfig fConfig) throws ServletException {
         this.context = fConfig.getServletContext();
-        this.context.log("StaticContentFilter initialized");
+        this.context.log("CtaticContentFilter initialized");
     }
 
     @Override
@@ -28,7 +28,7 @@ public class MainFilter implements Filter {
         if (path.startsWith("/css") || path.startsWith("/js") || path.startsWith("/images")) {
             chain.doFilter(request, response);
         } else {
-            request.getRequestDispatcher("/app" + path).forward(request, response);
+            request.getRequestDispatcher("/online-shop" + path).forward(request, response);
         }
     }
 

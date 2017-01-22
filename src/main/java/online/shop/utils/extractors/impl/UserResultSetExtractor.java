@@ -13,15 +13,18 @@ import java.sql.SQLException;
 public class UserResultSetExtractor implements ResultSetExtractor<User> {
     @Override
     public User extract(ResultSet set) throws SQLException{
-        return new User.Builder()
+        User.Builder builder= new User.Builder()
                 .setId(set.getInt("UserID"))
                 .setName(set.getString("name"))
                 .setSurname(set.getString("surname"))
                 .setEmail(set.getString("email"))
                 .setPassword(set.getString("password"))
                 .setBirthDate(set.getDate("birthDate"))
-                .setWorker(set.getBoolean("worker"))
-                .setRole(RoleType.getRole(set.getString("roleName")))
-                .build();
+                .setWorker(set.getBoolean("worker"));
+        String role = set.getString("role");
+        if(role!=null){
+            builder.setRole(RoleType.getRole(role));
+        }
+        return builder.build();
     }
 }

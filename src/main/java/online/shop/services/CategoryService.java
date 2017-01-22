@@ -3,13 +3,11 @@ package online.shop.services;
 import online.shop.model.entity.Category;
 
 import java.util.List;
+import java.util.Optional;
 
-/**
- * Created by andri on 1/19/2017.
- */
 public interface CategoryService {
-    Category findById(int id);
-    Category findCategoryByTitle(String title);
+    Optional<Category> findById(int id);
+    Optional<Category> findCategoryByTitle(String title);
     List<Category> findAll();
     void create(Category category);
     void update(Category category);

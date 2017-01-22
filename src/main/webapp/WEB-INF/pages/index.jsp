@@ -1,20 +1,21 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page import="online.shop.utils.constants.PagesPaths" %>
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Online shop</title>
   <meta name="keywords" content="" />
   <meta name="description" content="" />
-  <link href="templatemo_style.css" rel="stylesheet" type="text/css" />
+  <link href="/css/templatemo_style.css" rel="stylesheet" type="text/css" />
 
-  <link rel="stylesheet" href="nivo-slider.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="/css/nivo-slider.css" type="text/css" media="screen" />
 
   <link rel="stylesheet" type="text/css" href="/css/ddsmoothmenu.css" />
 
-  <script type="text/javascript" src="/js/jquery.min.js"></script>
-  <script type="text/javascript" src="/js/ddsmoothmenu.js">
+  <script type="text/javascript" src="../js/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/ddsmoothmenu.js">
 
   </script>
 
@@ -35,22 +36,12 @@
 <div id="templatemo_body_wrapper">
   <div id="templatemo_wrapper">
 
-    <div id="templatemo_header">
-      <div id="site_title"><h1><a href="#">Online Shop</a></h1></div>
-      <div id="header_right">
-        <p>
-          <a href="#">My Account</a> | <a href="#">My Wishlist</a> | <a href="#">My Cart</a> | <a href="#">Checkout</a> | <a href="#">Log In</a></p>
-        <p>
-          Shopping Cart: <strong>3 items</strong> ( <a href="shoppingcart.html">Show Cart</a> )
-        </p>
-      </div>
-      <div class="cleaner"></div>
-    </div>
+    <jsp:include page="/WEB-INF/pages/header.jsp" />
 
     <div id="templatemo_menubar">
       <div id="top_nav" class="ddsmoothmenu">
         <ul>
-          <li><a href="index.html" class="selected">Home</a></li>
+          <li><a href="/" class="selected">Home</a></li>
           <li><a href="products.html">Products</a>
             <ul>
               <li><a href="#submenu1">Sub menu 1</a></li>
@@ -204,7 +195,7 @@
       <p><a href="#">Home</a> | <a href="#">Products</a> | <a href="#">About</a> | <a href="#">FAQs</a> | <a href="#">Checkout</a> | <a href="#">Contact Us</a>
       </p>
 
-      Copyright © 2017 <a href="#">Andrew Iwanyuk</a> </div>
+      Copyright © 2017 <a href="#">Andrew Ivanyuk</a> </div>
 
   </div>
 </div>

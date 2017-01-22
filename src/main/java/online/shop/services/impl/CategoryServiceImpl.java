@@ -10,6 +10,7 @@ import online.shop.services.CategoryService;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by andri on 1/19/2017.
@@ -29,16 +30,19 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public Category findById(int id) {
+    public Optional<Category> findById(int id) {
         try(ConnectionWrapper connection = daoFactory.getConnection()) {
             CategoryDao categoryDao = daoFactory.getCategoryDao(connection);
-            return categoryDao.findById(id).get();
+            return categoryDao.findById(id);
         }
     }
 
     @Override
-    public Category findCategoryByTitle(String title) {
-        return null;
+    public Optional<Category> findCategoryByTitle(String title) {
+        try(ConnectionWrapper connection = daoFactory.getConnection()) {
+            CategoryDao categoryDao = daoFactory.getCategoryDao(connection);
+            return categoryDao.findCategoryByTitle(title);
+        }
     }
 
     @Override
