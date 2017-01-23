@@ -91,7 +91,7 @@
                 </table>
             </div>
             <div class="cleaner"></div>
-        </div> <!-- END of templatemo_main -->
+        </div> 
 
         <jsp:include page="/WEB-INF/pages/footer.jsp"/>
 

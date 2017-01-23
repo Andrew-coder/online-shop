@@ -3,6 +3,7 @@ package online.shop.controller;
 import online.shop.controller.commands.*;
 import online.shop.controller.commands.admin.AdminHomeCommand;
 import online.shop.controller.commands.user.PurchaseCommand;
+import online.shop.controller.commands.user.basket.UpdateCommand;
 import online.shop.controller.commands.user.register.RegisterCommand;
 import online.shop.controller.commands.user.register.RegisterSubmitCommand;
 import online.shop.controller.commands.login.LoginCommand;
@@ -63,6 +64,7 @@ public class MainController extends HttpServlet {
         commands.put("GET:/online-shop/basket", new ShowBasketCommand());
         commands.put("GET:/online-shop/basket/add", new AddBasketCommand());
         commands.put("GET:/online-shop/basket/remove", new RemoveBasketCommand());
+        commands.put("POST:/online-shop/update", new UpdateCommand());
         commands.put("GET:/online-shop/register", new RegisterCommand());
         commands.put("POST:/online-shop/register", new RegisterSubmitCommand());
         commands.put("GET:/online-shop/subcategory", new SubcategoryOverviewCommand());
