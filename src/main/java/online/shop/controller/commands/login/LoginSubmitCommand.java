@@ -1,5 +1,6 @@
-package online.shop.controller.commands;
+package online.shop.controller.commands.login;
 
+import online.shop.controller.commands.Command;
 import online.shop.model.entity.User;
 import online.shop.services.UserService;
 import online.shop.services.impl.UserServiceImpl;
@@ -12,8 +13,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import static online.shop.utils.constants.PagesPaths.ADMIN;
-import static online.shop.utils.constants.PagesPaths.HOME_PAGE;
+
 
 /**
  * Created by andri on 1/21/2017.
@@ -25,7 +25,7 @@ public class LoginSubmitCommand implements Command {
     UserService userService = UserServiceImpl.getInstance();
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String pageToGo = HOME_PAGE;
+        String pageToGo = PagesPaths.HOME_PAGE;
         String email = request.getParameter(PARAM_EMAIL);
         String password = request.getParameter(PARAM_PASSWORD);
         if( email != null && password != null ){
@@ -35,10 +35,11 @@ public class LoginSubmitCommand implements Command {
                 User person = user.get();
                 request.getSession().setAttribute(Attributes.USER, person);
                 if(person.isWorker()) {
-                    pageToGo = ADMIN;
+                    pageToGo = PagesPaths.ADMIN;
                 }
             }
         }
+
         return pageToGo;
     }
 }

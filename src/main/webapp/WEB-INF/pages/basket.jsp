@@ -1,4 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="online.shop.utils.constants.PagesPaths" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -43,18 +45,12 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="products.html">Products</a>
                         <ul>
-                            <li><a href="#submenu1">Sub menu 1</a></li>
-                            <li><a href="#submenu2">Sub menu 2</a></li>
-                            <li><a href="#submenu3">Sub menu 3</a></li>
-                            <li><a href="#submenu4">Sub menu 4</a></li>
-                            <li><a href="#submenu5">Sub menu 5</a></li>
+
                         </ul>
                     </li>
                     <li><a href="about.html">About</a>
                         <ul>
-                            <li><a href="#submenu1">Sub menu 1</a></li>
-                            <li><a href="#submenu2">Sub menu 2</a></li>
-                            <li><a href="#submenu3">Sub menu 3</a></li>
+
                         </ul>
                     </li>
                     <li><a href="faqs.html">FAQs</a></li>
@@ -103,63 +99,53 @@
                     <tr bgcolor="#ddd">
                         <th width="220" align="left">Image </th>
                         <th width="180" align="left">Description </th>
-                        <th width="100" align="center">Quantity </th>
+                        <%--<th width="100" align="center">Quantity </th>--%>
                         <th width="60" align="right">Price </th>
-                        <th width="60" align="right">Total </th>
+                        <%--<th width="60" align="right">Total </th>--%>
                         <th width="90"> </th>
 
                     </tr>
-                    <tr>
-                        <td><img src="images/product/01.jpg" alt="image 1" /></td>
-                        <td>Etiam in tellus (Validate <a href="http://validator.w3.org/check?uri=referer" rel="nofollow">XHTML</a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer" rel="nofollow">CSS</a>)</td>
-                        <td align="center"><input type="text" value="1" style="width: 20px; text-align: right" /> </td>
-                        <td align="right">$100 </td>
-                        <td align="right">$100 </td>
-                        <td align="center"> <a href="#"><img src="images/remove_x.gif" alt="remove" /><br />Remove</a> </td>
-                    </tr>
-                    <tr>
-                        <td><img src="images/product/02.jpg" alt="image 2" /> </td>
-                        <td>Second Red Shoes</td>
-                        <td align="center"><input type="text" value="1" style="width: 20px; text-align: right" />  </td>
-                        <td align="right">$80  </td>
-                        <td align="right">$80 </td>
-                        <td align="center"> <a href="#"><img src="images/remove_x.gif" alt="remove" /><br />Remove</a>  </td>
-                    </tr>
-                    <tr>
-                        <td><img src="images/product/03.jpg" alt="image 3" /> </td>
-                        <td>Hendrerit justo</td>
-                        <td align="center"><input type="text" value="1" style="width: 20px; text-align: right" />  </td>
-                        <td align="right">$60  </td>
-                        <td align="right">$60 </td>
-                        <td align="center"> <a href="#"><img src="images/remove_x.gif" alt="remove" /><br />Remove</a>  </td>
-                    </tr>
+
+                    <c:set var="total" value="${0}"/>
+                    <c:forEach items="${sessionScope.goods}" var="value">
+                        <tr>
+                            <td><img src="/images/no_photo.jpg" alt="image 1" /></td>
+                            <td>${value.title}</td>
+                            <%--<td align="center"><input id="amount" name="amount" type="text" value="${goods.get(value)}" style="width: 20px; text-align: right" /> </td>--%>
+                            <td align="right">${value.price} </td>
+                            <%--<td align="right">${goods.get(value)*value.price}</td>--%>
+                            <td align="center"> <a href="/basket/remove?goodsID=${value.id}"><img src="/images/remove_x.gif" alt="remove" /><br />Remove</a> </td>
+                        </tr>
+                        <c:set var="total" value="${total + value.price}" />
+                    </c:forEach>
+
                     <tr>
                         <td colspan="3" align="right"  height="30px">Have you modified your basket? Please click here to <a href="shoppingcart.html"><strong>Update</strong></a>&nbsp;&nbsp;</td>
                         <td align="right" style="background:#ddd; font-weight:bold"> Total </td>
-                        <td align="right" style="background:#ddd; font-weight:bold">$240 </td>
+                        <td align="right" style="background:#ddd; font-weight:bold">${total} </td>
                         <td style="background:#ddd; font-weight:bold"> </td>
                     </tr>
                 </table>
                 <div style="float:right; width: 215px; margin-top: 20px;">
 
-                    <p><a href="checkout.html">Proceed to checkout</a></p>
-                    <p><a href="javascript:history.back()">Continue shopping</a></p>
+                    <p><a href="${PagesPaths.ParentRoot}purchase">Proceed to checkout</a></p>
+                    <p><a href="${PagesPaths.HOME_PATH}">Continue shopping</a></p>
 
                 </div>
             </div>
             <div class="cleaner"></div>
-        </div> <!-- END of templatemo_main -->
+        </div>
 
         <div id="templatemo_footer">
-            <p><a href="#">Home</a> | <a href="#">Products</a> | <a href="#">About</a> | <a href="#">FAQs</a> | <a href="#">Checkout</a> | <a href="#">Contact Us</a>
+            <p><a href="${PagesPaths.HOME_PATH}">Home</a> | <a href="#">Products</a> | <a href="#">About</a> | <a href="#">FAQs</a> | <a href="#">Checkout</a> | <a href="#">Contact Us</a>
             </p>
 
-            Copyright © 2072 <a href="#">Your Company Name</a> <!-- Credit: www.templatemo.com -->
+            Copyright © 2017 <a href="#">Andrew Ivanyuk</a>
 
-        </div> <!-- END of templatemo_footer -->
+        </div>
 
-    </div> <!-- END of templatemo_wrapper -->
-</div> <!-- END of templatemo_body_wrapper -->
+    </div>
+</div>
 
 </body>
 </html>

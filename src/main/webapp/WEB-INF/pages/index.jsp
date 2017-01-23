@@ -3,6 +3,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ page import="online.shop.utils.constants.PagesPaths" %>
 <html>
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Online shop</title>
@@ -41,21 +42,15 @@
     <div id="templatemo_menubar">
       <div id="top_nav" class="ddsmoothmenu">
         <ul>
-          <li><a href="/" class="selected">Home</a></li>
+          <li><a href="${PagesPaths.ROOT}" class="selected">Home</a></li>
           <li><a href="products.html">Products</a>
             <ul>
-              <li><a href="#submenu1">Sub menu 1</a></li>
-              <li><a href="#submenu2">Sub menu 2</a></li>
-              <li><a href="#submenu3">Sub menu 3</a></li>
-              <li><a href="#submenu4">Sub menu 4</a></li>
-              <li><a href="#submenu5">Sub menu 5</a></li>
+
             </ul>
           </li>
           <li><a href="about.html">About</a>
             <ul>
-              <li><a href="#submenu1">Sub menu 1</a></li>
-              <li><a href="#submenu2">Sub menu 2</a></li>
-              <li><a href="#submenu3">Sub menu 3</a></li>
+
             </ul>
           </li>
           <li><a href="faqs.html">FAQs</a></li>
@@ -80,41 +75,13 @@
             <ul class="sidebar_list">
 
               <c:forEach items="${categories}" var="value">
-                <li><a href="#">${value.title}</a></li>
+                <li><a href="/subcategory?categoryID=${value.id}">${value.title}</a></li>
               </c:forEach>
 
             </ul>
           </div>
         </div>
-        <div class="sidebar_box"><span class="bottom"></span>
-          <h3>Bestsellers </h3>
-          <div class="content">
-            <div class="bs_box">
-              <a href="#"><img src="/images/templatemo_image_01.jpg" alt="image" /></a>
-              <h4><a href="#">Donec nunc nisl</a></h4>
-              <p class="price">$10</p>
-              <div class="cleaner"></div>
-            </div>
-            <div class="bs_box">
-              <a href="#"><img src="/images/templatemo_image_01.jpg" alt="image" /></a>
-              <h4><a href="#">Lorem ipsum dolor sit</a></h4>
-              <p class="price">$12</p>
-              <div class="cleaner"></div>
-            </div>
-            <div class="bs_box">
-              <a href="#"><img src="/images/templatemo_image_01.jpg" alt="image" /></a>
-              <h4><a href="#">Phasellus ut dui</a></h4>
-              <p class="price">$20</p>
-              <div class="cleaner"></div>
-            </div>
-            <div class="bs_box">
-              <a href="#"><img src="/images/templatemo_image_01.jpg" alt="image" /></a>
-              <h4><a href="#">Vestibulum ante</a></h4>
-              <p class="price">$8</p>
-              <div class="cleaner"></div>
-            </div>
-          </div>
-        </div>
+
       </div>
       <div id="content" class="float_r">
         <div id="slider-wrapper">
@@ -128,8 +95,8 @@
             <strong>This</strong> is an example of a <em>HTML</em> caption with <a href="#">a link</a>.
           </div>
         </div>
-        <script type="text/javascript" src="js/jquery-1.4.3.min.js"></script>
-        <script type="text/javascript" src="js/jquery.nivo.slider.pack.js"></script>
+        <script type="text/javascript" src="/js/jquery-1.4.3.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.nivo.slider.pack.js"></script>
         <script type="text/javascript">
           $(window).load(function() {
             $('#slider').nivoSlider();

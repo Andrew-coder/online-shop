@@ -64,43 +64,7 @@ public class FakeDaoFactory extends DaoFactory {
 
     @Override
     public SubcategoryDao getSubcategoryDao(ConnectionWrapper wrapper) {
-        return new SubcategoryDao() {
-            //List<Subcategory> db = Arrays.asList(1,"first subcategory");
-            @Override
-            public Optional<Subcategory> findSubcategoryByTitle(String title) {
-                return null;
-            }
-
-            @Override
-            public List<Subcategory> findSubcategoriesByCategory(Category category) {
-                return null;
-            }
-
-            @Override
-            public Optional<Subcategory> findById(int id) {
-                return null;
-            }
-
-            @Override
-            public List<Subcategory> findAll() {
-                return null;
-            }
-
-            @Override
-            public void create(Subcategory subcategory) {
-
-            }
-
-            @Override
-            public void update(Subcategory subcategory) {
-
-            }
-
-            @Override
-            public void delete(int id) {
-
-            }
-        };
+        return null;
     }
 
     @Override

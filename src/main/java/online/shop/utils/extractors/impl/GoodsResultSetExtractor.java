@@ -15,16 +15,18 @@ public class GoodsResultSetExtractor implements ResultSetExtractor<Goods> {
     @Override
     public Goods extract(ResultSet set) throws SQLException{
         Blob blob = set.getBlob("image");
-        Goods goods = new Goods.Builder()
+        Goods.Builder builder = new Goods.Builder()
+                .setId(set.getInt("goodsID"))
                 .setTitle(set.getString("title"))
                 .setPrice(set.getDouble("price"))
                 .setDescription(set.getString("description"))
                 .setEnds(set.getBoolean("ends"))
-                .setImage(blob.getBytes(1, (int)blob.length()))
-                .setSubcategory(new Subcategory(set.getInt("subcategoryID")))
-                .build();
+                .setSubcategory(new Subcategory(set.getInt("subcategoryID")));
+        if(blob!=null){
+            builder.setImage(blob.getBytes(1, (int)blob.length()));
+        }
         SubcategoryResultSetExtractor subcategoryExtractor = new SubcategoryResultSetExtractor();
-        goods.setSubcategory(subcategoryExtractor.extract(set));
-        return goods;
+        builder.setSubcategory(subcategoryExtractor.extract(set));
+        return builder.build();
     }
 }

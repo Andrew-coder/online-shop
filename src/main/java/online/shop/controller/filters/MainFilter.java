@@ -1,4 +1,4 @@
-package online.shop.controller;
+package online.shop.controller.filters;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterConfig;

@@ -7,14 +7,19 @@
         <p>
             <c:choose>
                 <c:when  test="${sessionScope.user!=null}">
-                    <a href="#">My Account</a> | <a href="#">My Cart</a> | <a href="#">Checkout</a> | ${user.name} ${' '} ${user.surname} | <a href="#">Log Out</a></p>
+                    <a href="#">My Account</a> | <a href="#">My Cart</a> | <a href="#">Checkout</a> | ${user.name} ${' '} ${user.surname} | <a href="./logout">Log Out</a></p>
                 </c:when>
                 <c:otherwise>
                     <a href="#">My Account</a> | <a href="#">My Cart</a> | <a href="#">Checkout</a> | <a href="./login">Log In</a></p>
                 </c:otherwise>
             </c:choose>
         <p>
-            Shopping Cart: <strong>3 items</strong> ( <a href="./basket">Show Basket</a> )
+            <c:if test="${sessionScope.goods!=null}">
+                Shopping Cart: <strong>${sessionScope.goods.size()} items</strong> ( <a href="./basket">Show Basket</a> )
+            </c:if>
+            <c:if test="${sessionScope.goods==null}">
+                Shopping Cart: <strong>0 items</strong> ( <a href="./basket">Show Basket</a> )
+            </c:if>
         </p>
     </div>
     <div class="cleaner"></div>

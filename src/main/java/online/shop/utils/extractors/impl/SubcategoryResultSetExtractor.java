@@ -3,6 +3,7 @@ package online.shop.utils.extractors.impl;
 import online.shop.utils.extractors.ResultSetExtractor;
 import online.shop.model.entity.Subcategory;
 
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

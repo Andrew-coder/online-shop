@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface GoodsDao extends CommonDao<Goods> {
     List<Goods> findGoodsByPriceRange(double minPrice, double maxPrice);
-    List<Goods> findGoodsBySubcategory(Subcategory subcategory);
+    List<Goods> findGoodsBySubcategoryId(int subcategoryId);
 }

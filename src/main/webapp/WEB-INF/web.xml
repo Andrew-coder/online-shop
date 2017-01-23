@@ -9,11 +9,20 @@
     </welcome-file-list>-->
     <filter>
         <filter-name>filter</filter-name>
-        <filter-class>online.shop.controller.MainFilter</filter-class>
+        <filter-class>online.shop.controller.filters.MainFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>filter</filter-name>
         <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>authFiler</filter-name>
+        <filter-class>online.shop.controller.filters.AdminAuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>authFiler</filter-name>
+        <url-pattern>/online-shop/admin/*</url-pattern>
     </filter-mapping>
 
     <servlet>

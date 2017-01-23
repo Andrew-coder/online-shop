@@ -1,5 +1,7 @@
 package online.shop.model.entity;
 
+import java.util.Base64;
+
 /**
  * Created by andri on 1/1/2017.
  */
@@ -85,12 +87,22 @@ public class Goods extends BaseEntity{
         return image;
     }
 
+    public String getImageInBase64(){
+        byte[] decoded = Base64.getEncoder().encode(image);
+        return new String(decoded);
+    }
+
     public void setImage(byte[] image) {
         this.image = image;
     }
 
     public static class Builder{
         Goods instance = new Goods();
+
+        public Builder setId(int id){
+            instance.setId(id);
+            return this;
+        }
 
         public Builder setTitle(String title){
             instance.title = title;

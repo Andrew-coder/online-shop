@@ -16,7 +16,7 @@ import java.util.Optional;
  * Created by andri on 1/5/2017.
  */
 public class SubcategoryDaoImpl implements SubcategoryDao{
-    private static final String GET_ALL_SUBCATEGORIES = "select subcategoryID, subcategoryTitle, categoryID, categoryTitle from(" +
+    private static final String GET_ALL_SUBCATEGORIES_IN_DETAILS = "select subcategoryID, subcategoryTitle, categoryID, categoryTitle from(" +
             "subcategory_list join categories using(categoryID)) ";
     private static final String FILTER_BY_CATEGORY = "where categoryID=?;";
     private static final String FILTER_BY_ID = "where subcategoryID=?;";
@@ -34,7 +34,7 @@ public class SubcategoryDaoImpl implements SubcategoryDao{
     @Override
     public Optional<Subcategory> findById(int id) {
         Optional<Subcategory> result = Optional.empty();
-        try(PreparedStatement statement = connection.prepareStatement(GET_ALL_SUBCATEGORIES+ FILTER_BY_ID)){
+        try(PreparedStatement statement = connection.prepareStatement(GET_ALL_SUBCATEGORIES_IN_DETAILS+ FILTER_BY_ID)){
             statement.setInt(1,id);
             ResultSet set = statement.executeQuery();
             if(set.next()){
@@ -51,7 +51,7 @@ public class SubcategoryDaoImpl implements SubcategoryDao{
     @Override
     public List<Subcategory> findAll() {
         try(Statement statement = connection.createStatement();
-            ResultSet set = statement.executeQuery(GET_ALL_SUBCATEGORIES)){
+            ResultSet set = statement.executeQuery(GET_ALL_SUBCATEGORIES_IN_DETAILS)){
             List<Subcategory> subcategories = new ArrayList<>();
             while(set.next()){
                 subcategories.add(extractor.extract(set));
@@ -61,6 +61,7 @@ public class SubcategoryDaoImpl implements SubcategoryDao{
         catch(SQLException ex){
             throw new DaoException("dao exception occured when retrieving all subcategories", ex);
         }
+
     }
 
     @Override
@@ -79,7 +80,7 @@ public class SubcategoryDaoImpl implements SubcategoryDao{
     @Override
     public Optional<Subcategory> findSubcategoryByTitle(String title) {
         Optional<Subcategory> result = Optional.empty();
-        try(PreparedStatement statement = connection.prepareStatement(GET_ALL_SUBCATEGORIES+ FILTER_BY_TITLE)){
+        try(PreparedStatement statement = connection.prepareStatement(GET_ALL_SUBCATEGORIES_IN_DETAILS+ FILTER_BY_TITLE)){
             statement.setString(1,title);
             ResultSet set = statement.executeQuery();
             if(set.next()){
@@ -110,9 +111,9 @@ public class SubcategoryDaoImpl implements SubcategoryDao{
     }
 
     @Override
-    public List<Subcategory> findSubcategoriesByCategory(Category category) {
-        try(PreparedStatement statement = connection.prepareStatement(GET_ALL_SUBCATEGORIES+ FILTER_BY_CATEGORY)){
-            statement.setInt(1, category.getId());
+    public List<Subcategory> findSubcategoriesByCategoryId(int categoryId) {
+        try(PreparedStatement statement = connection.prepareStatement(GET_ALL_SUBCATEGORIES_IN_DETAILS+ FILTER_BY_CATEGORY)){
+            statement.setInt(1, categoryId);
             List<Subcategory> subcategories = new ArrayList<>();
             ResultSet set = statement.executeQuery();
             while(set.next()){

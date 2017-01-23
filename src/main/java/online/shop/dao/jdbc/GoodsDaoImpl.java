@@ -16,8 +16,9 @@ import java.util.Optional;
  * Created by andri on 1/5/2017.
  */
 public class GoodsDaoImpl implements GoodsDao {
-    private static final String GET_ALL_GOODS = "select goodsID, title, price, ends, description, image, subcategoryID, subcategoryTitle from(" +
-            "goods join subcategory_list using(subcategoryID)) ";
+    private static final String GET_ALL_GOODS = "select goodsID, title, price, ends, description, image, subcategoryID, subcategoryTitle, categoryID, categoryTitle from(" +
+            "goods join (subcategory_list join categories using(categoryID)" +
+            ")using(subcategoryID)) ";
     private static final String FILTER_BY_ID = " where goodsID=?;";
     private static final String FILTER_BY_SUBCATEGORY = " where subcategoryID=?;";
     private static final String FILTER_BY_PRICE_RANGE = " where price >=? and price <=?;";
@@ -112,9 +113,9 @@ public class GoodsDaoImpl implements GoodsDao {
     }
 
     @Override
-    public List<Goods> findGoodsBySubcategory(Subcategory subcategory) {
+    public List<Goods> findGoodsBySubcategoryId(int subcategoryId) {
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_GOODS+ FILTER_BY_SUBCATEGORY)){
-            statement.setInt(1,subcategory.getId());
+            statement.setInt(1,subcategoryId);
             ResultSet set = statement.executeQuery();
             List<Goods> goods = new ArrayList<>();
             while(set.next()){

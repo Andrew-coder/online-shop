@@ -3,6 +3,7 @@ package online.shop.controller.commands;
 import online.shop.model.entity.Category;
 import online.shop.services.CategoryService;
 import online.shop.services.impl.CategoryServiceImpl;
+import online.shop.utils.constants.Attributes;
 import online.shop.utils.constants.PagesPaths;
 
 import javax.servlet.ServletException;
@@ -23,7 +24,7 @@ public class HomeCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Category> categories = categoryService.findAll();
-        request.setAttribute("categories", categories);
+        request.setAttribute(Attributes.CATEGORIES, categories);
         return HOME_PAGE;
     }
 }

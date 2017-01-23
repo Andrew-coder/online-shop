@@ -11,5 +11,5 @@ import java.util.Optional;
  */
 public interface SubcategoryDao extends CommonDao<Subcategory>{
     Optional<Subcategory> findSubcategoryByTitle(String title);
-    List<Subcategory> findSubcategoriesByCategory(Category category);
+    List<Subcategory> findSubcategoriesByCategoryId(int categoryId);
 }
