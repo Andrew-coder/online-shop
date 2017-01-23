@@ -1,6 +1,8 @@
 package online.shop.controller;
 
 import online.shop.controller.commands.*;
+import online.shop.controller.commands.admin.AdminHomeCommand;
+import online.shop.controller.commands.user.PurchaseCommand;
 import online.shop.controller.commands.user.register.RegisterCommand;
 import online.shop.controller.commands.user.register.RegisterSubmitCommand;
 import online.shop.controller.commands.login.LoginCommand;
@@ -31,21 +33,25 @@ public class MainController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        String path = processRequest(request, response);
+        if(!path.equals(PagesPaths.REDIRECT)) {
+            request.getRequestDispatcher(path).forward(request, response);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        String path = processRequest(request, response);
+        if(!path.equals(PagesPaths.FORWARD))
+            response.sendRedirect(path);
     }
 
-    public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    public String processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String method = request.getMethod().toUpperCase();
         String path = request.getRequestURI();
         String key = method+":"+path;
         Command command = commands.getOrDefault(key, (req , resp)-> PagesPaths.HOME_PATH );
-        String viewPage = command.execute(request, response);
-        request.getRequestDispatcher(viewPage).forward(request, response);
+        return command.execute(request, response);
     }
 
     @Override
@@ -61,5 +67,7 @@ public class MainController extends HttpServlet {
         commands.put("POST:/online-shop/register", new RegisterSubmitCommand());
         commands.put("GET:/online-shop/subcategory", new SubcategoryOverviewCommand());
         commands.put("GET:/online-shop/goods", new GoodsOverviewCommand());
+        commands.put("GET:/online-shop/admin", new AdminHomeCommand());
+        commands.put("GET:/online-shop/purchase", new PurchaseCommand());
     }
 }

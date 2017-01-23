@@ -96,6 +96,32 @@ public class Goods extends BaseEntity{
         this.image = image;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Goods)) return false;
+
+        Goods goods = (Goods) o;
+
+        if (Double.compare(goods.getPrice(), getPrice()) != 0) return false;
+        if (isEnds() != goods.isEnds()) return false;
+        if (!getTitle().equals(goods.getTitle())) return false;
+        return getDescription().equals(goods.getDescription());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = getTitle().hashCode();
+        temp = Double.doubleToLongBits(getPrice());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + getDescription().hashCode();
+        result = 31 * result + (isEnds() ? 1 : 0);
+        return result;
+    }
+
     public static class Builder{
         Goods instance = new Goods();
 

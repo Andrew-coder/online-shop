@@ -28,19 +28,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findById(int id) {
-        return null;
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
+            UserDao userDao = daoFactory.getUserDao(wrapper);
+            return userDao.findById(id);
+        }
     }
 
     @Override
     public Optional<User> findUserByEmail(String email) {
-        return null;
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
+            UserDao userDao = daoFactory.getUserDao(wrapper);
+            return userDao.findUserByEmail(email);
+        }
     }
 
     @Override
     public Optional<User> login(String email, String password) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection() ){
-            UserDao dao = daoFactory.getUserDao(wrapper);
-            return dao.findUserByEmail(email)
+            UserDao userDao = daoFactory.getUserDao(wrapper);
+            return userDao.findUserByEmail(email)
                     .filter( person-> password.equals(person.getPassword()));
         }
     }
@@ -52,7 +58,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void create(User user) {
-
+        try(ConnectionWrapper wrapper = daoFactory.getConnection() ){
+            UserDao userDao = daoFactory.getUserDao(wrapper);
+            userDao.create(user);
+        }
     }
 
     @Override

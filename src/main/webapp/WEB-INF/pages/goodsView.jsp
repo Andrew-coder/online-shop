@@ -38,33 +38,7 @@
 
         <jsp:include page="/WEB-INF/pages/header.jsp" />
 
-        <div id="templatemo_menubar">
-            <div id="top_nav" class="ddsmoothmenu">
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="products.html" class="selected">Products</a>
-                        <ul>
-
-                        </ul>
-                    </li>
-                    <li><a href="about.html">About</a>
-                        <ul>
-
-                        </ul>
-                    </li>
-                    <li><a href="faqs.html">FAQs</a></li>
-                    <li><a href="checkout.html">Checkout</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                </ul>
-                <br style="clear: left" />
-            </div> <!-- end of ddsmoothmenu -->
-            <div id="templatemo_search">
-                <form action="#" method="get">
-                    <input type="text" value=" " name="keyword" id="keyword" title="keyword" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
-                    <input type="submit" name="Search" value=" " alt="Search" id="searchbutton" title="Search" class="sub_btn"  />
-                </form>
-            </div>
-        </div>
+        <jsp:include page="/WEB-INF/pages/menu.jsp"/>
 
         <div id="templatemo_main">
             <div id="sidebar" class="float_l">
@@ -107,13 +81,7 @@
             <div class="cleaner"></div>
         </div>
 
-        <div id="templatemo_footer">
-            <p><a href="${PagesPaths.HOME_PATH}">Home</a> | <a href="#">Products</a> | <a href="#">About</a> | <a href="#">FAQs</a> | <a href="#">Checkout</a> | <a href="#">Contact Us</a>
-            </p>
-
-
-            Copyright © 2017 <a href="#">Andrew Ivanyuk</a>
-        </div>
+        <jsp:include page="/WEB-INF/pages/footer.jsp"/>
 
     </div>
 </div>

@@ -25,7 +25,7 @@ public class LoginSubmitCommand implements Command {
     UserService userService = UserServiceImpl.getInstance();
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String pageToGo = PagesPaths.HOME_PAGE;
+        String pageToGo = PagesPaths.SLASH;
         String email = request.getParameter(PARAM_EMAIL);
         String password = request.getParameter(PARAM_PASSWORD);
         if( email != null && password != null ){

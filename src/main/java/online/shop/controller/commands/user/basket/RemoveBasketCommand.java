@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -23,16 +24,17 @@ public class RemoveBasketCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Goods> goodsItems = (List<Goods>) request.getSession().getAttribute("goods");
+        Map<Goods, Integer> goodsItems = (Map<Goods,Integer>) request.getSession().getAttribute("goods");
         int id = Integer.parseInt(request.getParameter(Attributes.GOODS_ID));
         if(goodsItems!=null && checkGoodsId(id)) {
-            goodsItems = goodsItems
+            goodsItems = goodsItems.entrySet()
                     .stream()
-                    .filter(goods -> goods.getId()!=id)
-                    .collect(Collectors.toList());
+                    .filter(goods -> goods.getKey().getId()!=id)
+                    .collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
         }
         request.getSession().setAttribute(Attributes.GOODS, goodsItems);
-        return PagesPaths.ROOT;
+        response.sendRedirect(PagesPaths.BASKET);
+        return PagesPaths.REDIRECT;
     }
 
     private boolean checkGoodsId(int id){

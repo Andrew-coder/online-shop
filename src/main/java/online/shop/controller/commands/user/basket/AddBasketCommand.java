@@ -21,15 +21,17 @@ public class AddBasketCommand implements Command {
     private GoodsService goodsService = GoodsServiceImpl.getInstance();
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       List<Goods> goodsItems = (List<Goods>) request.getSession().getAttribute("goods");
+        Map<Goods,Integer> goodsItems = (Map<Goods, Integer>) request.getSession().getAttribute("goods");
         if(goodsItems==null){
-            goodsItems = new ArrayList<>();
+            goodsItems = new HashMap<>();
         }
         int id = Integer.parseInt(request.getParameter(Attributes.GOODS_ID));
         Optional<Goods> goods = goodsService.findById(id);
         if(goods.isPresent()){
             Goods g = goods.get();
-            goodsItems.add(g);
+            if(!goodsItems.keySet().contains(g)) {
+                goodsItems.put(g, 1);
+            }
         }
         request.getSession().setAttribute(Attributes.GOODS, goodsItems);
         return "../basket";

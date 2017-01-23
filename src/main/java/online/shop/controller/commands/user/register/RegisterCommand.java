@@ -1,6 +1,7 @@
 package online.shop.controller.commands.user.register;
 
 import online.shop.controller.commands.Command;
+import online.shop.utils.constants.PagesPaths;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,6 @@ import java.io.IOException;
 public class RegisterCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        return null;
+        return PagesPaths.REGISTER_PAGE;
     }
 }

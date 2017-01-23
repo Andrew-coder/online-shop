@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by andri on 1/22/2017.
  */
-public class AdminAuthFilter implements Filter {
+public class AuthFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -22,14 +22,15 @@ public class AdminAuthFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String requestUri = ((HttpServletRequest) request).getRequestURI();
+        /*String requestUri = ((HttpServletRequest) request).getRequestURI();
 
         if (isRequestAuthorized(request)) {
             chain.doFilter(request, response);
         }
         else {
             ((HttpServletResponse) response).sendRedirect(PagesPaths.LOGIN);
-        }
+        }*/
+        chain.doFilter(request, response);
     }
 
     @Override
