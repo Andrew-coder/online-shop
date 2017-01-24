@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by andri on 1/23/2017.
  */
-public class UpdateCommand implements Command {
+public class UpdateBasketCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<Goods, Integer> goodsItems = (Map<Goods,Integer>) request.getSession().getAttribute("goods");

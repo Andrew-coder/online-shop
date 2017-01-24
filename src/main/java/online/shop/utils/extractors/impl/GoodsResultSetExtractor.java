@@ -14,7 +14,6 @@ import java.sql.SQLException;
 public class GoodsResultSetExtractor implements ResultSetExtractor<Goods> {
     @Override
     public Goods extract(ResultSet set) throws SQLException{
-        Blob blob = set.getBlob("image");
         Goods.Builder builder = new Goods.Builder()
                 .setId(set.getInt("goodsID"))
                 .setTitle(set.getString("title"))
@@ -22,6 +21,7 @@ public class GoodsResultSetExtractor implements ResultSetExtractor<Goods> {
                 .setDescription(set.getString("description"))
                 .setEnds(set.getBoolean("ends"))
                 .setSubcategory(new Subcategory(set.getInt("subcategoryID")));
+        Blob blob = set.getBlob("image");
         if(blob!=null){
             builder.setImage(blob.getBytes(1, (int)blob.length()));
         }

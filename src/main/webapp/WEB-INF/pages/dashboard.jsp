@@ -10,12 +10,11 @@
         <tr>
             <td><div align="center"><a href="#">Categories</a></div></td>
             <td><div align="center"><a href="#">Subcategories</a></div></td>
-            <td><div align="center"><a href="#">Goods</a></div></td>
+            <td><div align="center"><a href="/admin/goods">Goods</a></div></td>
         </tr>
         <tr>
             <td><div align="center"><a href="#">Orders</a></div></td>
-            <td><div align="center"><a href="#">Users</a></div></td>
-            <td><div align="center"><a href="#">Blacklist</a></div></td>
+            <td><div align="center"><a href="/admin/users">Users</a></div></td>
         </tr>
     </table>
 </body>

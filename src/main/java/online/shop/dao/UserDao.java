@@ -11,4 +11,8 @@ import java.util.Optional;
 public interface UserDao extends CommonDao<User> {
     Optional<User> findUserByEmail(String email);
     List<User> findWorkersByRole(String role);
+    List<User> findAllCustomes();
+    List<User> findAllUserInBlacklist();
+    void addUserToBlacklist(int id);
+    void deleteUserFromBlacklist(int id);
 }

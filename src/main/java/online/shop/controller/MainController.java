@@ -2,8 +2,12 @@ package online.shop.controller;
 
 import online.shop.controller.commands.*;
 import online.shop.controller.commands.admin.AdminHomeCommand;
+import online.shop.controller.commands.admin.GoodsAdministrationCommand;
+import online.shop.controller.commands.admin.UsersAdministrationCommand;
+import online.shop.controller.commands.admin.blacklist.AddBlacklistCommand;
+import online.shop.controller.commands.admin.blacklist.RemoveBlacklistCommand;
 import online.shop.controller.commands.user.PurchaseCommand;
-import online.shop.controller.commands.user.basket.UpdateCommand;
+import online.shop.controller.commands.user.basket.UpdateBasketCommand;
 import online.shop.controller.commands.user.register.RegisterCommand;
 import online.shop.controller.commands.user.register.RegisterSubmitCommand;
 import online.shop.controller.commands.login.LoginCommand;
@@ -64,12 +68,16 @@ public class MainController extends HttpServlet {
         commands.put("GET:/online-shop/basket", new ShowBasketCommand());
         commands.put("GET:/online-shop/basket/add", new AddBasketCommand());
         commands.put("GET:/online-shop/basket/remove", new RemoveBasketCommand());
-        commands.put("POST:/online-shop/update", new UpdateCommand());
+        commands.put("POST:/online-shop/update", new UpdateBasketCommand());
         commands.put("GET:/online-shop/register", new RegisterCommand());
         commands.put("POST:/online-shop/register", new RegisterSubmitCommand());
         commands.put("GET:/online-shop/subcategory", new SubcategoryOverviewCommand());
         commands.put("GET:/online-shop/goods", new GoodsOverviewCommand());
-        commands.put("GET:/online-shop/admin", new AdminHomeCommand());
         commands.put("GET:/online-shop/purchase", new PurchaseCommand());
+        commands.put("GET:/online-shop/admin", new AdminHomeCommand());
+        commands.put("GET:/online-shop/admin/goods", new GoodsAdministrationCommand());
+        commands.put("GET:/online-shop/admin/users", new UsersAdministrationCommand());
+        commands.put("GET:/online-shop/admin/users/add", new AddBlacklistCommand());
+        commands.put("GET:/online-shop/admin/users/remove", new RemoveBlacklistCommand());
     }
 }

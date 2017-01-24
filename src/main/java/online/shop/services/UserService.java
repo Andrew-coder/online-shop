@@ -13,6 +13,10 @@ public interface UserService {
     Optional<User> findUserByEmail(String email);
     Optional<User> login (String email , String password);
     List<User> findAll();
+    List<User> findAllCustomers();
+    void addUserToBlacklist(int id);
+    void removeUserFromBlackList(int id);
+    boolean isUserInBlacklist(int id);
     void create(User user);
     void update(User user);
     void delete(int id);

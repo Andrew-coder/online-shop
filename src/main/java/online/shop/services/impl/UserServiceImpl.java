@@ -8,6 +8,7 @@ import online.shop.services.UserService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by andri on 1/21/2017.
@@ -53,7 +54,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        return null;
+        try(ConnectionWrapper wrapper = daoFactory.getConnection() ){
+            UserDao userDao = daoFactory.getUserDao(wrapper);
+            return userDao.findAll();
+        }
+    }
+
+    @Override
+    public List<User> findAllCustomers() {
+        try(ConnectionWrapper wrapper = daoFactory.getConnection() ){
+            UserDao userDao = daoFactory.getUserDao(wrapper);
+            return userDao.findAllCustomes();
+        }
     }
 
     @Override
@@ -72,5 +84,35 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(int id) {
 
+    }
+
+    @Override
+    public void addUserToBlacklist(int id) {
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
+            UserDao userDao = daoFactory.getUserDao(wrapper);
+            if(!isUserInBlacklist(id)){
+                userDao.addUserToBlacklist(id);
+            }
+        }
+    }
+
+    @Override
+    public boolean isUserInBlacklist(int id) {
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()) {
+            UserDao userDao = daoFactory.getUserDao(wrapper);
+            boolean a = userDao.findAllUserInBlacklist()
+                    .stream()
+                    .mapToInt(User::getId)
+                    .anyMatch(userID -> userID==id);
+            return a;
+        }
+    }
+
+    @Override
+    public void removeUserFromBlackList(int id) {
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
+            UserDao userDao = daoFactory.getUserDao(wrapper);
+            userDao.deleteUserFromBlacklist(id);
+        }
     }
 }

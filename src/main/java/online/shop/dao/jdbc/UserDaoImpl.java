@@ -18,12 +18,17 @@ import java.util.Optional;
  */
 public class UserDaoImpl implements UserDao{
     private static final String GET_ALL_USERS = "select userID, name, surname, email, password, birthDate, worker, r.roleName as role from users " +
-                                                "left join roles r on users.role=r.roleID";
+                                                "left join roles r on users.role=r.roleID ";
+    private static final String GET_ALL_USERS_IN_BLACKLIST = "select userID, name, surname, email, password, birthDate, worker, role from (" +
+            "blacklist join (users left join roles r on users.role=r.roleID)using(userID))";
+    private static final String FILTER_BY_ONLY_CUSTOMERS = "where worker=false;";
     private static final String FILTER_BY_ID = " where userID = ?;";
     private static final String FILTER_BY_EMAIL = " where email=?;";
     private static final String FILTER_BY_ROLE = " inner join roles on users.role=roles.roleID where roles.roleName=?;";
     private static final String DELETE_USER = "delete from users ";
     private static final String CREATE_USER = "insert into users (`name`, `surname`, `email`, `password`, `birthDate`) VALUES (?,?,?,?,?);";
+    private static final String INSERT_INTO_BLACKLIST = "insert into blacklist (`userID`) values (?);";
+    private static final String DELETE_FROM_BLACKLIST = "delete from blacklist where userID=?";
     private Connection connection;
     private UserResultSetExtractor extractor;
 
@@ -82,6 +87,21 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
+    public List<User> findAllCustomes() {
+        try(Statement statement = connection.createStatement();
+            ResultSet set = statement.executeQuery(GET_ALL_USERS+ FILTER_BY_ONLY_CUSTOMERS)) {
+            List<User> users = new ArrayList<>();
+            while(set.next()){
+                users.add(extractor.extract(set));
+            }
+            return users;
+        }
+        catch(SQLException ex){
+            throw new DaoException("dao exception occured when retrieving all customers", ex);
+        }
+    }
+
+    @Override
     public List<User> findWorkersByRole(String role) {
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS+ FILTER_BY_ROLE)){
             statement.setString(1,role);
@@ -127,6 +147,43 @@ public class UserDaoImpl implements UserDao{
         }
         catch (SQLException ex){
             throw new DaoException("Error occured when deleting user!", ex);
+        }
+    }
+
+    @Override
+    public List<User> findAllUserInBlacklist() {
+        try(Statement statement = connection.createStatement();
+            ResultSet set = statement.executeQuery(GET_ALL_USERS_IN_BLACKLIST)){
+            List<User> users = new ArrayList<>();
+            while(set.next()){
+                users.add(extractor.extract(set));
+            }
+            return users;
+        }
+        catch(SQLException ex){
+            throw new DaoException("dao exception occured when retrieving all users from blaclist", ex);
+        }
+    }
+
+    @Override
+    public void addUserToBlacklist(int id) {
+        try(PreparedStatement statement = connection.prepareStatement(INSERT_INTO_BLACKLIST)){
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        }
+        catch (SQLException ex){
+            throw new DaoException("Error occured when inserting user into blacklist!", ex);
+        }
+    }
+
+    @Override
+    public void deleteUserFromBlacklist(int id) {
+        try(PreparedStatement statement = connection.prepareStatement(DELETE_FROM_BLACKLIST)){
+            statement.setInt(1,id);
+            statement.executeUpdate();
+        }
+        catch (SQLException ex){
+            throw new DaoException("Error occured when deleting user from blacklist!", ex);
         }
     }
 }

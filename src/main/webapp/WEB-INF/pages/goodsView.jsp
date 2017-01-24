@@ -61,6 +61,7 @@
                                 <a href="basket/add?goodsID=${value.id}" class="addtocart"></a>
                                 <a href="/basket/goodsInfo?goodsID=${value.id}" class="detail"></a>
                             </div>
+                            <div class="cleaner"></div>
                         </c:when>
                         <c:otherwise>
                             <div class="product_box">
