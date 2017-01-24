@@ -2,6 +2,7 @@ package online.shop.dao.jdbc;
 
 import online.shop.dao.UserDao;
 import online.shop.dao.exception.DaoException;
+import online.shop.model.entity.RoleType;
 import online.shop.utils.extractors.impl.UserResultSetExtractor;
 
 import online.shop.model.entity.User;
@@ -17,7 +18,7 @@ import java.util.Optional;
  * Created by andri on 1/5/2017.
  */
 public class UserDaoImpl implements UserDao{
-    private static final String GET_ALL_USERS = "select userID, name, surname, email, password, birthDate, worker, r.roleName as role from users " +
+    private static final String GET_ALL_USERS = "select userID, name, surname, email, password, birthDate,  r.roleName as role from users " +
                                                 "left join roles r on users.role=r.roleID ";
     private static final String GET_ALL_USERS_IN_BLACKLIST = "select userID, name, surname, email, password, birthDate, worker, role from (" +
             "blacklist join (users left join roles r on users.role=r.roleID)using(userID))";
@@ -87,24 +88,9 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public List<User> findAllCustomes() {
-        try(Statement statement = connection.createStatement();
-            ResultSet set = statement.executeQuery(GET_ALL_USERS+ FILTER_BY_ONLY_CUSTOMERS)) {
-            List<User> users = new ArrayList<>();
-            while(set.next()){
-                users.add(extractor.extract(set));
-            }
-            return users;
-        }
-        catch(SQLException ex){
-            throw new DaoException("dao exception occured when retrieving all customers", ex);
-        }
-    }
-
-    @Override
-    public List<User> findWorkersByRole(String role) {
+    public List<User> findUsersByRole(RoleType roleType) {
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS+ FILTER_BY_ROLE)){
-            statement.setString(1,role);
+            statement.setString(1,roleType.getRoleName());
             List<User> users = new ArrayList<>();
             ResultSet set = statement.executeQuery();
             while(set.next()){

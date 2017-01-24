@@ -3,6 +3,7 @@ package online.shop.services.impl;
 import online.shop.dao.ConnectionWrapper;
 import online.shop.dao.DaoFactory;
 import online.shop.dao.UserDao;
+import online.shop.model.entity.RoleType;
 import online.shop.model.entity.User;
 import online.shop.services.UserService;
 
@@ -61,10 +62,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllCustomers() {
+    public List<User> findUsersByRole(RoleType roleType) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection() ){
             UserDao userDao = daoFactory.getUserDao(wrapper);
-            return userDao.findAllCustomes();
+            return userDao.findUsersByRole(roleType);
         }
     }
 

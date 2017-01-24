@@ -1,6 +1,7 @@
 package online.shop.controller.commands.login;
 
 import online.shop.controller.commands.Command;
+import online.shop.model.entity.RoleType;
 import online.shop.model.entity.User;
 import online.shop.services.UserService;
 import online.shop.services.impl.UserServiceImpl;
@@ -34,7 +35,7 @@ public class LoginSubmitCommand implements Command {
             if( user.isPresent() ){
                 User person = user.get();
                 request.getSession().setAttribute(Attributes.USER, person);
-                if(person.isWorker()) {
+                if(person.getRole()!= RoleType.USER) {
                     pageToGo = PagesPaths.ADMIN;
                 }
             }

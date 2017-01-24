@@ -10,7 +10,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-public class MainFilter implements Filter {
+public class RedirectFilter implements Filter {
     private ServletContext context;
 
     @Override

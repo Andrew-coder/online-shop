@@ -1,9 +1,7 @@
 package online.shop.controller;
 
 import online.shop.controller.commands.*;
-import online.shop.controller.commands.admin.AdminHomeCommand;
-import online.shop.controller.commands.admin.GoodsAdministrationCommand;
-import online.shop.controller.commands.admin.UsersAdministrationCommand;
+import online.shop.controller.commands.admin.*;
 import online.shop.controller.commands.admin.blacklist.AddBlacklistCommand;
 import online.shop.controller.commands.admin.blacklist.RemoveBlacklistCommand;
 import online.shop.controller.commands.user.PurchaseCommand;
@@ -61,7 +59,7 @@ public class MainController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        commands.put("GET:/online-shop/", new HomeCommand());
+        commands.put("GET:/online-shop", new HomeCommand());
         commands.put("GET:/online-shop/login", new LoginCommand());
         commands.put("POST:/online-shop/login", new LoginSubmitCommand());
         commands.put("GET:/online-shop/logout", new LogOutCommand());
@@ -79,5 +77,9 @@ public class MainController extends HttpServlet {
         commands.put("GET:/online-shop/admin/users", new UsersAdministrationCommand());
         commands.put("GET:/online-shop/admin/users/add", new AddBlacklistCommand());
         commands.put("GET:/online-shop/admin/users/remove", new RemoveBlacklistCommand());
+        commands.put("GET:/online-shop/admin/users/update", new UpdateUserCommand());
+        commands.put("POST:/online-shop/admin/users/update", new UpdateUserSubmitCommand());
+        commands.put("GET:/online-shop/admin/goods/update", new UpdateGoodsCommand());
+        commands.put("POST:/online-shop/admin/goods/update", new UpdateGoodsSubmitCommand());
     }
 }

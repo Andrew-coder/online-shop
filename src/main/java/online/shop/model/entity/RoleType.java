@@ -4,6 +4,7 @@ package online.shop.model.entity;
  * Created by andri on 1/3/2017.
  */
 public enum RoleType {
+    USER("user"),
     ADMIN("admin"),
     SALE_MANAGER("manager");
 

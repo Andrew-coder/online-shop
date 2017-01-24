@@ -36,9 +36,9 @@
 <div id="templatemo_body_wrapper">
     <div id="templatemo_wrapper">
 
-        <jsp:include page="/WEB-INF/pages/header.jsp" />
+        <jsp:include page="/WEB-INF/pages/user/header.jsp" />
 
-        <jsp:include page="/WEB-INF/pages/menu.jsp"/>
+        <jsp:include page="/WEB-INF/pages/user/menu.jsp"/>
 
         <div id="templatemo_main">
             <div id="sidebar" class="float_l">
@@ -92,7 +92,7 @@
             <div class="cleaner"></div>
         </div>
 
-        <jsp:include page="/WEB-INF/pages/footer.jsp"/>
+        <jsp:include page="/WEB-INF/pages/user/footer.jsp"/>
 
     </div>
 </div>

@@ -1,6 +1,7 @@
 package online.shop.controller.commands.admin;
 
 import online.shop.controller.commands.Command;
+import online.shop.model.entity.RoleType;
 import online.shop.model.entity.User;
 import online.shop.services.UserService;
 import online.shop.services.impl.UserServiceImpl;
@@ -21,7 +22,7 @@ public class UsersAdministrationCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<User> users = userService.findAllCustomers();
+        List<User> users = userService.findUsersByRole(RoleType.USER);
         request.setAttribute(Attributes.USERS, users);
         for(User user:users){
             request.setAttribute(String.valueOf(user.getId()), userService.isUserInBlacklist(user.getId()));

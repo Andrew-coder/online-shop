@@ -1,5 +1,6 @@
 package online.shop.dao;
 
+import online.shop.model.entity.RoleType;
 import online.shop.model.entity.User;
 
 import java.util.List;
@@ -10,8 +11,7 @@ import java.util.Optional;
  */
 public interface UserDao extends CommonDao<User> {
     Optional<User> findUserByEmail(String email);
-    List<User> findWorkersByRole(String role);
-    List<User> findAllCustomes();
+    List<User> findUsersByRole(RoleType roleType);
     List<User> findAllUserInBlacklist();
     void addUserToBlacklist(int id);
     void deleteUserFromBlacklist(int id);

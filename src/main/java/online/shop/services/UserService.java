@@ -1,5 +1,6 @@
 package online.shop.services;
 
+import online.shop.model.entity.RoleType;
 import online.shop.model.entity.User;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface UserService {
     Optional<User> findUserByEmail(String email);
     Optional<User> login (String email , String password);
     List<User> findAll();
-    List<User> findAllCustomers();
+    List<User> findUsersByRole(RoleType roleType);
     void addUserToBlacklist(int id);
     void removeUserFromBlackList(int id);
     boolean isUserInBlacklist(int id);

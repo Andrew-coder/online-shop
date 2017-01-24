@@ -3,9 +3,9 @@
 <html>
 <head>
     <title>Goods</title>
-</head>
-<body>
 
+</head>
+<body id="body" style="overflow:hidden;">
     <a href="/admin">Dashboard</a>
 
     <table width="608" border="2" align="center" cellpadding="3" cellspacing="4">

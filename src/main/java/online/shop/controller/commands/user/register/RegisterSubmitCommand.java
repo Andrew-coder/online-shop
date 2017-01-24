@@ -3,6 +3,7 @@ package online.shop.controller.commands.user.register;
 import online.shop.controller.commands.Command;
 import online.shop.controller.validators.UserRegisterValidator;
 import online.shop.controller.validators.ValidatorResults;
+import online.shop.model.entity.RoleType;
 import online.shop.model.entity.User;
 import online.shop.services.UserService;
 import online.shop.services.impl.UserServiceImpl;
@@ -59,7 +60,7 @@ public class RegisterSubmitCommand implements Command {
                 .setSurname(request.getParameter("surname").toString())
                 .setEmail(request.getParameter("email").toString())
                 .setPassword(request.getParameter("password").toString())
-                .setWorker(false);
+                .setRole(RoleType.USER);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date convertedDate = sdf.parse(request.getParameter("birthDate").toString());

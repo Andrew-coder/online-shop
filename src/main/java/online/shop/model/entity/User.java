@@ -11,7 +11,6 @@ public class User extends BaseEntity{
     private String email;
     private String password;
     private Date birthDate;
-    private boolean worker;
     private RoleType role;
 
     public String getName() {
@@ -41,10 +40,6 @@ public class User extends BaseEntity{
     public User() {
     }
 
-
-    public boolean isWorker(){
-        return worker;
-    }
 
     public static class Builder{
         User instance = new User();
@@ -76,11 +71,6 @@ public class User extends BaseEntity{
 
         public Builder setBirthDate(Date birthDate){
             instance.birthDate = birthDate;
-            return this;
-        }
-
-        public Builder setWorker(boolean worker){
-            instance.worker = worker;
             return this;
         }
 

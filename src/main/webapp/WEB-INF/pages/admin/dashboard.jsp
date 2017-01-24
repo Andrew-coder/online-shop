@@ -14,7 +14,7 @@
         </tr>
         <tr>
             <td><div align="center"><a href="#">Orders</a></div></td>
-            <td><div align="center"><a href="/admin/users">Users</a></div></td>
+            <td colspan="2" align="center"><div align="center"><a href="/admin/users">Users</a></div></td>
         </tr>
     </table>
 </body>
