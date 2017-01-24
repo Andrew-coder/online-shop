@@ -6,7 +6,9 @@
 
 </head>
 <body id="body" style="overflow:hidden;">
-    <a href="/admin">Dashboard</a>
+    <div class="top-bar">
+        <a href="/admin">dashboard</a>
+    </div>
 
     <table width="608" border="2" align="center" cellpadding="3" cellspacing="4">
         <tr>
@@ -21,8 +23,8 @@
                 <td>${value.id}</td>
                 <td>${value.title}</td>
                 <td width="50%"></td>
-                <td><button>Update</button></td>
-                <td><a href="/admin/goods/delete?goodsID="><button>Delete</button></a></td>
+                <td><a href="/admin/goods/update?goodsID=${value.id}"><button>Update</button></a></td>
+                <td><button>Delete</button></td>
             </tr>
         </c:forEach>
 

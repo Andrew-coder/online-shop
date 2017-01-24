@@ -12,18 +12,18 @@ import java.util.regex.Pattern;
  */
 public class UserRegisterValidator implements Validator<User> {
     @Override
-    public ValidatorResults validate(User user) {
-        ValidatorResults results = new ValidatorResults();
-        if(Pattern.matches(RegExp.REGEX_NAME, user.getName())){
+    public Errors validate(User user) {
+        Errors results = new Errors();
+        if(!Pattern.matches(RegExp.REGEX_NAME, user.getName())){
             results.addError(Attributes.USER_NAME, ErrorMessages.WRONG_USER_NAME);
         }
-        if(Pattern.matches(RegExp.REGEX_SURNAME, user.getSurname())){
+        if(!Pattern.matches(RegExp.REGEX_SURNAME, user.getSurname())){
             results.addError(Attributes.USER_SURNAME, ErrorMessages.WRONG_USER_SURNAME);
         }
-        if(Pattern.matches(RegExp.REGEX_MAIL, user.getEmail())){
+        if(!Pattern.matches(RegExp.REGEX_MAIL, user.getEmail())){
             results.addError(Attributes.USER_EMAIL, ErrorMessages.WRONG_USER_EMAIL);
         }
-        if(Pattern.matches(RegExp.REGEX_PASSWORD, user.getPassword())){
+        if(!Pattern.matches(RegExp.REGEX_PASSWORD, user.getPassword())){
             results.addError(Attributes.USER_PASSWORD, ErrorMessages.WRONG_USER_PASSWORD);
         }
         return results;

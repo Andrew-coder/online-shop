@@ -1,8 +1,9 @@
 package online.shop.controller.commands.user.register;
 
 import online.shop.controller.commands.Command;
+import online.shop.controller.validators.DateValidator;
 import online.shop.controller.validators.UserRegisterValidator;
-import online.shop.controller.validators.ValidatorResults;
+import online.shop.controller.validators.Errors;
 import online.shop.model.entity.RoleType;
 import online.shop.model.entity.User;
 import online.shop.services.UserService;
@@ -37,24 +38,26 @@ public class RegisterSubmitCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        ValidatorResults results = new ValidatorResults();
-        User user = extractUser(request, results);
-        results.addErrors(userValidator.validate(user).getErrors());
+        saveRegisterDataToRequest(request);
+        Errors errors = new Errors();
+        User user = extractUser(request, errors);
+        errors.addErrors(userValidator.validate(user).getErrors());
         if(isUserRegistered(user.getEmail())){
-            results.addError(Attributes.USER_EMAIL, ErrorMessages.EMAIL_ALREADY_EXISTS);
+            errors.addError(Attributes.USER_EMAIL, ErrorMessages.EMAIL_ALREADY_EXISTS);
         }
-        if(results.hasErrors()){
-            processErrors(request, results);
+        if(errors.hasErrors()){
+            processErrors(request, errors);
             request.getRequestDispatcher(PagesPaths.REGISTER_PAGE).forward(request, response);
             return PagesPaths.FORWARD;
         }
         userService.create(user);
         logger.info(String.format("User %d was succesfully registered",user.getId()));
         request.getRequestDispatcher(PagesPaths.REGISTER_SUCCESFULL_PAGE).forward(request, response);
+        clearRegisterDataFromRequest(request);
         return PagesPaths.FORWARD;
     }
 
-    private User extractUser(HttpServletRequest request, ValidatorResults results){
+    private User extractUser(HttpServletRequest request, Errors results){
         User.Builder builder = new User.Builder()
                 .setName(request.getParameter("name").toString())
                 .setSurname(request.getParameter("surname").toString())
@@ -62,8 +65,9 @@ public class RegisterSubmitCommand implements Command {
                 .setPassword(request.getParameter("password").toString())
                 .setRole(RoleType.USER);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String birthDdate = request.getParameter("birthDate").toString();
         try {
-            Date convertedDate = sdf.parse(request.getParameter("birthDate").toString());
+            Date convertedDate = sdf.parse(birthDdate);
             builder.setBirthDate(convertedDate);
             logger.info(LoggerMessages.SUCCESFULL_USER_REGISTER_INFO_PARSE);
         }
@@ -80,8 +84,24 @@ public class RegisterSubmitCommand implements Command {
         return user.isPresent();
     }
 
-    private void processErrors(HttpServletRequest request, ValidatorResults results){
+    private void processErrors(HttpServletRequest request, Errors errors){
         logger.error("Wrong input data in registration");
-        request.getSession().setAttribute(Attributes.REGISTRATION_ERRORS, results);
+        request.setAttribute(Attributes.REGISTRATION_ERRORS, errors);
+    }
+
+    private void saveRegisterDataToRequest(HttpServletRequest request){
+        request.setAttribute(Attributes.PREVIOUS_USER_NAME, request.getParameter("name"));
+        request.setAttribute(Attributes.PREVIOUS_USER_SURNAME, request.getParameter("surname"));
+        request.setAttribute(Attributes.PREVIOUS_USER_EMAIL, request.getParameter("email"));
+        request.setAttribute(Attributes.PREVIOUS_USER_DATE, request.getParameter("birthDate"));
+        request.setAttribute(Attributes.PREVIOUS_USER_PASSWORD, request.getParameter("password"));
+    }
+
+    private void clearRegisterDataFromRequest(HttpServletRequest request){
+        request.removeAttribute(Attributes.PREVIOUS_USER_NAME);
+        request.removeAttribute(Attributes.PREVIOUS_USER_SURNAME);
+        request.removeAttribute(Attributes.PREVIOUS_USER_EMAIL);
+        request.removeAttribute(Attributes.PREVIOUS_USER_DATE);
+        request.removeAttribute(Attributes.PREVIOUS_USER_PASSWORD);
     }
 }

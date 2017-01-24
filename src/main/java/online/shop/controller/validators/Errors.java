@@ -7,10 +7,10 @@ import java.util.Set;
 /**
  * Created by andri on 1/23/2017.
  */
-public class ValidatorResults {
+public class Errors {
     private Map<String, String> errors;
 
-    public ValidatorResults() {
+    public Errors() {
         errors = new HashMap<>();
     }
 

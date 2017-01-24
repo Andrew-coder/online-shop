@@ -30,4 +30,6 @@ public final class PagesPaths {
     public static final String GOODS_ADMINISTRATION_PAGE = VIEW_JSP_CLASSPATH + "/admin/goodsAdministration.jsp";
     public static final String USERS_ADMINISTRATION_PAGE = VIEW_JSP_CLASSPATH + "/admin/usersAdministration.jsp";
     public static final String ACCESS_DENIED_PAGE = VIEW_JSP_CLASSPATH + "accessDenied.jsp";
+    public static final String GOODS_UPDATE_PAGE = VIEW_JSP_CLASSPATH + "/admin/goodsUpdate.jsp";
+    public static final String USERS_UPDATE_PAGE = VIEW_JSP_CLASSPATH + "/admin/userUpdate.jsp";
 }

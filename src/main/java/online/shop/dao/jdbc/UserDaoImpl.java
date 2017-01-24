@@ -20,7 +20,7 @@ import java.util.Optional;
 public class UserDaoImpl implements UserDao{
     private static final String GET_ALL_USERS = "select userID, name, surname, email, password, birthDate,  r.roleName as role from users " +
                                                 "left join roles r on users.role=r.roleID ";
-    private static final String GET_ALL_USERS_IN_BLACKLIST = "select userID, name, surname, email, password, birthDate, worker, role from (" +
+    private static final String GET_ALL_USERS_IN_BLACKLIST = "select userID, name, surname, email, password, birthDate, role from (" +
             "blacklist join (users left join roles r on users.role=r.roleID)using(userID))";
     private static final String FILTER_BY_ONLY_CUSTOMERS = "where worker=false;";
     private static final String FILTER_BY_ID = " where userID = ?;";

@@ -42,7 +42,9 @@
 
         <div id="templatemo_main">
             <div id="sidebar" class="float_l">
-
+                <c:if test="${requestScope.errors!=null}">
+                    <h1>You input wrong data</h1>
+                </c:if>
 
             </div>
             <div id="content" class="float_r">
@@ -57,9 +59,8 @@
                         <th width="90"> </th>
 
                     </tr>
-
+                    <c:set var="total" value="${0}"/>
                     <form action="/update" method="post">
-                        <c:set var="total" value="${0}"/>
                         <tr>
                             <c:if test="${sessionScope.goods==null}">
                                 <td colspan="6" align="center"><h1>Basket is empty</h1></td>

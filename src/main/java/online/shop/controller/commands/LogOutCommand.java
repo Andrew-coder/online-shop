@@ -15,6 +15,7 @@ public class LogOutCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().invalidate();
-        return PagesPaths.HOME_PATH;
+        response.sendRedirect(PagesPaths.HOME_PATH);
+        return PagesPaths.REDIRECT;
     }
 }

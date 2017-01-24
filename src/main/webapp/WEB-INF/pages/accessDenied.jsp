@@ -5,7 +5,10 @@
     <title>ACCESS DENIED!</title>
 </head>
 <body>
-    <a href="/"></a>
+    <div>
+        <a href="/">HOME</a>
+    </div>
+
     <h>You don't have such permission!</h>
 </body>
 </html>

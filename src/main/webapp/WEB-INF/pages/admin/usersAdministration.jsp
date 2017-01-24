@@ -23,7 +23,7 @@
                 <td>${value.id}</td>
                 <td>${value.name}${" "}${value.surname}</td>
                 <td width="50%"></td>
-                <td><button >Update</button></td>
+                <td><a href="/admin/users/update?userID=${value.id}"><button>Update</button></a></td>
                 <c:if test="${requestScope.get(value.id.toString())}">
                     <td><a href="/admin/users/remove?userID=${value.id}"><button>remove from blacklist</button></a></td>
                 </c:if>
