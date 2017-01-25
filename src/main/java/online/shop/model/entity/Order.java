@@ -12,9 +12,11 @@ public class Order extends BaseEntity{
     private Map<Goods , Integer>  goodsItems;
     private Date orderDate;
     private boolean paid;
+    private long totalPrice;
 
     public Order() {
         goodsItems = new HashMap<>();
+        paid=false;
     }
 
     public void setUser(User user) {
@@ -37,13 +39,6 @@ public class Order extends BaseEntity{
         goodsItems.put(goods, amount);
     }
 
-    public long calculateTotalSum(){
-        return goodsItems.entrySet()
-                .stream()
-                .mapToLong(item -> (long)item.getKey().getPrice()*item.getValue())
-                .sum();
-    }
-
     public User getUser() {
         return user;
     }
@@ -58,5 +53,51 @@ public class Order extends BaseEntity{
 
     public Date getOrderDate() {
         return orderDate;
+    }
+
+    public long getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(long totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public static class Builder{
+        Order instance = new Order();
+
+        public Builder setId(int id){
+            instance.setId(id);
+            return this;
+        }
+
+        public Builder setUser(User user){
+            instance.user = user;
+            return this;
+        }
+
+        public Builder setGoodsItems(Map<Goods, Integer> goodsItems){
+            instance.goodsItems = goodsItems;
+            return this;
+        }
+
+        public Builder setOrderDate(Date orderDate){
+            instance.orderDate = orderDate;
+            return this;
+        }
+
+        public Builder setPaid(boolean paid){
+            instance.paid = paid;
+            return this;
+        }
+
+        public Builder setTotalPrice(long totalPrice){
+            instance.totalPrice = totalPrice;
+            return this;
+        }
+
+        public Order build(){
+            return instance;
+        }
     }
 }

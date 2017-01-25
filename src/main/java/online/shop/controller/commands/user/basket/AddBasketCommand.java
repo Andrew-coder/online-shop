@@ -34,6 +34,7 @@ public class AddBasketCommand implements Command {
             }
         }
         request.getSession().setAttribute(Attributes.GOODS, goodsItems);
-        return "../basket";
+        response.sendRedirect(PagesPaths.BASKET);
+        return PagesPaths.REDIRECT;
     }
 }

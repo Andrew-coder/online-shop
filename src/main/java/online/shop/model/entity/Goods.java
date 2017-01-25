@@ -10,13 +10,13 @@ public class Goods extends BaseEntity{
     private double price;
     private String description;
     private Subcategory subcategory;
-    private byte[] image;
+    private String image;
     private boolean ends;
 
     public Goods() {
     }
 
-    public Goods(String title, double price, String description, Subcategory subcategory, byte[] image, boolean ends) {
+    public Goods(String title, double price, String description, Subcategory subcategory, String image, boolean ends) {
         this.title = title;
         this.price = price;
         this.description = description;
@@ -25,7 +25,7 @@ public class Goods extends BaseEntity{
         this.ends = ends;
     }
 
-    public Goods(int id, String title, double price, String description, Subcategory subcategory, byte[] image, boolean ends) {
+    public Goods(int id, String title, double price, String description, Subcategory subcategory, String image, boolean ends) {
         super(id);
         this.title = title;
         this.price = price;
@@ -83,16 +83,11 @@ public class Goods extends BaseEntity{
         this.description = description;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public String getImageInBase64(){
-        byte[] decoded = Base64.getEncoder().encode(image);
-        return new String(decoded);
-    }
-
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -150,7 +145,7 @@ public class Goods extends BaseEntity{
             return this;
         }
 
-        public Builder setImage(byte[] image){
+        public Builder setImage(String image){
             instance.image=image;
             return this;
         }

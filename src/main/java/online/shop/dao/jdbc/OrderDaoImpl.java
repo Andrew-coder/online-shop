@@ -18,7 +18,7 @@ import java.util.*;
 
 public class OrderDaoImpl implements OrderDao{
     private static final Logger logger = Logger.getLogger(OrderDaoImpl.class);
-    private static final String GET_ALL_ORDERS = "select orderID, userID, orderDate, paid " +
+    private static final String GET_ALL_ORDERS = "select orderID, userID, orderDate, paid, totalPrice " +
             "userID, name, surname, email, password, birthDate, worker, role from (" +
             "torders join users using(userID))";
     private static final String FILTER_BY_ID = " where orderID=?;";
@@ -81,11 +81,12 @@ public class OrderDaoImpl implements OrderDao{
             statement.setDate(2, java.sql.Date.valueOf(order.getOrderDate().
                     toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
             statement.setBoolean(3, order.isPaid());
+            statement.executeUpdate();
             order.getGoodsItems().entrySet()
-                    .stream()
-                    .forEach(entry-> createOrderItem(order.getId(), entry.getKey().getId(), entry.getValue()));
+                        .stream()
+                        .forEach(entry -> createOrderItem(order.getId(), entry.getKey().getId(), entry.getValue()));
         }
-        catch (SQLException ex){
+        catch (SQLException|DaoException ex){
             logger.error(ErrorMessages.ERROR_CREATE_ORDER);
             throw new DaoException(ErrorMessages.ERROR_CREATE_ORDER, ex);
         }
@@ -96,10 +97,11 @@ public class OrderDaoImpl implements OrderDao{
             statement.setInt(1, orderId);
             statement.setInt(2, goodsId);
             statement.setInt(3, amount);
+            statement.executeUpdate();
         }
         catch (SQLException ex){
             logger.error(ErrorMessages.ERROR_CREATE_ORDER_ITEM);
-            throw new DaoException(ErrorMessages.ERROR_CREATE_ORDER_ITEM, ex);
+            throw new DaoException(ErrorMessages.ERROR_CREATE_ORDER_ITEM);
         }
     }
 

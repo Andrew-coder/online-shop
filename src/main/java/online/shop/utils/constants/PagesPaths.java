@@ -11,7 +11,7 @@ public final class PagesPaths {
     public static final String SLASH = "/";
     public static final String ROOT = "./";
     public static final String PARENT_ROOT = "../";
-    public static final String HOME_PATH = "/online-shop";
+    public static final String HOME_PATH = "/online-shop/";
     public static final String ADMIN = "/admin";
     public static final String LOGIN = "/login";
     public static final String BASKET = "/basket";
@@ -34,4 +34,5 @@ public final class PagesPaths {
     public static final String USERS_UPDATE_PAGE = VIEW_JSP_CLASSPATH + "/admin/userUpdate.jsp";
     public static final String ERROR_PAGE = VIEW_JSP_CLASSPATH + "error.jsp";
     public static final String PAGE_NOT_FOUND = VIEW_JSP_CLASSPATH + "pageNotFound.jsp";
+    public static final String PURCHASE_SUCCESFULL_PAGE = VIEW_JSP_CLASSPATH + "user/successfullPurchasePage.jsp";
 }

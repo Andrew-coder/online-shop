@@ -35,7 +35,7 @@ public class LoginSubmitCommand implements Command {
             if( user.isPresent() ){
                 User person = user.get();
                 request.getSession().setAttribute(Attributes.USER, person);
-                pageToGo=PagesPaths.HOME_PATH;
+                pageToGo=PagesPaths.SLASH;
                 if(person.getRole()!= RoleType.USER) {
                     pageToGo = PagesPaths.ADMIN;
                 }

@@ -1,6 +1,8 @@
 package online.shop.dao.jdbc;
 
 import online.shop.dao.ConnectionWrapper;
+import online.shop.dao.exception.DaoException;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -9,6 +11,7 @@ import java.sql.SQLException;
  * Created by andri on 1/11/2017.
  */
 public class ConnectionWrapperImpl implements ConnectionWrapper {
+    private static final Logger logger = Logger.getLogger(Logger.class);
     private Connection connection;
     private boolean inTransaction = false;
 
@@ -23,7 +26,8 @@ public class ConnectionWrapperImpl implements ConnectionWrapper {
             connection.setAutoCommit(false);
             inTransaction=true;
         }catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex);
+            throw new DaoException(ex);
         }
     }
 
@@ -35,7 +39,8 @@ public class ConnectionWrapperImpl implements ConnectionWrapper {
             inTransaction=false;
         }
         catch (SQLException ex){
-            ex.printStackTrace();
+            logger.error(ex);
+            throw new DaoException(ex);
         }
     }
 
@@ -47,7 +52,8 @@ public class ConnectionWrapperImpl implements ConnectionWrapper {
             inTransaction=false;
         }
         catch (SQLException ex){
-            ex.printStackTrace();
+            logger.error(ex);
+            throw new DaoException(ex);
         }
     }
 
@@ -58,8 +64,9 @@ public class ConnectionWrapperImpl implements ConnectionWrapper {
         }
         try {
             connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException ex) {
+            logger.error(ex);
+            throw new DaoException(ex);
         }
     }
 

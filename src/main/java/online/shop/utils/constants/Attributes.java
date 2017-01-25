@@ -7,6 +7,9 @@ public final class Attributes {
     public static final String USER = "user";
     public static final String USERS = "users";
     public static final String USER_ID = "userID";
+    public static final String BLACK_LIST_USER = "blackListUser";
+    public static final String PAYEE_TYPE = "group";
+    public static final String PAY_ON_DELIVERY = "paOnDelivery";
 
     public static final String USER_EMAIL = "userEmail";
     public static final String USER_PASSWORD = "userPassword";

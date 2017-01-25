@@ -15,13 +15,15 @@ import java.util.Map;
 public class OrderResultSetExtractor implements ResultSetExtractor<Order> {
     @Override
     public Order extract(ResultSet set) throws SQLException {
-        Order order = new Order();
-        order.setId(set.getInt("orderID"));
-        order.setOrderDate(set.getDate("orderDate"));
-        order.setPaid(set.getBoolean("paid"));
+        Order.Builder builder = new Order.Builder()
+                                .setId(set.getInt("orderID"))
+                                .setOrderDate(set.getDate("orderDate"))
+                                .setPaid(set.getBoolean("paid"))
+                                .setTotalPrice(set.getLong("totalPrice"));
         UserResultSetExtractor userExtractor = new UserResultSetExtractor();
-        order.setUser(userExtractor.extract(set));
-        return order;
+        builder.setUser(userExtractor.extract(set));
+        builder.setGoodsItems(extractGoodsItems(set));
+        return builder.build();
     }
 
     public Map<Goods, Integer> extractGoodsItems(ResultSet set) throws SQLException {

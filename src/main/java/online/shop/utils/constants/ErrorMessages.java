@@ -9,7 +9,9 @@ public final class ErrorMessages {
     public static final String WRONG_USER_SURNAME = "Wrong user surname";
     public static final String WRONG_USER_PASSWORD = "Wrong user password (at least 4 characters)";
     public static final String WRONG_USER_EMAIL = "Wrong user email";
+    public static final String BLACK_LIST_USER = "Currently, you are in the blacklist of this website. For additional info contact with admin";
     public static final String WRONG_USER_DATE = "Wrong user date! Date format (yyyy-mm-dd)";
+    public static final String WRONG_ORDER_DATA = "Wrong order data...";
 
     public static final String UNEXISTING_GOODS = "Goods doesn't found";
     public static final String UNEXISTING_USER = "User doesn't found";
@@ -39,4 +41,6 @@ public final class ErrorMessages {
     public static final String ERROR_FIND_ALL_GOODS = "";
     public static final String ERROR_CREATE_GOODS = "";
     public static final String ERROR_UPDATE_GOODS = "";
+
+    public static final String EMPTY_BASKET = "Your basket is currently empty";
 }

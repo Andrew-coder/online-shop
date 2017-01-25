@@ -46,7 +46,9 @@ public class OrderServiceImpl implements OrderService {
     public void create(Order order) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection() ) {
             OrderDao orderDao = daoFactory.getOrderDao(wrapper);
+            wrapper.beginTransaction();
             orderDao.create(order);
+            wrapper.commitTransaction();
         }
     }
 
@@ -54,7 +56,9 @@ public class OrderServiceImpl implements OrderService {
     public void update(Order order) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection() ) {
             OrderDao orderDao = daoFactory.getOrderDao(wrapper);
+            wrapper.beginTransaction();
             orderDao.update(order);
+            wrapper.commitTransaction();
         }
     }
 

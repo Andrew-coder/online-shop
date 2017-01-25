@@ -4,8 +4,9 @@ import online.shop.controller.commands.*;
 import online.shop.controller.commands.admin.*;
 import online.shop.controller.commands.admin.blacklist.AddBlacklistCommand;
 import online.shop.controller.commands.admin.blacklist.RemoveBlacklistCommand;
-import online.shop.controller.commands.user.PurchaseCommand;
+import online.shop.controller.commands.user.purchase.PurchaseCommand;
 import online.shop.controller.commands.user.basket.UpdateBasketCommand;
+import online.shop.controller.commands.user.purchase.PurchaseSubmitCommand;
 import online.shop.controller.commands.user.register.RegisterCommand;
 import online.shop.controller.commands.user.register.RegisterSubmitCommand;
 import online.shop.controller.commands.login.LoginCommand;
@@ -80,6 +81,7 @@ public class MainController extends HttpServlet {
         commands.put("GET:/online-shop/subcategory", new SubcategoryOverviewCommand());
         commands.put("GET:/online-shop/goods", new GoodsOverviewCommand());
         commands.put("GET:/online-shop/purchase", new PurchaseCommand());
+        commands.put("POST:/online-shop/purchase", new PurchaseSubmitCommand());
         commands.put("GET:/online-shop/admin", new AdminHomeCommand());
         commands.put("GET:/online-shop/admin/goods", new GoodsAdministrationCommand());
         commands.put("GET:/online-shop/admin/users", new UsersAdministrationCommand());

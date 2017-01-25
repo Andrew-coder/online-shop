@@ -22,7 +22,7 @@ public class UpdateBasketCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<Goods, Integer> goodsItems = (Map<Goods,Integer>) request.getSession().getAttribute("goods");
+        Map<Goods, Integer> goodsItems = (Map<Goods,Integer>) request.getSession().getAttribute(Attributes.GOODS);
         Errors errors = new Errors();
         try {
             if (goodsItems != null && !goodsItems.isEmpty()) {
@@ -41,13 +41,10 @@ public class UpdateBasketCommand implements Command {
     }
 
     private int extractGoodsAmount(HttpServletRequest request, int id){
-        return Integer.parseInt(request.getParameter("amount"+String.valueOf(id)));
-    }
+        int amount = Integer.parseInt(request.getParameter("amount"+String.valueOf(id)));
+        if(amount<=0)
+            throw new NumberFormatException();
+        return amount;
 
-    private long calculateTotalSum(Map<Goods, Integer> goodsItems){
-        return goodsItems.entrySet()
-                .stream()
-                .mapToLong(item -> (long)item.getKey().getPrice()*item.getValue())
-                .sum();
     }
 }

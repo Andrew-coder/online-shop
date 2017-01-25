@@ -14,19 +14,15 @@
 
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/ddsmoothmenu.js">
-
-
     </script>
 
     <script type="text/javascript">
-
         ddsmoothmenu.init({
             mainmenuid: "top_nav", //menu DIV id
             orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
             classname: 'ddsmoothmenu', //class added to menu's outer DIV
             contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
         })
-
     </script>
 
 </head>
@@ -61,20 +57,21 @@
                     </tr>
                     <c:set var="total" value="${0}"/>
                     <form action="/update" method="post">
-                        <tr>
-                            <c:if test="${sessionScope.goods==null}">
-                                <td colspan="6" align="center"><h1>Basket is empty</h1></td>
+
+                            <c:if test="${sessionScope.goods==null || sessionScope.goods.isEmpty()}">
+                                <tr><td colspan="6" align="center"><h1>Basket is empty</h1></td></tr>
                             </c:if>
                             <c:forEach items="${sessionScope.goods}" var="entry">
-                                <td><img src="/images/no_photo.jpg" alt="image 1" /></td>
-                                <td>${entry.key.title}</td>
-                                <td align="center"><input id="amount${entry.key.id}" name="amount${entry.key.id}" type="text" value="${entry.value}" style="width: 20px; text-align: right" /> </td>
-                                <td align="right">${entry.key.price} </td>
-                                <td align="right">${entry.value*entry.key.price}</td>
-                                <td align="center"> <a href="/basket/remove?goodsID=${entry.key.id}"><img src="/images/remove_x.gif" alt="remove" /><br />Remove</a> </td>
-                                <c:set var="total" value="${total + entry.key.price*entry.value}" />
+                                <tr>
+                                    <td><img src="${entry.key.image}" alt="image 1" /></td>
+                                    <td>${entry.key.title}</td>
+                                    <td align="center"><input id="amount${entry.key.id}" name="amount${entry.key.id}" type="text" value="${entry.value}" style="width: 20px; text-align: right" /> </td>
+                                    <td align="right">${entry.key.price} </td>
+                                    <td align="right">${entry.value*entry.key.price}</td>
+                                    <td align="center"> <a href="/basket/remove?goodsID=${entry.key.id}"><img src="/images/remove_x.gif" alt="remove" /><br />Remove</a> </td>
+                                    <c:set var="total" value="${total + entry.key.price*entry.value}" />
+                                </tr>
                             </c:forEach>
-                        </tr>
                         <tr>
                             <td colspan="3" align="right"  height="30px">Have you modified your basket? Please click here to <strong><input type="submit" value="Update"/></strong></td>
                             <td align="right" style="background:#ddd; font-weight:bold"> Total </td>

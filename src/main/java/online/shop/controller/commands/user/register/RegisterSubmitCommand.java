@@ -1,7 +1,6 @@
 package online.shop.controller.commands.user.register;
 
 import online.shop.controller.commands.Command;
-import online.shop.controller.validators.DateValidator;
 import online.shop.controller.validators.UserRegisterValidator;
 import online.shop.controller.validators.Errors;
 import online.shop.model.entity.RoleType;

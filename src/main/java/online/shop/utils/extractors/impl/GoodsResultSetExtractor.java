@@ -20,12 +20,10 @@ public class GoodsResultSetExtractor implements ResultSetExtractor<Goods> {
                 .setPrice(set.getDouble("price"))
                 .setDescription(set.getString("description"))
                 .setEnds(set.getBoolean("ends"))
-                .setSubcategory(new Subcategory(set.getInt("subcategoryID")));
-        Blob blob = set.getBlob("image");
-        if(blob!=null){
-            builder.setImage(blob.getBytes(1, (int)blob.length()));
-        }
+                .setSubcategory(new Subcategory(set.getInt("subcategoryID")))
+                .setImage(set.getString("image"));
         SubcategoryResultSetExtractor subcategoryExtractor = new SubcategoryResultSetExtractor();
+        CategoryResultSetExtractor categoryExtractor = new CategoryResultSetExtractor();
         builder.setSubcategory(subcategoryExtractor.extract(set));
         return builder.build();
     }

@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="online.shop.utils.constants.PagesPaths" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -49,13 +50,13 @@
                 <h1> Products</h1>
 
 
-                <c:forEach items="${goods}" var="value" varStatus="loop">
+                <c:forEach items="${requestScope.goods}" var="value" varStatus="loop">
                     <c:choose>
                         <c:when test="${ (loop.index+1)%3 eq 0}">
                             <div class="product_box no_margin_right">
                                 <h3>${value.title}</h3>
                                 <%--<a href="productdetail.html"><img src="data:image/jpg;base64,${value.getImageInBase64()}" alt="${value.getCategory().getTitle()}" /></a>--%>
-                                <a href="productdetail.html"><img src="/images/no_photo.jpg" alt="Shoes 1" /></a>
+                                <a href="productdetail.html"><img src="${value.image}" alt="Shoes 1" /></a>
                                 <p> ${value.description} </p>
                                 <p class="product_price">${value.price}</p>
                                 <a href="basket/add?goodsID=${value.id}" class="addtocart"></a>
