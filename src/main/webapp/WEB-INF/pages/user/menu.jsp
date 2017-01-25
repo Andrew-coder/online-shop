@@ -13,7 +13,7 @@
                 </ul>
             </li>
             <li><a href="faqs.html">FAQs</a></li>
-            <li><a href="checkout.html">Checkout</a></li>
+            <li><a href="/purchase">Checkout</a></li>
             <li><a href="contact.html">Contact Us</a></li>
         </ul>
         <br style="clear: left" />

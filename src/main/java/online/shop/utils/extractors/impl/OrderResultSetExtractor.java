@@ -18,6 +18,7 @@ public class OrderResultSetExtractor implements ResultSetExtractor<Order> {
         Order order = new Order();
         order.setId(set.getInt("orderID"));
         order.setOrderDate(set.getDate("orderDate"));
+        order.setPaid(set.getBoolean("paid"));
         UserResultSetExtractor userExtractor = new UserResultSetExtractor();
         order.setUser(userExtractor.extract(set));
         return order;
@@ -27,9 +28,11 @@ public class OrderResultSetExtractor implements ResultSetExtractor<Order> {
         Map<Goods, Integer> goodsItems = new HashMap<>();
         GoodsResultSetExtractor goodsExtractor = new GoodsResultSetExtractor();
         SubcategoryResultSetExtractor subcategoryExtractor = new SubcategoryResultSetExtractor();
+        CategoryResultSetExtractor categoryExtractor = new CategoryResultSetExtractor();
         while(set.next()){
             Goods goods = goodsExtractor.extract(set);
             goods.setSubcategory(subcategoryExtractor.extract(set));
+            goods.getSubcategory().setCategory(categoryExtractor.extract(set));
             int amount = set.getInt("amount");
             goodsItems.put(goods, amount);
         }

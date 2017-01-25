@@ -37,6 +37,13 @@ public class Order extends BaseEntity{
         goodsItems.put(goods, amount);
     }
 
+    public long calculateTotalSum(){
+        return goodsItems.entrySet()
+                .stream()
+                .mapToLong(item -> (long)item.getKey().getPrice()*item.getValue())
+                .sum();
+    }
+
     public User getUser() {
         return user;
     }

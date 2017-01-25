@@ -16,6 +16,7 @@ import online.shop.controller.commands.user.basket.AddBasketCommand;
 import online.shop.controller.commands.user.basket.RemoveBasketCommand;
 import online.shop.controller.commands.user.basket.ShowBasketCommand;
 import online.shop.utils.constants.PagesPaths;
+import org.apache.log4j.Logger;
 
 
 import javax.servlet.ServletException;
@@ -30,6 +31,7 @@ import java.util.Map;
  * Created by andri on 1/19/2017.
  */
 public class MainController extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(MainController.class);
     private static final long serialVersionUID = 1L;
 
     private Map<String , Command> commands = new HashMap<>();
@@ -50,16 +52,22 @@ public class MainController extends HttpServlet {
     }
 
     public String processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        String method = request.getMethod().toUpperCase();
-        String path = request.getRequestURI();
-        String key = method+":"+path;
-        Command command = commands.getOrDefault(key, (req , resp)-> PagesPaths.HOME_PATH );
-        return command.execute(request, response);
+        try {
+            String method = request.getMethod().toUpperCase();
+            String path = request.getRequestURI();
+            String key = method+":"+path;
+            Command command = commands.getOrDefault(key, new PageNotFoundCommand());
+            return command.execute(request, response);
+        }
+        catch (Exception exception){
+            logger.error(exception.getMessage());
+            return PagesPaths.ERROR_PAGE;
+        }
     }
 
     @Override
     public void init() throws ServletException {
-        commands.put("GET:/online-shop", new HomeCommand());
+        commands.put("GET:/online-shop/", new HomeCommand());
         commands.put("GET:/online-shop/login", new LoginCommand());
         commands.put("POST:/online-shop/login", new LoginSubmitCommand());
         commands.put("GET:/online-shop/logout", new LogOutCommand());

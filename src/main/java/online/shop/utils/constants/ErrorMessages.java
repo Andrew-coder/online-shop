@@ -16,4 +16,27 @@ public final class ErrorMessages {
     public static final String SUBCATEGORIES_NOT_FOUND = "Not found amy subcategories";
 
     public static final String WRONG_BASKET_VALUES = "You entered wrong values!";
+
+    /* DAO messages */
+    public static final String ERROR_FIND_ONE_CATEGORY = "";
+    public static final String ERROR_FIND_ALL_CATEGORIES = "";
+
+    public static final String ERROR_FIND_ONE_SUBCATEGORY = "";
+    public static final String ERROR_FIND_ALL_SUBCATEGORIES = "";
+
+    public static final String ERROR_FIND_ONE_ORDER = "dao exception occured when retrieving order by id";
+    public static final String ERROR_FIND_GOODS_ITEMS = "dao exception occured when retrieving goods items in order by order id";
+    public static final String ERROR_FIND_ALL_ORDERS = "dao exception occured when retrieving all orders";
+    public static final String ERROR_CREATE_ORDER = "Error occured when creating new order!";
+    public static final String ERROR_CREATE_ORDER_ITEM = "Error occured when creating new order Item!";
+
+    public static final String ERROR_FIND_ONE_USER = "";
+    public static final String ERROR_FIND_ALL_USERS = "";
+    public static final String ERROR_CREATE_USERR = "";
+    public static final String ERROR_UPDATE_USERR = "";
+
+    public static final String ERROR_FIND_ONE_GOODS = "";
+    public static final String ERROR_FIND_ALL_GOODS = "";
+    public static final String ERROR_CREATE_GOODS = "";
+    public static final String ERROR_UPDATE_GOODS = "";
 }

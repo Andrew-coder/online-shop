@@ -32,4 +32,6 @@ public final class PagesPaths {
     public static final String ACCESS_DENIED_PAGE = VIEW_JSP_CLASSPATH + "accessDenied.jsp";
     public static final String GOODS_UPDATE_PAGE = VIEW_JSP_CLASSPATH + "/admin/goodsUpdate.jsp";
     public static final String USERS_UPDATE_PAGE = VIEW_JSP_CLASSPATH + "/admin/userUpdate.jsp";
+    public static final String ERROR_PAGE = VIEW_JSP_CLASSPATH + "error.jsp";
+    public static final String PAGE_NOT_FOUND = VIEW_JSP_CLASSPATH + "pageNotFound.jsp";
 }
