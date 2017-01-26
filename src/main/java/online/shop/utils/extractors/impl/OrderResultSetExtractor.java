@@ -6,7 +6,9 @@ import online.shop.model.entity.Order;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,15 +28,16 @@ public class OrderResultSetExtractor implements ResultSetExtractor<Order> {
         return builder.build();
     }
 
-    public Map<Goods, Integer> extractGoodsItems(ResultSet set) throws SQLException {
+    private Map<Goods, Integer> extractGoodsItems(ResultSet set) throws SQLException {
         Map<Goods, Integer> goodsItems = new HashMap<>();
         GoodsResultSetExtractor goodsExtractor = new GoodsResultSetExtractor();
         int orderId = set.getInt("orderID");
-        while(set.next() && set.getInt("orderID")==orderId){
+        do{
             Goods goods = goodsExtractor.extract(set);
             int amount = set.getInt("amount");
             goodsItems.put(goods, amount);
-        }
+        }while(set.next() && set.getInt("orderID")==orderId);
+        set.previous();
         return goodsItems;
     }
 }
