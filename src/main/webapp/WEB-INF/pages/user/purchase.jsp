@@ -43,14 +43,16 @@
 
 
             </div>
-                <c:if test="${requestScope.get(errors) != null}">
+                <div>
                     <table align="center">
+                    <c:if test="${requestScope.errors != null}">
+
                         <c:forEach items="${requestScope.errors.getErrorsAttributes()}" var="value">
                             <tr><td align="center">${requestScope.errors.getErrors().get(value)}</td></tr>
                         </c:forEach>
+                    </c:if>
                     </table>
-                </c:if>
-
+                </div>
                 <div class="cleaner h50"></div>
                 <h3>SHOPPING CART</h3>
 

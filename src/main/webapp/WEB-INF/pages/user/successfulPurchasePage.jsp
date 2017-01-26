@@ -35,10 +35,10 @@
         <div id="templatemo_wrapper">
             <jsp:include page="/WEB-INF/pages/user/header.jsp" />
             <jsp:include page="/WEB-INF/pages/user/menu.jsp"/>
+            <div id="templatemo_main">
+                <h1>Congratulations with the success purchase!</h1>
+            </div>
 
-
-
-            <jsp:include page="/WEB-INF/pages/user/footer.jsp"/>
         </div>
     </div>
 </body>

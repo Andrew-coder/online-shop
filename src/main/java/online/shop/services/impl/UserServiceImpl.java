@@ -6,15 +6,19 @@ import online.shop.dao.UserDao;
 import online.shop.model.entity.RoleType;
 import online.shop.model.entity.User;
 import online.shop.services.UserService;
+import online.shop.services.exception.ServiceException;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 /**
  * Created by andri on 1/21/2017.
  */
 public class UserServiceImpl implements UserService {
+    private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
     private UserServiceImpl(){}
@@ -33,14 +37,6 @@ public class UserServiceImpl implements UserService {
         try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             UserDao userDao = daoFactory.getUserDao(wrapper);
             return userDao.findById(id);
-        }
-    }
-
-    @Override
-    public Optional<User> findUserByEmail(String email) {
-        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
-            UserDao userDao = daoFactory.getUserDao(wrapper);
-            return userDao.findUserByEmail(email);
         }
     }
 
@@ -73,6 +69,7 @@ public class UserServiceImpl implements UserService {
     public void create(User user) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection() ){
             UserDao userDao = daoFactory.getUserDao(wrapper);
+            checkIsUserRegistered(user.getEmail(), userDao);
             userDao.create(user);
         }
     }
@@ -114,6 +111,13 @@ public class UserServiceImpl implements UserService {
         try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             UserDao userDao = daoFactory.getUserDao(wrapper);
             userDao.deleteUserFromBlacklist(id);
+        }
+    }
+
+    private void checkIsUserRegistered(String email, UserDao userDao){
+        if(userDao.findUserByEmail(email).isPresent()){
+            logger.error("The user with such email already exists!");
+            throw new ServiceException("The user with such email already exists!");
         }
     }
 }

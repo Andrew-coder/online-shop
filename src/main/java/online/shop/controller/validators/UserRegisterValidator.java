@@ -17,7 +17,7 @@ public class UserRegisterValidator implements Validator<User> {
         if(!Pattern.matches(RegExp.REGEX_NAME, user.getName())){
             results.addError(Attributes.USER_NAME, ErrorMessages.WRONG_USER_NAME);
         }
-        if(!Pattern.matches(RegExp.REGEX_SURNAME, user.getSurname())){
+        if(!Pattern.matches(RegExp.REGEX_NAME, user.getSurname())){
             results.addError(Attributes.USER_SURNAME, ErrorMessages.WRONG_USER_SURNAME);
         }
         if(!Pattern.matches(RegExp.REGEX_MAIL, user.getEmail())){

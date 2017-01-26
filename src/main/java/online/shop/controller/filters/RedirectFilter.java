@@ -16,7 +16,7 @@ public class RedirectFilter implements Filter {
     @Override
     public void init(FilterConfig fConfig) throws ServletException {
         this.context = fConfig.getServletContext();
-        this.context.log("CtaticContentFilter initialized");
+        this.context.log("StaticContentFilter initialized");
     }
 
     @Override

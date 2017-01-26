@@ -33,8 +33,11 @@ public final class Attributes {
 
     public static final String REGISTRATION_ERRORS = "errors";
 
+    public static final String ERROR = "error";
     public static final String ERRORS = "errors";
 
     public static final String WRONG_BASKET_VALUES = "wrongBasket";
     public static final String BASKET_TOTAL = "totalSum";
+
+    public static final String ORDERS = "orders";
 }

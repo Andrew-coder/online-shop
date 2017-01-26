@@ -4,6 +4,6 @@
     <title>UNKNOWN ERROR OCCURED!</title>
 </head>
 <body>
-    <div align="center">Something went completely wrong...</div>
+    <div align="center">${requestScope.error.toString()}</div>
 </body>
 </html>

@@ -11,7 +11,6 @@ import java.util.Optional;
  */
 public interface UserService {
     Optional<User> findById(int id);
-    Optional<User> findUserByEmail(String email);
     Optional<User> login (String email , String password);
     List<User> findAll();
     List<User> findUsersByRole(RoleType roleType);

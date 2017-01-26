@@ -1,6 +1,7 @@
 package online.shop.controller.commands.user.purchase;
 
 import online.shop.controller.commands.Command;
+import online.shop.controller.commands.CommandExecuter;
 import online.shop.controller.validators.Errors;
 import online.shop.controller.validators.OrderValidator;
 import online.shop.model.entity.Goods;
@@ -26,7 +27,7 @@ import java.util.Map;
 /**
  * Created by andri on 1/25/2017.
  */
-public class PurchaseSubmitCommand implements Command {
+public class PurchaseSubmitCommand extends CommandExecuter {
     private static final Logger logger = Logger.getLogger(PurchaseSubmitCommand.class);
     private OrderService orderService = OrderServiceImpl.getInstance();
     private UserService userService = UserServiceImpl.getInstance();
@@ -37,7 +38,7 @@ public class PurchaseSubmitCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Order order = extractOrder(request);
         String payeeType = request.getParameter(Attributes.PAYEE_TYPE).toString();
         if(!payeeType.equals(Attributes.PAY_ON_DELIVERY)){
@@ -51,10 +52,12 @@ public class PurchaseSubmitCommand implements Command {
         if(errors.hasErrors()){
             request.setAttribute(Attributes.ERRORS, errors);
             logger.error(ErrorMessages.WRONG_ORDER_DATA);
-            return PagesPaths.PURCHASE;
+            request.getRequestDispatcher(PagesPaths.PURCHASE_PAGE).forward(request,response);
+            return PagesPaths.FORWARD;
         }
         orderService.create(order);
-        return PagesPaths.PURCHASE_SUCCESFULL_PAGE;
+        request.getRequestDispatcher(PagesPaths.PURCHASE_SUCCESFULL_PAGE).forward(request, response);
+        return PagesPaths.FORWARD;
     }
 
     private Order extractOrder(HttpServletRequest request){

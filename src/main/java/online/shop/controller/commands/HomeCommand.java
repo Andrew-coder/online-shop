@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static online.shop.utils.constants.PagesPaths.HOME_PAGE;
-
 /**
  * Created by andri on 1/20/2017.
  */
@@ -25,6 +23,6 @@ public class HomeCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Category> categories = categoryService.findAll();
         request.setAttribute(Attributes.CATEGORIES, categories);
-        return HOME_PAGE;
+        return PagesPaths.HOME_PAGE;
     }
 }

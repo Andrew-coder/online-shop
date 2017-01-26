@@ -23,7 +23,6 @@ public class GoodsResultSetExtractor implements ResultSetExtractor<Goods> {
                 .setSubcategory(new Subcategory(set.getInt("subcategoryID")))
                 .setImage(set.getString("image"));
         SubcategoryResultSetExtractor subcategoryExtractor = new SubcategoryResultSetExtractor();
-        CategoryResultSetExtractor categoryExtractor = new CategoryResultSetExtractor();
         builder.setSubcategory(subcategoryExtractor.extract(set));
         return builder.build();
     }

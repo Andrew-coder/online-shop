@@ -29,12 +29,9 @@ public class OrderResultSetExtractor implements ResultSetExtractor<Order> {
     public Map<Goods, Integer> extractGoodsItems(ResultSet set) throws SQLException {
         Map<Goods, Integer> goodsItems = new HashMap<>();
         GoodsResultSetExtractor goodsExtractor = new GoodsResultSetExtractor();
-        SubcategoryResultSetExtractor subcategoryExtractor = new SubcategoryResultSetExtractor();
-        CategoryResultSetExtractor categoryExtractor = new CategoryResultSetExtractor();
-        while(set.next()){
+        int orderId = set.getInt("orderID");
+        while(set.next() && set.getInt("orderID")==orderId){
             Goods goods = goodsExtractor.extract(set);
-            goods.setSubcategory(subcategoryExtractor.extract(set));
-            goods.getSubcategory().setCategory(categoryExtractor.extract(set));
             int amount = set.getInt("amount");
             goodsItems.put(goods, amount);
         }

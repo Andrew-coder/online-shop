@@ -1,6 +1,7 @@
 package online.shop.controller.commands.user.register;
 
 import online.shop.controller.commands.Command;
+import online.shop.controller.commands.CommandExecuter;
 import online.shop.controller.validators.UserRegisterValidator;
 import online.shop.controller.validators.Errors;
 import online.shop.model.entity.RoleType;
@@ -26,24 +27,22 @@ import org.apache.log4j.Logger;
 /**
  * Created by andri on 1/22/2017.
  */
-public class RegisterSubmitCommand implements Command {
+public class RegisterSubmitCommand extends CommandExecuter {
     private static final Logger logger = Logger.getLogger(RegisterSubmitCommand.class);
     private UserService userService = UserServiceImpl.getInstance();
     private UserRegisterValidator userValidator;
 
-    public RegisterSubmitCommand(){
+    public RegisterSubmitCommand()
+    {
         userValidator = new UserRegisterValidator();
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         saveRegisterDataToRequest(request);
         Errors errors = new Errors();
         User user = extractUser(request, errors);
         errors.addErrors(userValidator.validate(user).getErrors());
-        if(isUserRegistered(user.getEmail())){
-            errors.addError(Attributes.USER_EMAIL, ErrorMessages.EMAIL_ALREADY_EXISTS);
-        }
         if(errors.hasErrors()){
             processErrors(request, errors);
             request.getRequestDispatcher(PagesPaths.REGISTER_PAGE).forward(request, response);
@@ -78,10 +77,6 @@ public class RegisterSubmitCommand implements Command {
         return builder.build();
     }
 
-    private boolean isUserRegistered(String email){
-        Optional<User> user = userService.findUserByEmail(email);
-        return user.isPresent();
-    }
 
     private void processErrors(HttpServletRequest request, Errors errors){
         logger.error("Wrong input data in registration");

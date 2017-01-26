@@ -29,10 +29,11 @@ public final class PagesPaths {
     public static final String ADMIN_PAGE = VIEW_JSP_CLASSPATH + "/admin/dashboard.jsp";
     public static final String GOODS_ADMINISTRATION_PAGE = VIEW_JSP_CLASSPATH + "/admin/goodsAdministration.jsp";
     public static final String USERS_ADMINISTRATION_PAGE = VIEW_JSP_CLASSPATH + "/admin/usersAdministration.jsp";
+    public static final String ORDER_ADMINISTRATION_PAGE = VIEW_JSP_CLASSPATH + "/admin/orderAdministration.jsp";
     public static final String ACCESS_DENIED_PAGE = VIEW_JSP_CLASSPATH + "accessDenied.jsp";
     public static final String GOODS_UPDATE_PAGE = VIEW_JSP_CLASSPATH + "/admin/goodsUpdate.jsp";
     public static final String USERS_UPDATE_PAGE = VIEW_JSP_CLASSPATH + "/admin/userUpdate.jsp";
     public static final String ERROR_PAGE = VIEW_JSP_CLASSPATH + "error.jsp";
     public static final String PAGE_NOT_FOUND = VIEW_JSP_CLASSPATH + "pageNotFound.jsp";
-    public static final String PURCHASE_SUCCESFULL_PAGE = VIEW_JSP_CLASSPATH + "user/successfullPurchasePage.jsp";
+    public static final String PURCHASE_SUCCESFULL_PAGE = VIEW_JSP_CLASSPATH + "user/successfulPurchasePage.jsp";
 }

@@ -18,16 +18,24 @@ import java.util.*;
 
 public class OrderDaoImpl implements OrderDao{
     private static final Logger logger = Logger.getLogger(OrderDaoImpl.class);
-    private static final String GET_ALL_ORDERS = "select orderID, userID, orderDate, paid, totalPrice " +
-            "userID, name, surname, email, password, birthDate, worker, role from (" +
-            "torders join users using(userID))";
+    private static final String GET_ALL_ORDERS = "select orderID, orderDate, paid, totalPrice, amount, userID, " +
+            "    name, surname, email, password, birthDate, role, goodsID, " +
+            "        title, price, ends, description, image, subcategoryID, " +
+            "        subcategoryTitle, categoryID, categoryTitle from (" +
+            "  orders join (" +
+            "    users join roles on users.role=roles.roleID" +
+            "    ) using(userID)" +
+            "    join (" +
+            "    orderinfo join (" +
+            "      goods join (" +
+            "        subcategory_list join categories using(categoryID)" +
+            "            )using(subcategoryID)" +
+            "        ) using(goodsID)" +
+            "    ) using(orderID)" +
+            ") order by orderID ";
     private static final String FILTER_BY_ID = " where orderID=?;";
-    private static final String FIND_GOODS_ITEMS = "select orderID, goodsID, title, price, ends, description, image, subcategoryID, subcategoryTitle, categoryID, categoryTitle from (" +
-            "orderInfo left join (" +
-            "goods join( subcategory_list join categories using(categoryID))using(subcategoryID)" +
-            ") using (goodsID))";
-    private static final String CREATE_ORDER = "insert into orders (`userID`, `orderDate`, `paid`) values (?,?,?);";
-    private static final String CREATE_ORDER_ITEM = "insert into orderInfo (`orderID`, `googsID`, `amount`) values (?,?,?);";
+    private static final String CREATE_ORDER = "insert into orders (`userID`, `orderDate`, `paid`, `totalPrice`) values (?,?,?,?);";
+    private static final String CREATE_ORDER_ITEM = "insert into orderInfo (`orderID`, `goodsID`, `amount`) values (last_insert_id(),?,?);";
     private Connection connection;
     private OrderResultSetExtractor extractor;
 
@@ -44,7 +52,6 @@ public class OrderDaoImpl implements OrderDao{
             ResultSet set = statement.executeQuery();
             if(set.next()){
                 Order order = extractor.extract(set);
-                order.setGoodsItems(findGoodsItems(order.getId()));
                 result = Optional.of(order);
             }
             return result;
@@ -62,7 +69,6 @@ public class OrderDaoImpl implements OrderDao{
             List<Order> orders = new ArrayList<>();
             while(set.next()){
                 Order order = extractor.extract(set);
-                order.setGoodsItems(findGoodsItems(order.getId()));
                 orders.add(order);
             }
             return orders;
@@ -81,10 +87,11 @@ public class OrderDaoImpl implements OrderDao{
             statement.setDate(2, java.sql.Date.valueOf(order.getOrderDate().
                     toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
             statement.setBoolean(3, order.isPaid());
+            statement.setLong(4, order.getTotalPrice());
             statement.executeUpdate();
             order.getGoodsItems().entrySet()
                         .stream()
-                        .forEach(entry -> createOrderItem(order.getId(), entry.getKey().getId(), entry.getValue()));
+                        .forEach(entry -> createOrderItem(entry.getKey().getId(), entry.getValue()));
         }
         catch (SQLException|DaoException ex){
             logger.error(ErrorMessages.ERROR_CREATE_ORDER);
@@ -92,11 +99,10 @@ public class OrderDaoImpl implements OrderDao{
         }
     }
 
-    private void createOrderItem(int orderId, int goodsId, int amount){
+    private void createOrderItem(int goodsId, int amount){
         try(PreparedStatement statement = connection.prepareStatement(CREATE_ORDER_ITEM)){
-            statement.setInt(1, orderId);
-            statement.setInt(2, goodsId);
-            statement.setInt(3, amount);
+            statement.setInt(1, goodsId);
+            statement.setInt(2, amount);
             statement.executeUpdate();
         }
         catch (SQLException ex){
@@ -113,20 +119,6 @@ public class OrderDaoImpl implements OrderDao{
     @Override
     public void delete(int id) {
         throw new UnsupportedOperationException();
-    }
-
-    private Map<Goods,Integer> findGoodsItems(int orderID){
-        try(PreparedStatement statement = connection.prepareStatement(FIND_GOODS_ITEMS+FILTER_BY_ID)){
-            statement.setInt(1,orderID);
-            Map<Goods, Integer> goodsItems = null;
-            ResultSet set = statement.executeQuery();
-            goodsItems=extractor.extractGoodsItems(set);
-            return goodsItems;
-        }
-        catch(SQLException ex){
-            logger.error(ErrorMessages.ERROR_FIND_GOODS_ITEMS);
-            throw new DaoException(ErrorMessages.ERROR_FIND_GOODS_ITEMS, ex);
-        }
     }
 
     @Override

@@ -16,6 +16,7 @@ import online.shop.controller.commands.overview.SubcategoryOverviewCommand;
 import online.shop.controller.commands.user.basket.AddBasketCommand;
 import online.shop.controller.commands.user.basket.RemoveBasketCommand;
 import online.shop.controller.commands.user.basket.ShowBasketCommand;
+import online.shop.services.exception.ServiceException;
 import online.shop.utils.constants.PagesPaths;
 import org.apache.log4j.Logger;
 
@@ -53,17 +54,11 @@ public class MainController extends HttpServlet {
     }
 
     public String processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        try {
-            String method = request.getMethod().toUpperCase();
-            String path = request.getRequestURI();
-            String key = method+":"+path;
-            Command command = commands.getOrDefault(key, new PageNotFoundCommand());
-            return command.execute(request, response);
-        }
-        catch (Exception exception){
-            logger.error(exception.getMessage());
-            return PagesPaths.ERROR_PAGE;
-        }
+        String method = request.getMethod().toUpperCase();
+        String path = request.getRequestURI();
+        String key = method+":"+path;
+        Command command = commands.getOrDefault(key, new PageNotFoundCommand());
+        return command.execute(request, response);
     }
 
     @Override
@@ -85,11 +80,13 @@ public class MainController extends HttpServlet {
         commands.put("GET:/online-shop/admin", new AdminHomeCommand());
         commands.put("GET:/online-shop/admin/goods", new GoodsAdministrationCommand());
         commands.put("GET:/online-shop/admin/users", new UsersAdministrationCommand());
+        commands.put("GET:/online-shop/admin/orders", new OrdersAdministrationCommand());
         commands.put("GET:/online-shop/admin/users/add", new AddBlacklistCommand());
         commands.put("GET:/online-shop/admin/users/remove", new RemoveBlacklistCommand());
         commands.put("GET:/online-shop/admin/users/update", new UpdateUserCommand());
         commands.put("POST:/online-shop/admin/users/update", new UpdateUserSubmitCommand());
         commands.put("GET:/online-shop/admin/goods/update", new UpdateGoodsCommand());
         commands.put("POST:/online-shop/admin/goods/update", new UpdateGoodsSubmitCommand());
+        commands.put("POST:/online-shop/admin/orders/update", new OrdersUpdateCommand());
     }
 }

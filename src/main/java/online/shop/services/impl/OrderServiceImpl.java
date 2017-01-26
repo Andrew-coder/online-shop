@@ -46,6 +46,7 @@ public class OrderServiceImpl implements OrderService {
     public void create(Order order) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection() ) {
             OrderDao orderDao = daoFactory.getOrderDao(wrapper);
+            order.setTotalPrice(calculateTotalPrice(order));
             wrapper.beginTransaction();
             orderDao.create(order);
             wrapper.commitTransaction();
@@ -76,6 +77,13 @@ public class OrderServiceImpl implements OrderService {
             OrderDao orderDao = daoFactory.getOrderDao(wrapper);
             return orderDao.findAllUnpaidOrders();
         }
+    }
+
+    private long calculateTotalPrice(Order order){
+        return order.getGoodsItems().entrySet()
+                                .stream()
+                                .mapToLong(entry -> (long)entry.getKey().getPrice()*entry.getValue())
+                                .sum();
     }
 }
 

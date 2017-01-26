@@ -26,6 +26,7 @@ public class AddBasketCommand implements Command {
             goodsItems = new HashMap<>();
         }
         int id = Integer.parseInt(request.getParameter(Attributes.GOODS_ID));
+        //todo wrap into class basket
         Optional<Goods> goods = goodsService.findById(id);
         if(goods.isPresent()){
             Goods g = goods.get();
