@@ -30,7 +30,6 @@ import java.util.Map;
 public class PurchaseSubmitCommand extends CommandExecuter {
     private static final Logger logger = Logger.getLogger(PurchaseSubmitCommand.class);
     private OrderService orderService = OrderServiceImpl.getInstance();
-    private UserService userService = UserServiceImpl.getInstance();
     private OrderValidator orderValidator;
 
     public PurchaseSubmitCommand() {
@@ -45,10 +44,6 @@ public class PurchaseSubmitCommand extends CommandExecuter {
             order.setPaid(true);
         }
         Errors errors = orderValidator.validate(order);
-        if(userService.isUserInBlacklist(order.getUser().getId())){
-            logger.error(String.format("User %d from blacklist tried to make purchase", order.getUser().getId()));
-            errors.addError(Attributes.BLACK_LIST_USER, ErrorMessages.BLACK_LIST_USER);
-        }
         if(errors.hasErrors()){
             request.setAttribute(Attributes.ERRORS, errors);
             logger.error(ErrorMessages.WRONG_ORDER_DATA);
