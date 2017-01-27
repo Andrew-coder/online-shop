@@ -39,5 +39,10 @@ public final class Attributes {
     public static final String WRONG_BASKET_VALUES = "wrongBasket";
     public static final String BASKET_TOTAL = "totalSum";
 
+    public static final String ORDER_ID = "orderID";
+    public static final String ORDER = "order";
     public static final String ORDERS = "orders";
+    public static final String ORDER_STATUS = "status";
+    public static final String ORDER_PAID = "paid";
+    public static final String ORDER_UNPAID = "unpaid";
 }

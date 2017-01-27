@@ -16,7 +16,6 @@ import online.shop.controller.commands.overview.SubcategoryOverviewCommand;
 import online.shop.controller.commands.user.basket.AddBasketCommand;
 import online.shop.controller.commands.user.basket.RemoveBasketCommand;
 import online.shop.controller.commands.user.basket.ShowBasketCommand;
-import online.shop.services.exception.ServiceException;
 import online.shop.utils.constants.PagesPaths;
 import org.apache.log4j.Logger;
 
@@ -87,6 +86,7 @@ public class MainController extends HttpServlet {
         commands.put("POST:/online-shop/admin/users/update", new UpdateUserSubmitCommand());
         commands.put("GET:/online-shop/admin/goods/update", new UpdateGoodsCommand());
         commands.put("POST:/online-shop/admin/goods/update", new UpdateGoodsSubmitCommand());
-        commands.put("POST:/online-shop/admin/orders/update", new OrdersUpdateCommand());
+        commands.put("GET:/online-shop/admin/orders/update", new UpdateOrderCommand());
+        commands.put("POST:/online-shop/admin/orders/update", new UpdateOrderSubmitCommand() );
     }
 }

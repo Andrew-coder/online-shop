@@ -32,8 +32,9 @@ public class OrderDaoImpl implements OrderDao{
             "            )using(subcategoryID)" +
             "        ) using(goodsID)" +
             "    ) using(orderID)" +
-            ") order by orderID ";
+            ")  ";
     private static final String FILTER_BY_ID = " where orderID=?;";
+    private static final String UPDATE_ORDER = "update orders set `paid`=? ";
     private static final String CREATE_ORDER = "insert into orders (`userID`, `orderDate`, `paid`, `totalPrice`) values (?,?,?,?);";
     private static final String CREATE_ORDER_ITEM = "insert into orderInfo (`orderID`, `goodsID`, `amount`) values (last_insert_id(),?,?);";
     private Connection connection;
@@ -113,7 +114,17 @@ public class OrderDaoImpl implements OrderDao{
 
     @Override
     public void update(Order order) {
-        throw new UnsupportedOperationException();
+        checkEmptyOrder(order);
+        checkUnsavedOrder(order);
+        try(PreparedStatement statement = connection.prepareStatement(UPDATE_ORDER + FILTER_BY_ID)){
+            statement.setBoolean(1, order.isPaid());
+            statement.setInt(2, order.getId());
+            statement.executeUpdate();
+        }
+        catch (SQLException ex){
+            logger.error(ErrorMessages.ERROR_UPDATE_ORDER);
+            throw new DaoException(ErrorMessages.ERROR_UPDATE_ORDER, ex);
+        }
     }
 
     @Override
@@ -129,5 +140,17 @@ public class OrderDaoImpl implements OrderDao{
     @Override
     public List<Order> findAllUnpaidOrders() {
         return null;
+    }
+
+    private void checkUnsavedOrder(Order order){
+        if(order.getId()==0){
+            throw new DaoException(ErrorMessages.UNSAVED_OBJECT);
+        }
+    }
+
+    private void checkEmptyOrder(Order order){
+        if(order == null){
+            throw new DaoException(ErrorMessages.EMPTY_OBJECT);
+        }
     }
 }

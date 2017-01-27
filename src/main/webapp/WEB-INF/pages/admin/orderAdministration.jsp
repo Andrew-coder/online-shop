@@ -9,7 +9,7 @@
     <a href="/admin">dashboard</a>
 </div>
 
-    <form method="post" action="/admin/orders/update">
+
         <table width="608" border="2" align="center" cellpadding="3" cellspacing="4">
             <tr>
                 <td>ID</td>
@@ -24,24 +24,17 @@
                     <td>${value.id}</td>
                     <td>${value.user.name}${" "}${value.user.surname}</td>
                     <td>${value.totalPrice}</td>
-                    <td width="50%"></td>
-                    <td>
-                        <select>
-                            <c:if test="${value.paid==true}">
-                                <option selected="selected">paid</option>
-                                <option>unpaid</option>
-                            </c:if>
-                            <c:if test="${value.paid==false}">
-                                <option>paid</option>
-                                <option selected="selected">unpaid</option>
-                            </c:if>
-                        </select>
-                    </td>
-                    <td><a href="/admin/orders/details?orderID=${value.id}"><button>Details</button></a></td>
+                    <td width="40%"></td>
+                    <c:if test="${value.paid==true}">
+                        <td>paid</td>
+                    </c:if>
+                    <c:if test="${value.paid==false}">
+                        <td>unpaid</td>
+                    </c:if>
+                    <td><a href="/admin/orders/update?orderID=${value.id}"><button>Details</button></a></td>
                 </tr>
             </c:forEach>
         </table>
-        <input type="submit">
-    </form>
+
 </body>
 </html>

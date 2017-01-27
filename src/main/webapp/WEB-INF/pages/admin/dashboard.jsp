@@ -9,9 +9,10 @@
 <body>
     <h1 align="center">Control Panel</h1>
     <p align="center">Control Panel</p>
-    <%--<c:choose>
-        <c:when test="${sessionScope.user.role==RoleType.ADMIN}">--%>
-            <table width="608" border="2" align="center" cellpadding="3" cellspacing="4">
+    <table width="608" border="2" align="center" cellpadding="3" cellspacing="4">
+    <c:choose>
+        <c:when test="${user.role.getRoleName() eq 'admin'}">
+
             <tr>
                 <td><div align="center"><a href="#">Categories</a></div></td>
                 <td><div align="center"><a href="#">Subcategories</a></div></td>
@@ -21,11 +22,11 @@
                 <td><div align="center"><a href="/admin/orders">Orders</a></div></td>
                 <td colspan="2" align="center"><div align="center"><a href="/admin/users">Users</a></div></td>
             </tr>
-        <%--</c:when>
-        <c:when test="${sessionScope.user.role==RoleType.MANAGER}">
-
-        </c:when>--%>
+        </c:when>
+        <c:when test="${user.role.getRoleName() eq 'manager'}">
+            <tr><td><div align="center"><a href="/admin/goods">Goods</a></div></td></tr>
+        </c:when>
+    </c:choose>
     </table>
-   <%-- </c:choose>--%>
 </body>
 </html>

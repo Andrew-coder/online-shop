@@ -35,7 +35,9 @@ public class UpdateGoodsCommand implements Command {
         Optional<Goods> goods = extractGoods(request);
         Errors errors = new Errors();
         if(!goods.isPresent()){
-            errors.addError(Attributes.GOODS_ID, ErrorMessages.UNEXISTING_GOODS);
+            logger.error(ErrorMessages.GOODS_NOT_FOUND);
+            response.sendRedirect(PagesPaths.GOODS_ADMINISTRATION);
+            return PagesPaths.REDIRECT;
         }
         List<Subcategory> subcategories = subcategoryService.findAll();
         if(subcategories.isEmpty()){

@@ -5,6 +5,8 @@ import online.shop.dao.DaoFactory;
 import online.shop.dao.OrderDao;
 import online.shop.model.entity.Order;
 import online.shop.services.OrderService;
+import online.shop.services.exception.ServiceException;
+import online.shop.utils.constants.ErrorMessages;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,11 +57,23 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void update(Order order) {
+        checkEmptyOrder(Optional.of(order));
         try(ConnectionWrapper wrapper = daoFactory.getConnection() ) {
             OrderDao orderDao = daoFactory.getOrderDao(wrapper);
             wrapper.beginTransaction();
             orderDao.update(order);
             wrapper.commitTransaction();
+        }
+    }
+
+    @Override
+    public void updateOrderStatus(int orderId, boolean paid) {
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
+            OrderDao orderDao = daoFactory.getOrderDao(wrapper);
+            Optional<Order> order = orderDao.findById(orderId);
+            checkEmptyOrder(order);
+            order.get().setPaid(paid);
+            orderDao.update(order.get());
         }
     }
 
@@ -84,6 +98,12 @@ public class OrderServiceImpl implements OrderService {
                                 .stream()
                                 .mapToLong(entry -> (long)entry.getKey().getPrice()*entry.getValue())
                                 .sum();
+    }
+
+    private void checkEmptyOrder(Optional<Order> order){
+        if(!order.isPresent()){
+            throw new ServiceException(ErrorMessages.EMPTY_OBJECT);
+        }
     }
 }
 

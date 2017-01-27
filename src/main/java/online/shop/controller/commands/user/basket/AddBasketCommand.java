@@ -21,7 +21,7 @@ public class AddBasketCommand implements Command {
     private GoodsService goodsService = GoodsServiceImpl.getInstance();
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<Goods,Integer> goodsItems = (Map<Goods, Integer>) request.getSession().getAttribute("goods");
+        Map<Goods,Integer> goodsItems = (Map<Goods, Integer>) request.getSession().getAttribute(Attributes.GOODS);
         if(goodsItems==null){
             goodsItems = new HashMap<>();
         }

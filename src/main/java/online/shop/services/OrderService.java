@@ -13,6 +13,7 @@ public interface OrderService {
     List<Order> findAll();
     void create(Order order);
     void update(Order order);
+    void updateOrderStatus(int orderId, boolean paid);
     List<Order> findAllUserOrders(int userId);
     List<Order> findAllUnpaidOrders();
 }
