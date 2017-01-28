@@ -1,14 +1,17 @@
 package online.shop.controller;
 
-import online.shop.controller.commands.*;
-import online.shop.controller.commands.admin.*;
+import online.shop.controller.commands.Command;
+import online.shop.controller.commands.HomeCommand;
+import online.shop.controller.commands.LogOutCommand;
+import online.shop.controller.commands.PageNotFoundCommand;
+import online.shop.controller.commands.admin.AdminHomeCommand;
 import online.shop.controller.commands.admin.blacklist.AddBlacklistCommand;
 import online.shop.controller.commands.admin.blacklist.RemoveBlacklistCommand;
-import online.shop.controller.commands.user.purchase.PurchaseCommand;
-import online.shop.controller.commands.user.basket.UpdateBasketCommand;
-import online.shop.controller.commands.user.purchase.PurchaseSubmitCommand;
-import online.shop.controller.commands.user.register.RegisterCommand;
-import online.shop.controller.commands.user.register.RegisterSubmitCommand;
+import online.shop.controller.commands.admin.goods.*;
+import online.shop.controller.commands.admin.orders.OrdersAdministrationCommand;
+import online.shop.controller.commands.admin.orders.UpdateOrderCommand;
+import online.shop.controller.commands.admin.orders.UpdateOrderSubmitCommand;
+import online.shop.controller.commands.admin.users.*;
 import online.shop.controller.commands.login.LoginCommand;
 import online.shop.controller.commands.login.LoginSubmitCommand;
 import online.shop.controller.commands.overview.GoodsOverviewCommand;
@@ -16,52 +19,30 @@ import online.shop.controller.commands.overview.SubcategoryOverviewCommand;
 import online.shop.controller.commands.user.basket.AddBasketCommand;
 import online.shop.controller.commands.user.basket.RemoveBasketCommand;
 import online.shop.controller.commands.user.basket.ShowBasketCommand;
-import online.shop.utils.constants.PagesPaths;
-import org.apache.log4j.Logger;
+import online.shop.controller.commands.user.basket.UpdateBasketCommand;
+import online.shop.controller.commands.user.purchase.PurchaseCommand;
+import online.shop.controller.commands.user.purchase.PurchaseSubmitCommand;
+import online.shop.controller.commands.user.register.RegisterCommand;
+import online.shop.controller.commands.user.register.RegisterSubmitCommand;
 
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by andri on 1/19/2017.
+ * Created by andri on 1/27/2017.
  */
-public class MainController extends HttpServlet {
-    private static final Logger logger = Logger.getLogger(MainController.class);
-    private static final long serialVersionUID = 1L;
+public class CommandHolder {
+    private Map<String, Command> commands = new HashMap<>();
 
-    private Map<String , Command> commands = new HashMap<>();
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = processRequest(request, response);
-        if(!path.equals(PagesPaths.REDIRECT)) {
-            request.getRequestDispatcher(path).forward(request, response);
-        }
+    public CommandHolder() {
+        fillCommands();
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = processRequest(request, response);
-        if(!path.equals(PagesPaths.FORWARD))
-            response.sendRedirect(path);
+    Command findCommand(String key){
+        return commands.getOrDefault(key, new PageNotFoundCommand());
     }
 
-    public String processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        String method = request.getMethod().toUpperCase();
-        String path = request.getRequestURI();
-        String key = method+":"+path;
-        Command command = commands.getOrDefault(key, new PageNotFoundCommand());
-        return command.execute(request, response);
-    }
-
-    @Override
-    public void init() throws ServletException {
+    private void fillCommands(){
         commands.put("GET:/online-shop/", new HomeCommand());
         commands.put("GET:/online-shop/login", new LoginCommand());
         commands.put("POST:/online-shop/login", new LoginSubmitCommand());
@@ -88,5 +69,9 @@ public class MainController extends HttpServlet {
         commands.put("POST:/online-shop/admin/goods/update", new UpdateGoodsSubmitCommand());
         commands.put("GET:/online-shop/admin/orders/update", new UpdateOrderCommand());
         commands.put("POST:/online-shop/admin/orders/update", new UpdateOrderSubmitCommand() );
+        commands.put("GET:/online-shop/admin/users/create", new CreateUserCommand());
+        commands.put("POST:/online-shop/admin/users/create", new CreateUserSubmitCommand());
+        commands.put("GET:/online-shop/admin/goods/create", new CreateGoodsCommand());
+        commands.put("POST:/online-shop/admin/goods/create", new CreateGoodsSubmitCommand());
     }
 }

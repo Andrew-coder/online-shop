@@ -4,6 +4,7 @@ import online.shop.controller.validators.Errors;
 import online.shop.dao.exception.DaoException;
 import online.shop.services.exception.ServiceException;
 import online.shop.utils.constants.Attributes;
+import online.shop.utils.constants.ErrorMessages;
 import online.shop.utils.constants.PagesPaths;
 import org.apache.log4j.Logger;
 
@@ -29,7 +30,7 @@ public abstract class CommandExecuter implements Command {
         }
         catch (Exception exception){
             logger.error(exception.getMessage());
-            putErrorMessageInRequest(request, exception.getMessage());
+            putErrorMessageInRequest(request, ErrorMessages.UNKNOWN_ERROR_OCCURED);
         }
         request.getRequestDispatcher(PagesPaths.ERROR_PAGE).forward(request,response);
         return PagesPaths.FORWARD;

@@ -1,4 +1,4 @@
-package online.shop.controller.commands.admin;
+package online.shop.controller.commands.admin.users;
 
 import online.shop.controller.commands.Command;
 import online.shop.controller.validators.Errors;

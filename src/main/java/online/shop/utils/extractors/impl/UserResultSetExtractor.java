@@ -19,11 +19,8 @@ public class UserResultSetExtractor implements ResultSetExtractor<User> {
                 .setSurname(set.getString("surname"))
                 .setEmail(set.getString("email"))
                 .setPassword(set.getString("password"))
-                .setBirthDate(set.getDate("birthDate"));
-        String role = set.getString("role");
-        if(role!=null){
-            builder.setRole(RoleType.getRole(role));
-        }
+                .setBirthDate(set.getDate("birthDate"))
+                .setRole(RoleType.getRole(set.getString("role")));
         return builder.build();
     }
 }

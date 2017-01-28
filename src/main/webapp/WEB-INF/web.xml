@@ -25,7 +25,7 @@
 
     <servlet>
         <servlet-name>MainController</servlet-name>
-        <servlet-class>online.shop.controller.MainController</servlet-class>
+        <servlet-class>online.shop.controller.FrontController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>

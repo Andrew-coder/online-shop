@@ -1,4 +1,4 @@
-package online.shop.controller.commands.admin;
+package online.shop.controller.commands.admin.users;
 
 import online.shop.controller.commands.Command;
 
@@ -10,10 +10,9 @@ import java.io.IOException;
 /**
  * Created by andri on 1/24/2017.
  */
-public class UpdateGoodsSubmitCommand implements Command {
+public class UpdateUserSubmitCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         return null;
     }
 }
-

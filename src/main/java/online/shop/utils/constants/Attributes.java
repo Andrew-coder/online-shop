@@ -21,6 +21,7 @@ public final class Attributes {
     public static final String PREVIOUS_USER_NAME = "previousUserName";
     public static final String PREVIOUS_USER_SURNAME = "previousUserSurname";
     public static final String PREVIOUS_USER_DATE = "previousUserDate";
+    public static final String PREVIOUS_USER_ROLE = "previousUserRole";
 
     public static final String CATEGORIES = "categories";
     public static final String CATEGORY_ID = "categoryID";

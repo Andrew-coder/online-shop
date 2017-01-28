@@ -20,11 +20,9 @@ public class OrderDaoImpl implements OrderDao{
     private static final Logger logger = Logger.getLogger(OrderDaoImpl.class);
     private static final String GET_ALL_ORDERS = "select orderID, orderDate, paid, totalPrice, amount, userID, " +
             "    name, surname, email, password, birthDate, role, goodsID, " +
-            "        title, price, ends, description, image, subcategoryID, " +
+            "        title, price, availability, description, image, subcategoryID, " +
             "        subcategoryTitle, categoryID, categoryTitle from (" +
-            "  orders join (" +
-            "    users join roles on users.role=roles.roleID" +
-            "    ) using(userID)" +
+            "  orders join users using(userID)" +
             "    join (" +
             "    orderinfo join (" +
             "      goods join (" +

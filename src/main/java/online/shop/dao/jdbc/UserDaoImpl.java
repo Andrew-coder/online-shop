@@ -18,16 +18,14 @@ import java.util.Optional;
  * Created by andri on 1/5/2017.
  */
 public class UserDaoImpl implements UserDao{
-    private static final String GET_ALL_USERS = "select userID, name, surname, email, password, birthDate,  r.roleName as role from users " +
-                                                "left join roles r on users.role=r.roleID ";
+    private static final String GET_ALL_USERS = "select userID, name, surname, email, password, birthDate,  role from users ";
     private static final String GET_ALL_USERS_IN_BLACKLIST = "select userID, name, surname, email, password, birthDate, role from (" +
-            "blacklist join (users left join roles r on users.role=r.roleID)using(userID))";
-    private static final String FILTER_BY_ONLY_CUSTOMERS = "where worker=false;";
+            "blacklist join users using(userID))";
     private static final String FILTER_BY_ID = " where userID = ?;";
     private static final String FILTER_BY_EMAIL = " where email=?;";
-    private static final String FILTER_BY_ROLE = " inner join roles on users.role=roles.roleID where roles.roleName=?;";
+    private static final String FILTER_BY_ROLE = " where role=?;";
     private static final String DELETE_USER = "delete from users ";
-    private static final String CREATE_USER = "insert into users (`name`, `surname`, `email`, `password`, `birthDate`) VALUES (?,?,?,?,?);";
+    private static final String CREATE_USER = "insert into users (`name`, `surname`, `email`, `password`, `birthDate`, `role`) VALUES (?,?,?,?,?,?);";
     private static final String INSERT_INTO_BLACKLIST = "insert into blacklist (`userID`) values (?);";
     private static final String DELETE_FROM_BLACKLIST = "delete from blacklist where userID=?";
     private Connection connection;
@@ -113,6 +111,7 @@ public class UserDaoImpl implements UserDao{
             statement.setString(4, user.getPassword());
             statement.setDate(5, java.sql.Date.valueOf(user.getBirthDate().
                     toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+            statement.setString(6, user.getRole().getRoleName());
             statement.executeUpdate();
         }
         catch (SQLException ex){

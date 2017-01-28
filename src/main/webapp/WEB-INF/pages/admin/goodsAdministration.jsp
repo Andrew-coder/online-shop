@@ -9,25 +9,26 @@
     <div class="top-bar">
         <a href="/admin">dashboard</a>
     </div>
-
-    <table width="608" border="2" align="center" cellpadding="3" cellspacing="4">
-        <tr>
-            <td>ID</td>
-            <td>Title</td>
-            <td width="50%"></td>
-            <td>Update</td>
-            <td>Delete</td>
-        </tr>
-        <c:forEach var="value" items="${goods}">
+    <div>
+        <table width="608" border="2" align="center" cellpadding="3" cellspacing="4">
             <tr>
-                <td>${value.id}</td>
-                <td>${value.title}</td>
+                <td>ID</td>
+                <td>Title</td>
                 <td width="50%"></td>
-                <td><a href="/admin/goods/update?goodsID=${value.id}"><button>Update</button></a></td>
-                <td><button>Delete</button></td>
+                <td>Update</td>
             </tr>
-        </c:forEach>
-
-    </table>
+            <c:forEach var="value" items="${goods}">
+                <tr>
+                    <td>${value.id}</td>
+                    <td>${value.title}</td>
+                    <td width="50%"></td>
+                    <td><a href="/admin/goods/update?goodsID=${value.id}"><button>Update</button></a></td>
+                </tr>
+            </c:forEach>
+        </table>
+        <div align="center">
+        <a href="/admin/goods/create"><button type="button">Create new goods</button></a>
+        </div>
+    </div>
 </body>
 </html>

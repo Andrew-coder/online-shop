@@ -33,21 +33,41 @@
             <table>
                 <tr>
                     <td><label>title</label></td>
-                    <td><input type="text" value="${goods.title}"></td>
+                    <td><input type="text" value="${goods.title}" style="width: 200px;"></td>
                 </tr>
                 <tr>
                     <td><label>price</label></td>
                     <td><input type="text" value="${goods.price}"></td>
                 </tr>
                 <tr>
-                    <td><label>mark that this goods ends soon</label></td>
-                    <td><input type="checkbox" value="not available" unchecked></td>
+                    <td><label>goods status</label></td>
+                    <td>
+                        <select>
+                            <c:choose>
+                                <c:when test="${goods.goodsStatus.getGoodsStatus() eq 'available'}">
+                                    <option id="available" value="available" selected>available</option>
+                                    <option id="ends" value="ends">ends</option>
+                                    <option id="ended" value="ended">ended</option>
+                                </c:when>
+                                <c:when test="${goods.goodsStatus.getGoodsStatus() eq 'ends'}">
+                                    <option id="available" value="available">available</option>
+                                    <option id="ends" value="ends" selected>ends</option>
+                                    <option id="ended" value="ended">ended</option>
+                                </c:when>
+                                <c:when test="${goods.goodsStatus.getGoodsStatus() eq 'ended'}">
+                                    <option id="available" value="available">available</option>
+                                    <option id="ends" value="ends">ends</option>
+                                    <option id="ended" value="ended" selected>ended</option>
+                                </c:when>
+                            </c:choose>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2"><label>description</label></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><input type="text"  value="${goods.description}"  width="30%" height="20%"></td>
+                    <td colspan="2"><input type="text"  value="${goods.description}" style="width: 350px; height: 50px;"></td>
                 </tr>
             </table>
             <label>select subcategory</label>

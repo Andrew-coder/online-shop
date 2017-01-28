@@ -1,7 +1,6 @@
-package online.shop.controller.commands.admin;
+package online.shop.controller.commands.admin.orders;
 
 import online.shop.controller.commands.Command;
-import online.shop.model.entity.RoleType;
 import online.shop.services.OrderService;
 import online.shop.services.impl.OrderServiceImpl;
 import online.shop.utils.constants.Attributes;

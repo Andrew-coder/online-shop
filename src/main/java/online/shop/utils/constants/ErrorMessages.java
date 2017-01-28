@@ -50,4 +50,6 @@ public final class ErrorMessages {
 
     public static final String GOODS_NOT_FOUND = "Goods wasn't found";
     public static final String ORDER_NOT_FOUND = "Order wasn't found ";
+
+    public static final String UNKNOWN_ERROR_OCCURED = "Unknown error occured...";
 }

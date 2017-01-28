@@ -7,40 +7,40 @@ import java.util.Base64;
  */
 public class Goods extends BaseEntity{
     private String title;
-    private double price;
+    private long price;
     private String description;
     private Subcategory subcategory;
     private String image;
-    private boolean ends;
+    private GoodsStatus goodsStatus;
 
     public Goods() {
     }
 
-    public Goods(String title, double price, String description, Subcategory subcategory, String image, boolean ends) {
+    public Goods(String title, long price, String description, Subcategory subcategory, String image, GoodsStatus goodsStatus) {
         this.title = title;
         this.price = price;
         this.description = description;
         this.subcategory = subcategory;
         this.image = image;
-        this.ends = ends;
+        this.goodsStatus = goodsStatus;
     }
 
-    public Goods(int id, String title, double price, String description, Subcategory subcategory, String image, boolean ends) {
+    public Goods(int id, String title, long price, String description, Subcategory subcategory, String image, GoodsStatus goodsStatus) {
         super(id);
         this.title = title;
         this.price = price;
         this.description = description;
         this.subcategory = subcategory;
         this.image = image;
-        this.ends = ends;
+        this.goodsStatus = goodsStatus;
     }
 
-    public Goods(String title, double price, String description, Subcategory subcategory, boolean ends) {
+    public Goods(String title, long price, String description, Subcategory subcategory, GoodsStatus goodsStatus) {
         this.title = title;
         this.price = price;
         this.description = description;
         this.subcategory = subcategory;
-        this.ends = ends;
+        this.goodsStatus = goodsStatus;
     }
 
     public String getTitle() {
@@ -55,7 +55,7 @@ public class Goods extends BaseEntity{
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
@@ -67,12 +67,12 @@ public class Goods extends BaseEntity{
         this.subcategory = subcategory;
     }
 
-    public boolean isEnds() {
-        return ends;
+    public GoodsStatus getGoodsStatus() {
+        return goodsStatus;
     }
 
-    public void setEnds(boolean ends) {
-        this.ends = ends;
+    public void setGoodsStatus(GoodsStatus goodsStatus) {
+        this.goodsStatus = goodsStatus;
     }
 
     public String getDescription() {
@@ -91,31 +91,7 @@ public class Goods extends BaseEntity{
         this.image = image;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Goods)) return false;
 
-        Goods goods = (Goods) o;
-
-        if (Double.compare(goods.getPrice(), getPrice()) != 0) return false;
-        if (isEnds() != goods.isEnds()) return false;
-        if (!getTitle().equals(goods.getTitle())) return false;
-        return getDescription().equals(goods.getDescription());
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = getTitle().hashCode();
-        temp = Double.doubleToLongBits(getPrice());
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + getDescription().hashCode();
-        result = 31 * result + (isEnds() ? 1 : 0);
-        return result;
-    }
 
     public static class Builder{
         Goods instance = new Goods();
@@ -130,7 +106,7 @@ public class Goods extends BaseEntity{
             return this;
         }
 
-        public Builder setPrice(double price){
+        public Builder setPrice(long price){
             instance.price = price;
             return this;
         }
@@ -150,8 +126,8 @@ public class Goods extends BaseEntity{
             return this;
         }
 
-        public Builder setEnds(boolean ends){
-            instance.ends = ends;
+        public Builder setGoodsStatus(GoodsStatus goodsStatus){
+            instance.goodsStatus = goodsStatus;
             return this;
         }
 

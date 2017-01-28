@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 /**
  * Created by andri on 1/23/2017.
  */
-public class UserRegisterValidator implements Validator<User> {
+public class UserValidator implements Validator<User> {
     @Override
     public Errors validate(User user) {
         Errors results = new Errors();

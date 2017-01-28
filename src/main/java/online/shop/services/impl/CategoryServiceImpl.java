@@ -56,16 +56,16 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public void create(Category category) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void update(Category category) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void delete(int id) {
-
+        throw new UnsupportedOperationException();
     }
 }

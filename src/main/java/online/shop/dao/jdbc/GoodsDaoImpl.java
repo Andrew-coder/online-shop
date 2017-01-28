@@ -16,7 +16,7 @@ import java.util.Optional;
  * Created by andri on 1/5/2017.
  */
 public class GoodsDaoImpl implements GoodsDao {
-    private static final String GET_ALL_GOODS = "select goodsID, title, price, image, ends, description,  subcategoryID, subcategoryTitle, categoryID, categoryTitle from(" +
+    private static final String GET_ALL_GOODS = "select goodsID, title, price, image, availability, description,  subcategoryID, subcategoryTitle, categoryID, categoryTitle from(" +
             "goods join (subcategory_list join categories using(categoryID)" +
             ")using(subcategoryID)) ";
     private static final String FILTER_BY_ID = " where goodsID=?;";

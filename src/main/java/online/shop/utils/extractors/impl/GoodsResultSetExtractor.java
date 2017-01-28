@@ -1,5 +1,6 @@
 package online.shop.utils.extractors.impl;
 
+import online.shop.model.entity.GoodsStatus;
 import online.shop.utils.extractors.ResultSetExtractor;
 import online.shop.model.entity.Goods;
 import online.shop.model.entity.Subcategory;
@@ -17,11 +18,12 @@ public class GoodsResultSetExtractor implements ResultSetExtractor<Goods> {
         Goods.Builder builder = new Goods.Builder()
                 .setId(set.getInt("goodsID"))
                 .setTitle(set.getString("title"))
-                .setPrice(set.getDouble("price"))
+                .setPrice(set.getLong("price"))
                 .setDescription(set.getString("description"))
-                .setEnds(set.getBoolean("ends"))
                 .setSubcategory(new Subcategory(set.getInt("subcategoryID")))
                 .setImage(set.getString("image"));
+        String status = set.getString("availability");
+        builder.setGoodsStatus(GoodsStatus.getStatus(status));
         SubcategoryResultSetExtractor subcategoryExtractor = new SubcategoryResultSetExtractor();
         builder.setSubcategory(subcategoryExtractor.extract(set));
         return builder.build();
