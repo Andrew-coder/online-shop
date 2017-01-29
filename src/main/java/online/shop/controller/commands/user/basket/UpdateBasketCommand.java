@@ -2,6 +2,7 @@ package online.shop.controller.commands.user.basket;
 
 import online.shop.controller.commands.Command;
 import online.shop.controller.validators.Errors;
+import online.shop.model.dto.Basket;
 import online.shop.model.entity.Goods;
 import online.shop.utils.constants.Attributes;
 import online.shop.utils.constants.ErrorMessages;
@@ -22,11 +23,11 @@ public class UpdateBasketCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<Goods, Integer> goodsItems = (Map<Goods,Integer>) request.getSession().getAttribute(Attributes.GOODS);
+        Basket basket = (Basket) request.getSession().getAttribute(Attributes.BASKET);
         Errors errors = new Errors();
         try {
-            if (goodsItems != null && !goodsItems.isEmpty()) {
-                goodsItems.entrySet()
+            if (!basket.isEmpty()) {
+                basket.getGoodsItems().entrySet()
                         .stream()
                         .forEach(g -> g.setValue(extractGoodsAmount(request, g.getKey().getId())));
             }
@@ -36,7 +37,7 @@ public class UpdateBasketCommand implements Command {
             errors.addError(Attributes.WRONG_BASKET_VALUES, ErrorMessages.WRONG_BASKET_VALUES);
             request.setAttribute(Attributes.ERRORS, errors);
         }
-        request.getSession().setAttribute(Attributes.GOODS, goodsItems);
+        request.getSession().setAttribute(Attributes.BASKET, basket);
         return PagesPaths.BASKET;
     }
 

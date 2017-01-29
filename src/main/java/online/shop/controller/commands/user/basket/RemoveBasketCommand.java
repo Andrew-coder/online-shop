@@ -1,6 +1,8 @@
 package online.shop.controller.commands.user.basket;
 
 import online.shop.controller.commands.Command;
+import online.shop.controller.commands.CommandExecuter;
+import online.shop.model.dto.Basket;
 import online.shop.model.entity.Goods;
 import online.shop.services.GoodsService;
 import online.shop.services.impl.GoodsServiceImpl;
@@ -19,29 +21,21 @@ import java.util.stream.Collectors;
 /**
  * Created by andri on 1/22/2017.
  */
-public class RemoveBasketCommand implements Command {
+public class RemoveBasketCommand extends CommandExecuter {
     private GoodsService goodsService = GoodsServiceImpl.getInstance();
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<Goods, Integer> goodsItems = (Map<Goods,Integer>) request.getSession().getAttribute("goods");
+    public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Basket basket = (Basket) request.getSession().getAttribute(Attributes.BASKET);
         int id = Integer.parseInt(request.getParameter(Attributes.GOODS_ID));
-        if(goodsItems!=null && checkGoodsId(id)) {
-            goodsItems = goodsItems.entrySet()
-                    .stream()
-                    .filter(goods -> goods.getKey().getId()!=id)
-                    .collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
+        if(!basket.isEmpty() ) {
+            Optional<Goods> goods = goodsService.findById(id);
+            if(goods.isPresent()){
+                basket.removeGoodsItem(goods.get());
+            }
         }
-        request.getSession().setAttribute(Attributes.GOODS, goodsItems);
+        request.getSession().setAttribute(Attributes.BASKET, basket);
         response.sendRedirect(PagesPaths.BASKET);
         return PagesPaths.REDIRECT;
-    }
-
-    private boolean checkGoodsId(int id){
-        Optional<Goods> goods = goodsService.findById(id);
-        if(goods.isPresent()){
-            return true;
-        }
-        return false;
     }
 }

@@ -14,10 +14,10 @@
                 </c:otherwise>
             </c:choose>
         <p>
-            <c:if test="${sessionScope.goods!=null}">
-                Shopping Cart: <strong>${sessionScope.goods.size()} items</strong> ( <a href="./basket">Show Basket</a> )
+            <c:if test="${sessionScope.basket!=null}">
+                Shopping Cart: <strong>${basket.getGoodsItems().size()} items</strong> ( <a href="./basket">Show Basket</a> )
             </c:if>
-            <c:if test="${sessionScope.goods==null}">
+            <c:if test="${sessionScope.basket==null}">
                 Shopping Cart: <strong>0 items</strong> ( <a href="./basket">Show Basket</a> )
             </c:if>
         </p>

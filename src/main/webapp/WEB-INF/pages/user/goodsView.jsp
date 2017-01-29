@@ -55,10 +55,10 @@
                         <c:when test="${ (loop.index+1)%3 eq 0}">
                             <div class="product_box no_margin_right">
                                 <h3>${value.title}</h3>
-                                <%--<a href="productdetail.html"><img src="data:image/jpg;base64,${value.getImageInBase64()}" alt="${value.getCategory().getTitle()}" /></a>--%>
+                                <h4>${value.goodsStatus}</h4>
                                 <a href="productdetail.html"><img src="${value.image}" alt="Shoes 1" /></a>
                                 <p> ${value.description} </p>
-                                <p class="product_price">${value.price}</p>
+                                <p class="product_price">${value.getRealPrice()}</p>
                                 <a href="basket/add?goodsID=${value.id}" class="addtocart"></a>
                                 <a href="/basket/goodsInfo?goodsID=${value.id}" class="detail"></a>
                             </div>
@@ -67,10 +67,10 @@
                         <c:otherwise>
                             <div class="product_box">
                                 <h3>${value.title}</h3>
-                                    <%--<a href="productdetail.html"><img src="data:image/jpg;base64,${value.getImageInBase64()}" alt="${value.getCategory().getTitle()}" /></a>--%>
+                                <h4>${value.goodsStatus}</h4>
                                 <a href="productdetail.html"><img src="/images/no_photo.jpg" alt="Shoes 1" /></a>
                                 <p> ${value.description} </p>
-                                <p class="product_price">${value.price}</p>
+                                <p class="product_price">${value.getRealPrice()}</p>
                                 <a href="/basket/add?goodsID=${value.id}" class="addtocart"></a>
                                 <a href="/goodsInfo?goodsID=${value.id}" class="detail"></a>
                             </div>

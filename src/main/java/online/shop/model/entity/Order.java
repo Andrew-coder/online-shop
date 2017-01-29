@@ -63,6 +63,31 @@ public class Order extends BaseEntity{
         this.totalPrice = totalPrice;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Order)) return false;
+
+        Order order = (Order) o;
+
+        if (isPaid() != order.isPaid()) return false;
+        if (getTotalPrice() != order.getTotalPrice()) return false;
+        if (!getUser().equals(order.getUser())) return false;
+        if (!getGoodsItems().equals(order.getGoodsItems())) return false;
+        return getOrderDate().equals(order.getOrderDate());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getUser().hashCode();
+        result = 31 * result + getGoodsItems().hashCode();
+        result = 31 * result + getOrderDate().hashCode();
+        result = 31 * result + (isPaid() ? 1 : 0);
+        result = 31 * result + (int) (getTotalPrice() ^ (getTotalPrice() >>> 32));
+        return result;
+    }
+
     public static class Builder{
         Order instance = new Order();
 

@@ -16,15 +16,14 @@ import java.util.Optional;
 public class SubcategoryServiceImpl implements SubcategoryService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
-    private static SubcategoryService instance;
-
     private SubcategoryServiceImpl(){}
 
-    public static synchronized SubcategoryService getInstance(){
-        if(instance==null){
-            instance = new SubcategoryServiceImpl();
-        }
-        return instance;
+    private static class InstanceHolder {
+        private static final SubcategoryService instance = new SubcategoryServiceImpl();
+    }
+
+    public static SubcategoryService getInstance(){
+        return InstanceHolder.instance;
     }
     @Override
     public Optional<Subcategory> findById(int id) {

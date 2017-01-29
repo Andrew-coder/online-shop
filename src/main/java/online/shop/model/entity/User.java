@@ -40,6 +40,32 @@ public class User extends BaseEntity{
     public User() {
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        if (!getName().equals(user.getName())) return false;
+        if (!getSurname().equals(user.getSurname())) return false;
+        if (!getEmail().equals(user.getEmail())) return false;
+        if (!getPassword().equals(user.getPassword())) return false;
+        if (!getBirthDate().equals(user.getBirthDate())) return false;
+        return getRole() == user.getRole();
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getName().hashCode();
+        result = 31 * result + getSurname().hashCode();
+        result = 31 * result + getEmail().hashCode();
+        result = 31 * result + getPassword().hashCode();
+        result = 31 * result + getBirthDate().hashCode();
+        result = 31 * result + getRole().hashCode();
+        return result;
+    }
 
     public static class Builder{
         User instance = new User();

@@ -15,15 +15,14 @@ import java.util.Optional;
 public class GoodsServiceImpl implements GoodsService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
-    private static GoodsService instance;
-
     private GoodsServiceImpl(){}
 
-    public static synchronized GoodsService getInstance(){
-        if(instance==null){
-            instance = new GoodsServiceImpl();
-        }
-        return instance;
+    private static class InstanceHolder {
+        private static final GoodsService instance = new GoodsServiceImpl();
+    }
+
+    public static GoodsService getInstance(){
+        return InstanceHolder.instance;
     }
 
     @Override
@@ -60,12 +59,18 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public void create(Goods goods) {
-
+        try(ConnectionWrapper connection = daoFactory.getConnection()) {
+            GoodsDao goodsDao = daoFactory.getGoodsDao(connection);
+            goodsDao.create(goods);
+        }
     }
 
     @Override
     public void update(Goods goods) {
-
+        try(ConnectionWrapper connection = daoFactory.getConnection()) {
+            GoodsDao goodsDao = daoFactory.getGoodsDao(connection);
+            goodsDao.update(goods);
+        }
     }
 
     @Override

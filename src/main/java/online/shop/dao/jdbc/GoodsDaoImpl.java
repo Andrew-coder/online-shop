@@ -5,6 +5,7 @@ import online.shop.dao.exception.DaoException;
 import online.shop.utils.extractors.impl.GoodsResultSetExtractor;
 import online.shop.model.entity.Goods;
 import online.shop.model.entity.Subcategory;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,14 +17,16 @@ import java.util.Optional;
  * Created by andri on 1/5/2017.
  */
 public class GoodsDaoImpl implements GoodsDao {
+    private static final Logger logger = Logger.getLogger(GoodsDaoImpl.class);
     private static final String GET_ALL_GOODS = "select goodsID, title, price, image, availability, description,  subcategoryID, subcategoryTitle, categoryID, categoryTitle from(" +
             "goods join (subcategory_list join categories using(categoryID)" +
             ")using(subcategoryID)) ";
     private static final String FILTER_BY_ID = " where goodsID=?;";
     private static final String FILTER_BY_SUBCATEGORY = " where subcategoryID=?;";
     private static final String FILTER_BY_PRICE_RANGE = " where price >=? and price <=?;";
-    private static final String CREATE_GOODS = "insert into goods (`title`, `price`, `description`, `subcategoryID`) VALUES (?,?,?,?);";
+    private static final String CREATE_GOODS = "insert into goods (`title`, `price`, `availability`, `description`, `subcategoryID`) values (?,?,?,?,?);";
     private static final String DELETE_GOODS = "delete from goods ";
+    private static final String UPDATE_GOODS = "update `online-shop`.`goods` set `title`=?, `price`=?, `availability`=?, `description`=?, `subcategoryID`=? ";
     private Connection connection;
     private GoodsResultSetExtractor extractor;
 
@@ -86,9 +89,10 @@ public class GoodsDaoImpl implements GoodsDao {
         Objects.requireNonNull(goods, "Error! Wrong goods object...");
         try(PreparedStatement statement = connection.prepareStatement(CREATE_GOODS)){
             statement.setString(1,goods.getTitle());
-            statement.setDouble(2,goods.getPrice());
-            statement.setString(3,goods.getDescription());
-            statement.setInt(4, goods.getSubcategory().getId());
+            statement.setLong(2,goods.getPrice());
+            statement.setString(3, goods.getGoodsStatus().getGoodsStatus());
+            statement.setString(4,goods.getDescription());
+            statement.setInt(5, goods.getSubcategory().getId());
             statement.executeUpdate();
         }
         catch (SQLException ex){
@@ -98,7 +102,18 @@ public class GoodsDaoImpl implements GoodsDao {
 
     @Override
     public void update(Goods goods) {
-        throw new UnsupportedOperationException();
+        Objects.requireNonNull(goods, "Error! Wrong goods object...");
+        try(PreparedStatement statement = connection.prepareStatement(UPDATE_GOODS + FILTER_BY_ID)){
+            statement.setString(1,goods.getTitle());
+            statement.setLong(2,goods.getPrice());
+            statement.setString(3, goods.getGoodsStatus().getGoodsStatus());
+            statement.setString(4,goods.getDescription());
+            statement.setInt(5, goods.getSubcategory().getId());
+            statement.setInt(6, goods.getId());
+            statement.executeUpdate();
+        }catch (SQLException ex){
+            throw new DaoException("Error occured when updating goods!", ex);
+        }
     }
 
     @Override

@@ -23,13 +23,12 @@ public class OrderServiceImpl implements OrderService {
     private UserService userService = UserServiceImpl.getInstance();
     private OrderServiceImpl(){}
 
-    private static OrderService instance;
+    private static class InstanceHolder {
+        private static final OrderService instance = new OrderServiceImpl();
+    }
 
-    public static synchronized  OrderService getInstance(){
-        if(instance==null){
-            instance = new OrderServiceImpl();
-        }
-        return instance;
+    public static OrderService getInstance(){
+        return InstanceHolder.instance;
     }
 
     @Override

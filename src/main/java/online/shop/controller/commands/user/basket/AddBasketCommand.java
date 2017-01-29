@@ -1,6 +1,8 @@
 package online.shop.controller.commands.user.basket;
 
 import online.shop.controller.commands.Command;
+import online.shop.controller.commands.CommandExecuter;
+import online.shop.model.dto.Basket;
 import online.shop.model.entity.Goods;
 import online.shop.services.GoodsService;
 import online.shop.services.impl.GoodsServiceImpl;
@@ -17,24 +19,24 @@ import java.util.*;
 /**
  * Created by andri on 1/22/2017.
  */
-public class AddBasketCommand implements Command {
+public class AddBasketCommand extends CommandExecuter {
     private GoodsService goodsService = GoodsServiceImpl.getInstance();
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<Goods,Integer> goodsItems = (Map<Goods, Integer>) request.getSession().getAttribute(Attributes.GOODS);
-        if(goodsItems==null){
-            goodsItems = new HashMap<>();
+    public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Basket basket = (Basket) request.getSession().getAttribute(Attributes.BASKET);
+        if(basket==null){
+            basket= new Basket();
         }
         int id = Integer.parseInt(request.getParameter(Attributes.GOODS_ID));
-        //todo wrap into class basket
+
         Optional<Goods> goods = goodsService.findById(id);
         if(goods.isPresent()){
             Goods g = goods.get();
-            if(!goodsItems.keySet().contains(g)) {
-                goodsItems.put(g, 1);
+            if(!basket.contains(g)) {
+                basket.addGoodsItem(g, 1);
             }
         }
-        request.getSession().setAttribute(Attributes.GOODS, goodsItems);
+        request.getSession().setAttribute(Attributes.BASKET, basket);
         response.sendRedirect(PagesPaths.BASKET);
         return PagesPaths.REDIRECT;
     }

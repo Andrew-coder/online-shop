@@ -51,8 +51,12 @@ public class Goods extends BaseEntity{
         this.title = title;
     }
 
-    public double getPrice() {
+    public long getPrice() {
         return price;
+    }
+
+    public double getRealPrice(){
+        return price/100;
     }
 
     public void setPrice(long price) {
@@ -91,7 +95,32 @@ public class Goods extends BaseEntity{
         this.image = image;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Goods)) return false;
 
+        Goods goods = (Goods) o;
+
+        if (getPrice() != goods.getPrice()) return false;
+        if (!getTitle().equals(goods.getTitle())) return false;
+        if (!getDescription().equals(goods.getDescription())) return false;
+        if (!getSubcategory().equals(goods.getSubcategory())) return false;
+        if (getImage() != null ? !getImage().equals(goods.getImage()) : goods.getImage() != null) return false;
+        return getGoodsStatus() == goods.getGoodsStatus();
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getTitle().hashCode();
+        result = 31 * result + (int) (getPrice() ^ (getPrice() >>> 32));
+        result = 31 * result + getDescription().hashCode();
+        result = 31 * result + getSubcategory().hashCode();
+        result = 31 * result + (getImage() != null ? getImage().hashCode() : 0);
+        result = 31 * result + getGoodsStatus().hashCode();
+        return result;
+    }
 
     public static class Builder{
         Goods instance = new Goods();

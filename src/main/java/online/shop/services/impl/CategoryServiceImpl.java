@@ -20,13 +20,12 @@ public class CategoryServiceImpl implements CategoryService{
 
     private CategoryServiceImpl(){}
 
-    private static CategoryService instance;
+    private static class InstanceHolder {
+        private static final CategoryService instance = new CategoryServiceImpl();
+    }
 
-    public static synchronized  CategoryService getInstance(){
-        if(instance==null){
-            instance = new CategoryServiceImpl();
-        }
-        return instance;
+    public static CategoryService getInstance(){
+        return InstanceHolder.instance;
     }
 
     @Override

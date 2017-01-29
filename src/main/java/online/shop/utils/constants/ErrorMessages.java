@@ -52,4 +52,6 @@ public final class ErrorMessages {
     public static final String ORDER_NOT_FOUND = "Order wasn't found ";
 
     public static final String UNKNOWN_ERROR_OCCURED = "Unknown error occured...";
+    public static final String WRONG_PRICE = "Wrong price";
+    public static final String WRONG_GOODS_DATA = "Wrong goods data";
 }

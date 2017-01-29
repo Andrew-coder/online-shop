@@ -42,4 +42,23 @@ public class Subcategory extends BaseEntity {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Subcategory)) return false;
+
+        Subcategory that = (Subcategory) o;
+
+        if (!getCategory().equals(that.getCategory())) return false;
+        return getTitle().equals(that.getTitle());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getCategory().hashCode();
+        result = 31 * result + getTitle().hashCode();
+        return result;
+    }
 }

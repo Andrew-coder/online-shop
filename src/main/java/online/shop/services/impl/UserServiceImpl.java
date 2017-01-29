@@ -23,13 +23,12 @@ public class UserServiceImpl implements UserService {
 
     private UserServiceImpl(){}
 
-    private static UserService instance;
+    private static class InstanceHolder {
+        private static final UserService instance = new UserServiceImpl();
+    }
 
-    public static synchronized  UserService getInstance(){
-        if(instance==null){
-            instance = new UserServiceImpl();
-        }
-        return instance;
+    public static UserService getInstance(){
+        return InstanceHolder.instance;
     }
 
     @Override
