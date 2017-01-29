@@ -22,7 +22,7 @@ public class UsersAdministrationCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<User> users = userService.findUsersByRole(RoleType.USER);
+        List<User> users = userService.findAll();
         request.setAttribute(Attributes.USERS, users);
         for(User user:users){
             request.setAttribute(String.valueOf(user.getId()), userService.isUserInBlacklist(user.getId()));

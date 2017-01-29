@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> login(String email, String password) {
-        try(ConnectionWrapper wrapper = daoFactory.getConnection() ){
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             UserDao userDao = daoFactory.getUserDao(wrapper);
             return userDao.findUserByEmail(email)
                     .filter( person-> password.equals(person.getPassword()));
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        try(ConnectionWrapper wrapper = daoFactory.getConnection() ){
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             UserDao userDao = daoFactory.getUserDao(wrapper);
             return userDao.findAll();
         }
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findUsersByRole(RoleType roleType) {
-        try(ConnectionWrapper wrapper = daoFactory.getConnection() ){
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             UserDao userDao = daoFactory.getUserDao(wrapper);
             return userDao.findUsersByRole(roleType);
         }
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void create(User user) {
-        try(ConnectionWrapper wrapper = daoFactory.getConnection() ){
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             UserDao userDao = daoFactory.getUserDao(wrapper);
             checkIsUserRegistered(user.getEmail(), userDao);
             userDao.create(user);
@@ -76,12 +76,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user) {
-
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
+            UserDao userDao = daoFactory.getUserDao(wrapper);
+            userDao.update(user);
+        }
     }
 
     @Override
     public void delete(int id) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -6,18 +6,20 @@ import online.shop.model.entity.RoleType;
 import online.shop.utils.extractors.impl.UserResultSetExtractor;
 
 import online.shop.model.entity.User;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.Optional;;
 
 /**
  * Created by andri on 1/5/2017.
  */
 public class UserDaoImpl implements UserDao{
+    private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
     private static final String GET_ALL_USERS = "select userID, name, surname, email, password, birthDate,  role from users ";
     private static final String GET_ALL_USERS_IN_BLACKLIST = "select userID, name, surname, email, password, birthDate, role from (" +
             "blacklist join users using(userID))";
@@ -26,6 +28,7 @@ public class UserDaoImpl implements UserDao{
     private static final String FILTER_BY_ROLE = " where role=?;";
     private static final String DELETE_USER = "delete from users ";
     private static final String CREATE_USER = "insert into users (`name`, `surname`, `email`, `password`, `birthDate`, `role`) VALUES (?,?,?,?,?,?);";
+    private static final String UPDATE_USER = "update `online-shop`.`users` set `name`=?, `surname`=?, `email`=?, `password`=?, `birthDate`=?, `role`=? ";
     private static final String INSERT_INTO_BLACKLIST = "insert into blacklist (`userID`) values (?);";
     private static final String DELETE_FROM_BLACKLIST = "delete from blacklist where userID=?";
     private Connection connection;
@@ -121,7 +124,21 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public void update(User user) {
-        throw new UnsupportedOperationException();
+        Objects.requireNonNull(user, "Error! Wrong user object...");
+        try(PreparedStatement statement = connection.prepareStatement(UPDATE_USER + FILTER_BY_ID)){
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getSurname());
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getPassword());
+            statement.setDate(5, java.sql.Date.valueOf(user.getBirthDate().
+                    toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+            statement.setString(6, user.getRole().getRoleName());
+            statement.setInt(7, user.getId());
+            statement.executeUpdate();
+        }
+        catch (SQLException ex){
+            throw new DaoException("Error occured when updating user!", ex);
+        }
     }
 
     @Override

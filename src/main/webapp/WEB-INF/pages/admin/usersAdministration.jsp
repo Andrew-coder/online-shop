@@ -24,12 +24,19 @@
                     <td>${value.name}${" "}${value.surname}</td>
                     <td width="50%"></td>
                     <td><a href="/admin/users/update?userID=${value.id}"><button>Update</button></a></td>
-                    <c:if test="${requestScope.get(value.id.toString())}">
-                        <td><a href="/admin/users/remove?userID=${value.id}"><button>remove from blacklist</button></a></td>
-                    </c:if>
-                    <c:if test="${not requestScope.get(value.id.toString())}">
-                        <td><a href="/admin/users/add?userID=${value.id}"><button>add to blacklist</button></a></td>
-                    </c:if>
+                    <c:choose>
+                        <c:when test="${value.role.getRoleName() eq 'user'}">
+                            <c:if test="${requestScope.get(value.id.toString())}">
+                                <td><a href="/admin/users/remove?userID=${value.id}"><button>remove from blacklist</button></a></td>
+                            </c:if>
+                            <c:if test="${not requestScope.get(value.id.toString())}">
+                                <td><a href="/admin/users/add?userID=${value.id}"><button>add to blacklist</button></a></td>
+                            </c:if>
+                        </c:when>
+                        <c:otherwise>
+                            <td></td>
+                        </c:otherwise>
+                    </c:choose>
                 </tr>
             </c:forEach>
         </table>

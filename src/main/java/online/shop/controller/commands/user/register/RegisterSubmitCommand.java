@@ -76,7 +76,7 @@ public class RegisterSubmitCommand extends CommandExecuter {
 
     private void processErrors(HttpServletRequest request, Errors errors){
         logger.error("Wrong input data in registration");
-        request.setAttribute(Attributes.REGISTRATION_ERRORS, errors);
+        request.setAttribute(Attributes.ERRORS, errors);
     }
 
     private void saveRegisterDataToRequest(HttpServletRequest request){

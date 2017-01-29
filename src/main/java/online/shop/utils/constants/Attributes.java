@@ -32,7 +32,6 @@ public final class Attributes {
     public static final String GOODS = "goods";
     public static final String GOODS_ID = "goodsID";
 
-    public static final String REGISTRATION_ERRORS = "errors";
 
     public static final String ERROR = "error";
     public static final String ERRORS = "errors";

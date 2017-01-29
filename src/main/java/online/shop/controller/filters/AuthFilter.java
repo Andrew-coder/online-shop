@@ -74,8 +74,8 @@ public class AuthFilter implements Filter {
     private class SaleManagerAuthorizer implements Authorizer {
         public boolean check(String uri, User user) {
             return !(   uri.startsWith(PagesPaths.USERS_ADMINISTRATION)||
-                        uri.startsWith(PagesPaths.ORDER_ADMINISTRATION))||
-                        uri.startsWith(PagesPaths.PURCHASE);
+                        uri.startsWith(PagesPaths.ORDER_ADMINISTRATION)||
+                        uri.startsWith(PagesPaths.PURCHASE));
         }
     }
 

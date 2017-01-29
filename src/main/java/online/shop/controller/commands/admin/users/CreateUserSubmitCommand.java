@@ -91,6 +91,6 @@ public class CreateUserSubmitCommand extends CommandExecuter {
 
     private void processErrors(HttpServletRequest request, Errors errors){
         logger.error("Wrong input user data in creation");
-        request.setAttribute(Attributes.REGISTRATION_ERRORS, errors);
+        request.setAttribute(Attributes.ERRORS, errors);
     }
 }
