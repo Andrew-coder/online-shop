@@ -1,6 +1,7 @@
 package online.shop.controller.commands.admin.goods;
 
 import online.shop.controller.commands.Command;
+import online.shop.controller.commands.CommandExecuter;
 import online.shop.controller.validators.Errors;
 import online.shop.model.entity.Goods;
 import online.shop.model.entity.Subcategory;
@@ -24,14 +25,14 @@ import org.apache.log4j.Logger;
 /**
  * Created by andri on 1/24/2017.
  */
-public class UpdateGoodsCommand implements Command {
+public class UpdateGoodsCommand extends CommandExecuter {
     private static final Logger logger = Logger.getLogger(UpdateGoodsCommand.class);
     private SubcategoryService subcategoryService = SubcategoryServiceImpl.getInstance();
     private GoodsService goodsServices = GoodsServiceImpl.getInstance();
     private static final String WRONG_GOODS_ID = "wrong goods id parameter from request";
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Optional<Goods> goods = extractGoods(request);
         Errors errors = new Errors();
         if(!goods.isPresent()){

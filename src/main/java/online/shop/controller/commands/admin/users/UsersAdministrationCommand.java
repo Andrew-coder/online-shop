@@ -1,6 +1,7 @@
 package online.shop.controller.commands.admin.users;
 
 import online.shop.controller.commands.Command;
+import online.shop.controller.commands.CommandExecuter;
 import online.shop.model.entity.RoleType;
 import online.shop.model.entity.User;
 import online.shop.services.UserService;
@@ -17,11 +18,11 @@ import java.util.List;
 /**
  * Created by andri on 1/23/2017.
  */
-public class UsersAdministrationCommand implements Command {
+public class UsersAdministrationCommand extends CommandExecuter {
     private UserService userService = UserServiceImpl.getInstance();
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<User> users = userService.findAll();
         request.setAttribute(Attributes.USERS, users);
         for(User user:users){

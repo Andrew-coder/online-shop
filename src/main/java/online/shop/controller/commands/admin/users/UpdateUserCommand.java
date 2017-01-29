@@ -1,6 +1,7 @@
 package online.shop.controller.commands.admin.users;
 
 import online.shop.controller.commands.Command;
+import online.shop.controller.commands.CommandExecuter;
 import online.shop.controller.validators.Errors;
 import online.shop.model.entity.User;
 import online.shop.services.UserService;
@@ -19,13 +20,13 @@ import java.util.Optional;
 /**
  * Created by andri on 1/24/2017.
  */
-public class UpdateUserCommand implements Command{
+public class UpdateUserCommand extends CommandExecuter{
     private static final Logger logger = Logger.getLogger(UpdateUserCommand.class);
     private UserService userService = UserServiceImpl.getInstance();
     private static final String WRONG_USER_ID = "wrong user id parameter from request";
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Optional<User> user = extractUser(request);
         Errors errors = new Errors();
         if(!user.isPresent()){

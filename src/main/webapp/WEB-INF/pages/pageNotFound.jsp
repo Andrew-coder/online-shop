@@ -1,18 +1,21 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: andri
-  Date: 1/25/2017
-  Time: 11:27
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+
+<%@ page import="online.shop.utils.constants.Attributes"%>
+<%@ page import="online.shop.controller.i18n.LocaleHolder" %>
+<%@ page import="online.shop.utils.constants.PagesPaths" %>
 <html>
 <head>
     <title>PAGE NOT FOUND</title>
 </head>
 <body>
+<fmt:setLocale value="${sessionScope['locale']}"/>
+<fmt:requestEncoding value="UTF-8" />
+<fmt:setBundle basename="${bundleFile}" var="msg"/>
     <div align="center">
-        Oops! The page you requested was not found
+        <fmt:message key="page.not.found" bundle="${msg}"/>
     </div>
 </body>
 </html>

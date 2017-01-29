@@ -2,6 +2,7 @@ package online.shop.controller.commands.user.purchase;
 
 import online.shop.controller.commands.Command;
 import online.shop.controller.validators.Errors;
+import online.shop.model.dto.Basket;
 import online.shop.model.entity.Goods;
 import online.shop.model.entity.Order;
 import online.shop.model.entity.User;
@@ -27,9 +28,9 @@ public class PurchaseCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Map<Goods, Integer> goodsItems = (Map<Goods,Integer>) session.getAttribute(Attributes.GOODS);
+        Basket basket = (Basket) session.getAttribute(Attributes.BASKET);
         Errors errors = new Errors();
-        if(goodsItems==null || goodsItems.isEmpty()){
+        if(basket==null || basket.isEmpty()){
             logger.error(ErrorMessages.EMPTY_BASKET);
             response.sendRedirect(PagesPaths.BASKET);
             return PagesPaths.REDIRECT;

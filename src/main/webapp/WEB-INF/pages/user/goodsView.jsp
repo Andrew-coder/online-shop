@@ -1,6 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+
+<%@ page import="online.shop.utils.constants.Attributes"%>
+<%@ page import="online.shop.controller.i18n.LocaleHolder" %>
 <%@ page import="online.shop.utils.constants.PagesPaths" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -33,8 +39,11 @@
 </head>
 
 <body>
-
+<fmt:setLocale value="${sessionScope['locale']}"/>
+<fmt:requestEncoding value="UTF-8" />
+<fmt:setBundle basename="${bundleFile}" var="msg"/>
 <div id="templatemo_body_wrapper">
+    <jsp:include page="../localeSelector.jsp"/>
     <div id="templatemo_wrapper">
 
         <jsp:include page="/WEB-INF/pages/user/header.jsp" />
@@ -47,7 +56,7 @@
 
             </div>
             <div id="content" class="float_r">
-                <h1> Products</h1>
+                <h1> <fmt:message key="shop.products" bundle="${msg}"/></h1>
 
 
                 <c:forEach items="${requestScope.goods}" var="value" varStatus="loop">

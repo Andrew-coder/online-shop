@@ -1,6 +1,7 @@
 package online.shop.controller.commands.overview;
 
 import online.shop.controller.commands.Command;
+import online.shop.controller.commands.CommandExecuter;
 import online.shop.dao.SubcategoryDao;
 import online.shop.dao.jdbc.SubcategoryDaoImpl;
 import online.shop.model.entity.Subcategory;
@@ -20,12 +21,12 @@ import java.util.List;
 /**
  * Created by andri on 1/22/2017.
  */
-public class SubcategoryOverviewCommand implements Command {
+public class SubcategoryOverviewCommand extends CommandExecuter {
     private static final Logger logger = Logger.getLogger(SubcategoryOverviewCommand.class);
     private SubcategoryService subcategoryService = SubcategoryServiceImpl.getInstance();
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             int id = Integer.parseInt(request.getParameter(Attributes.CATEGORY_ID));
             List<Subcategory> subcategories = subcategoryService.findSubcategoriesByCategoryId(id);

@@ -1,6 +1,7 @@
 package online.shop.controller.commands.admin.orders;
 
 import online.shop.controller.commands.Command;
+import online.shop.controller.commands.CommandExecuter;
 import online.shop.model.entity.Order;
 import online.shop.services.OrderService;
 import online.shop.services.impl.OrderServiceImpl;
@@ -18,12 +19,12 @@ import java.util.Optional;
 /**
  * Created by andri on 1/26/2017.
  */
-public class UpdateOrderCommand implements Command {
+public class UpdateOrderCommand extends CommandExecuter {
     private static final Logger logger = Logger.getLogger(UpdateOrderCommand.class);
     private OrderService orderService = OrderServiceImpl.getInstance();
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Optional<Order> order = extractOrder(request);
         if(!order.isPresent()){
             logger.error(ErrorMessages.ORDER_NOT_FOUND);

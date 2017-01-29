@@ -17,11 +17,11 @@ import java.util.List;
 /**
  * Created by andri on 1/27/2017.
  */
-public class CreateGoodsCommand implements Command {
+public class CreateGoodsCommand extends CommandExecuter {
     private SubcategoryService subcategoryService = SubcategoryServiceImpl.getInstance();
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Subcategory> subcategories = subcategoryService.findAll();
         request.setAttribute(Attributes.SUBCATEGORIES, subcategories);
         return PagesPaths.GOODS_CREATE_PAGE;

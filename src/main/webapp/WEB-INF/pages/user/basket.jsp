@@ -1,6 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+
+<%@ page import="online.shop.utils.constants.Attributes"%>
+<%@ page import="online.shop.controller.i18n.LocaleHolder" %>
 <%@ page import="online.shop.utils.constants.PagesPaths" %>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -28,8 +35,11 @@
 </head>
 
 <body>
-
+<fmt:setLocale value="${sessionScope['locale']}"/>
+<fmt:requestEncoding value="UTF-8" />
+<fmt:setBundle basename="${bundleFile}" var="msg"/>
 <div id="templatemo_body_wrapper">
+    <jsp:include page="../localeSelector.jsp"/>
     <div id="templatemo_wrapper">
 
         <jsp:include page="/WEB-INF/pages/user/header.jsp" />
@@ -38,20 +48,18 @@
 
         <div id="templatemo_main">
             <div id="sidebar" class="float_l">
-                <c:if test="${requestScope.errors!=null}">
-                    <h1>You input wrong data</h1>
-                </c:if>
+
 
             </div>
             <div id="content" class="float_r">
-                <h1>Shopping Cart</h1>
+                <h1><fmt:message key="shop.shopping.card" bundle="${msg}"/></h1>
                 <table width="680px" cellspacing="0" cellpadding="5">
                     <tr bgcolor="#ddd">
-                        <th width="220" align="left">Image </th>
-                        <th width="180" align="left">Description </th>
-                        <th width="100" align="center">Quantity </th>
-                        <th width="60" align="right">Price </th>
-                        <th width="60" align="right">Total </th>
+                        <th width="220" align="left"><fmt:message key="basket.image" bundle="${msg}"/> </th>
+                        <th width="180" align="left"><fmt:message key="basket.description" bundle="${msg}"/> </th>
+                        <th width="100" align="center"><fmt:message key="basket.quantity" bundle="${msg}"/> </th>
+                        <th width="60" align="right"><fmt:message key="basket.price" bundle="${msg}"/> </th>
+                        <th width="60" align="right"><fmt:message key="basket.total" bundle="${msg}"/> </th>
                         <th width="90"> </th>
 
                     </tr>
@@ -59,7 +67,7 @@
                     <form action="/update" method="post">
 
                             <c:if test="${sessionScope.basket==null || sessionScope.basket.isEmpty()}">
-                                <tr><td colspan="6" align="center"><h1>Basket is empty</h1></td></tr>
+                                <tr><td colspan="6" align="center"><h1><fmt:message key="basket.empty" bundle="${msg}"/></h1></td></tr>
                             </c:if>
                             <c:forEach items="${basket.getGoodsItems()}" var="entry">
                                 <tr>
@@ -68,12 +76,12 @@
                                     <td align="center"><input id="amount${entry.key.id}" name="amount${entry.key.id}" type="text" value="${entry.value}" style="width: 20px; text-align: right" /> </td>
                                     <td align="right">${entry.key.getRealPrice()} </td>
                                     <td align="right">${entry.value*entry.key.getRealPrice()}</td>
-                                    <td align="center"> <a href="/basket/remove?goodsID=${entry.key.id}"><img src="/images/remove_x.gif" alt="remove" /><br />Remove</a> </td>
+                                    <td align="center"> <a href="/basket/remove?goodsID=${entry.key.id}"><img src="/images/remove_x.gif" alt="remove" /><br /><fmt:message key="basket.remove" bundle="${msg}"/></a> </td>
                                 </tr>
                             </c:forEach>
                         <tr>
-                            <td colspan="3" align="right"  height="30px">Have you modified your basket? Please click here to <strong><input type="submit" value="Update"/></strong></td>
-                            <td align="right" style="background:#ddd; font-weight:bold"> Total </td>
+                            <td colspan="3" align="right"  height="30px"><fmt:message key="basket.have.modified" bundle="${msg}"/> <strong><input type="submit" value="<fmt:message key="basket.update" bundle="${msg}"/>"/></strong></td>
+                            <td align="right" style="background:#ddd; font-weight:bold"> <fmt:message key="basket.total" bundle="${msg}"/> </td>
                             <td align="right" style="background:#ddd; font-weight:bold">${basket.getTotalPrice()} </td>
                             <td style="background:#ddd; font-weight:bold"> </td>
                         </tr>
@@ -81,8 +89,8 @@
                 </table>
                 <div style="float:right; width: 215px; margin-top: 20px;">
 
-                    <p><a href="/purchase">Proceed to checkout</a></p>
-                    <p><a href="/">Continue shopping</a></p>
+                    <p><a href="/purchase"><fmt:message key="basket.proceed.checkout" bundle="${msg}"/></a></p>
+                    <p><a href="/"><fmt:message key="basket.continue.shopping" bundle="${msg}"/></a></p>
 
                 </div>
             </div>

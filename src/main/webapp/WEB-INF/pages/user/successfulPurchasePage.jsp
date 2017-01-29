@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -30,8 +31,11 @@
 </head>
 
 <body>
-
+<fmt:setLocale value="${sessionScope['locale']}"/>
+<fmt:requestEncoding value="UTF-8" />
+<fmt:setBundle basename="${bundleFile}" var="msg"/>
     <div id="templatemo_body_wrapper">
+        <jsp:include page="../localeSelector.jsp"/>
         <div id="templatemo_wrapper">
             <jsp:include page="/WEB-INF/pages/user/header.jsp" />
             <jsp:include page="/WEB-INF/pages/user/menu.jsp"/>

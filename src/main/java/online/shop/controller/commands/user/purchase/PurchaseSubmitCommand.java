@@ -52,7 +52,7 @@ public class PurchaseSubmitCommand extends CommandExecuter {
         }
         orderService.create(order);
         request.getRequestDispatcher(PagesPaths.PURCHASE_SUCCESFULL_PAGE).forward(request, response);
-        request.getSession().removeAttribute(Attributes.GOODS);
+        request.getSession().removeAttribute(Attributes.BASKET);
         return PagesPaths.FORWARD;
     }
 

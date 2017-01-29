@@ -1,6 +1,7 @@
 package online.shop.controller.commands.overview;
 
 import online.shop.controller.commands.Command;
+import online.shop.controller.commands.CommandExecuter;
 import online.shop.dao.DaoFactory;
 import online.shop.model.entity.Goods;
 import online.shop.services.GoodsService;
@@ -19,12 +20,12 @@ import java.util.List;
 /**
  * Created by andri on 1/22/2017.
  */
-public class GoodsOverviewCommand implements Command {
+public class GoodsOverviewCommand extends CommandExecuter {
     private static final Logger logger = Logger.getLogger(GoodsOverviewCommand.class);
-    GoodsService goodsService = GoodsServiceImpl.getInstance();
+    private GoodsService goodsService = GoodsServiceImpl.getInstance();
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             int id = Integer.parseInt(request.getParameter(Attributes.SUBCATEGORY_ID));
             List<Goods> goods = goodsService.findGoodsBySubcategoryId(id);

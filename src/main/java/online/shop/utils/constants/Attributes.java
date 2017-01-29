@@ -46,4 +46,12 @@ public final class Attributes {
     public static final String ORDER_STATUS = "status";
     public static final String ORDER_PAID = "paid";
     public static final String ORDER_UNPAID = "unpaid";
+
+    public static final String EN = "en";
+    public static final String UA = "ua";
+    public static final String RU = "ru";
+    public static final String UTF_8 = "UTF-8";
+    public static final String LANG = "lang";
+    public static final String LOCALE = "locale";
+    public static final String BUNDLE_FILE = "bundleFile";
 }

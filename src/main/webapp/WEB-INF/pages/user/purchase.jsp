@@ -1,5 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+
+<%@ page import="online.shop.utils.constants.Attributes"%>
+<%@ page import="online.shop.controller.i18n.LocaleHolder" %>
+<%@ page import="online.shop.utils.constants.PagesPaths" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -30,8 +37,11 @@
 </head>
 
 <body>
-
+<fmt:setLocale value="${sessionScope['locale']}"/>
+<fmt:requestEncoding value="UTF-8" />
+<fmt:setBundle basename="${bundleFile}" var="msg"/>
 <div id="templatemo_body_wrapper">
+    <jsp:include page="../localeSelector.jsp"/>
     <div id="templatemo_wrapper">
 
         <jsp:include page="/WEB-INF/pages/user/header.jsp" />
@@ -54,22 +64,15 @@
                     </table>
                 </div>
                 <div class="cleaner h50"></div>
-                <h3>SHOPPING CART</h3>
+                <h3><fmt:message key="shop.shopping.card" bundle="${msg}"/></h3>
 
-
-                <c:set var="total" value="${0}"/>
-                <c:forEach items="${sessionScope.goods}" var="entry">
-                    <c:set var="total" value="${total + entry.key.price*entry.value}" />
-                </c:forEach>
-
-
-                <h4>TOTAL AMOUNT: <strong>${total}</strong></h4>
+                <h4><fmt:message key="basket.total" bundle="${msg}"/> <strong>${basket.getTotalPrice()}</strong></h4>
                 <form action="/purchase" method="post">
                     <table style="border:1px solid #CCCCCC;" width="100%">
                         <tr>
                             <td><input type="radio" name="group" checked></td>
                             <td height="80px"> <img src="images/paypal.gif" alt="paypal" /></td>
-                            <td width="400px;" style="padding: 0px 20px;">Recommended if you have a PayPal account. Fastest delivery time.
+                            <td width="400px;" style="padding: 0px 20px;"><fmt:message key="purchase.paypal.option" bundle="${msg}"/>
                             </td>
                             <td></td>
                         </tr>
@@ -77,16 +80,16 @@
                             <td><input type="radio" name="group"></td>
                             <td  height="80px"><img src="images/2co.gif" alt="paypal" />
                             </td>
-                            <td  width="400px;" style="padding: 0px 20px;">2Checkout.com, Inc. is an authorized retailer of goods and services. 2CheckOut accepts customer orders via online checks, Visa, MasterCard, Discover, American Express, Diners, JCB and debit cards with the Visa, Mastercard logo. Validate <a href="http://validator.w3.org/check?uri=referer" rel="nofollow">XHTML</a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer" rel="nofollow">CSS</a>.</td>
+                            <td  width="400px;" style="padding: 0px 20px;"><fmt:message key="purchase.checkout.option" bundle="${msg}"/> <a href="http://validator.w3.org/check?uri=referer" rel="nofollow">XHTML</a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer" rel="nofollow">CSS</a>.</td>
                             <td><a href="#" class="more">2CHECKOUT</a></td>
 
                         </tr>
                         <tr>
                             <td><input type="radio" name="group" value="paOnDelivery"></td>
-                            <td colspan="3"><p>Pay on delivery</p></td>
+                            <td colspan="3"><p><fmt:message key="purhcase.pay.on.delivery" bundle="${msg}"/></p></td>
                         </tr>
                     </table>
-                    <input type="submit" value="Make purchase"/>
+                    <input type="submit" value="<fmt:message key="purchase.submit" bundle="${msg}"/>"/>
                 </form>
             </div>
             <div class="cleaner"></div>

@@ -23,7 +23,8 @@ public class LoginSubmitCommand implements Command {
     public static final String PARAM_EMAIL = "login";
     public static final String PARAM_PASSWORD ="password";
 
-    UserService userService = UserServiceImpl.getInstance();
+    private UserService userService = UserServiceImpl.getInstance();
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pageToGo = PagesPaths.LOGIN;

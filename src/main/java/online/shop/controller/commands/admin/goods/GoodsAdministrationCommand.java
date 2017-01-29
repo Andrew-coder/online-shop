@@ -1,6 +1,7 @@
 package online.shop.controller.commands.admin.goods;
 
 import online.shop.controller.commands.Command;
+import online.shop.controller.commands.CommandExecuter;
 import online.shop.model.entity.Goods;
 import online.shop.services.GoodsService;
 import online.shop.services.impl.GoodsServiceImpl;
@@ -16,11 +17,11 @@ import java.util.List;
 /**
  * Created by andri on 1/23/2017.
  */
-public class GoodsAdministrationCommand implements Command {
+public class GoodsAdministrationCommand extends CommandExecuter {
     private GoodsService goodsService = GoodsServiceImpl.getInstance();
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Goods> goods = goodsService.findAll();
         request.setAttribute(Attributes.GOODS, goods);
         return PagesPaths.GOODS_ADMINISTRATION_PAGE;
