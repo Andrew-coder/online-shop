@@ -3,6 +3,7 @@ package online.shop.services.impl;
 import online.shop.dao.ConnectionWrapper;
 import online.shop.dao.DaoFactory;
 import online.shop.dao.OrderDao;
+import online.shop.dao.exception.DaoException;
 import online.shop.model.entity.Order;
 import online.shop.model.entity.User;
 import online.shop.services.OrderService;

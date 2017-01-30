@@ -1,6 +1,11 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+
+<%@ page import="online.shop.utils.constants.Attributes"%>
+<%@ page import="online.shop.controller.i18n.LocaleHolder" %>
+<%@ page import="online.shop.utils.constants.PagesPaths" %>
 <html>
 <head>
     <title>ACCESS DENIED!</title>

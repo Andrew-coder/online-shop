@@ -49,4 +49,8 @@ public class FrontController extends HttpServlet {
     public void init() throws ServletException {
         commandHolder = new CommandHolder();
     }
+
+    public void setCommandHolder(CommandHolder commandHolder) {
+        this.commandHolder = commandHolder;
+    }
 }
