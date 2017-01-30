@@ -10,10 +10,7 @@ import java.sql.SQLException;
  * Created by andri on 1/5/2017.
  */
 public class JdbcDaoFactory extends DaoFactory {
-    private DataSource dataSource = DataSourceProvider.setupDataSource();
-
-    public JdbcDaoFactory() {
-    }
+    private DataSource dataSource = DataSourceProvider.getInstance();
 
     @Override
     public ConnectionWrapper getConnection() {

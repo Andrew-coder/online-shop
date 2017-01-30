@@ -7,6 +7,7 @@ import online.shop.model.entity.RoleType;
 import online.shop.model.entity.User;
 import online.shop.services.UserService;
 import online.shop.services.exception.ServiceException;
+import online.shop.utils.constants.ErrorMessages;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -21,10 +22,14 @@ public class UserServiceImpl implements UserService {
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
-    private UserServiceImpl(){}
+    public UserServiceImpl(){}
+
+    UserServiceImpl(DaoFactory daoFactory) {
+        this.daoFactory = daoFactory;
+    }
 
     private static class InstanceHolder {
-        private static final UserService instance = new UserServiceImpl();
+        private static final UserService instance = new UserServiceImpl(DaoFactory.getInstance());
     }
 
     public static UserService getInstance(){
@@ -118,8 +123,12 @@ public class UserServiceImpl implements UserService {
 
     private void checkIsUserRegistered(String email, UserDao userDao){
         if(userDao.findUserByEmail(email).isPresent()){
-            logger.error("The user with such email already exists!");
-            throw new ServiceException("The user with such email already exists!");
+            logger.error(ErrorMessages.EMAIL_ALREADY_EXISTS);
+            throw new ServiceException(ErrorMessages.EMAIL_ALREADY_EXISTS);
         }
+    }
+
+    public void setDaoFactory(DaoFactory daoFactory) {
+        this.daoFactory = daoFactory;
     }
 }

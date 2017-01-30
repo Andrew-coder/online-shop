@@ -15,10 +15,14 @@ import java.util.Optional;
 public class GoodsServiceImpl implements GoodsService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
-    private GoodsServiceImpl(){}
+    public GoodsServiceImpl(){}
+
+    GoodsServiceImpl(DaoFactory daoFactory) {
+        this.daoFactory = daoFactory;
+    }
 
     private static class InstanceHolder {
-        private static final GoodsService instance = new GoodsServiceImpl();
+        private static final GoodsService instance = new GoodsServiceImpl(DaoFactory.getInstance());
     }
 
     public static GoodsService getInstance(){

@@ -18,7 +18,11 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService{
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
-    private CategoryServiceImpl(){}
+    public CategoryServiceImpl(){}
+
+    CategoryServiceImpl(DaoFactory daoFactory) {
+        this.daoFactory = daoFactory;
+    }
 
     private static class InstanceHolder {
         private static final CategoryService instance = new CategoryServiceImpl();

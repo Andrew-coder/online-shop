@@ -16,10 +16,14 @@ import java.util.Optional;
 public class SubcategoryServiceImpl implements SubcategoryService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
-    private SubcategoryServiceImpl(){}
+    public SubcategoryServiceImpl(){}
+
+    SubcategoryServiceImpl(DaoFactory daoFactory) {
+        this.daoFactory = daoFactory;
+    }
 
     private static class InstanceHolder {
-        private static final SubcategoryService instance = new SubcategoryServiceImpl();
+        private static final SubcategoryService instance = new SubcategoryServiceImpl(DaoFactory.getInstance());
     }
 
     public static SubcategoryService getInstance(){

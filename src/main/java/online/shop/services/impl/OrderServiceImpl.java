@@ -21,10 +21,17 @@ public class OrderServiceImpl implements OrderService {
     private static final Logger logger = Logger.getLogger(OrderServiceImpl.class);
     private DaoFactory daoFactory = DaoFactory.getInstance();
     private UserService userService = UserServiceImpl.getInstance();
-    private OrderServiceImpl(){}
+
+    public OrderServiceImpl(UserService userService) {
+        this.userService = userService;
+    }
+
+    OrderServiceImpl(DaoFactory daoFactory) {
+        this.daoFactory = daoFactory;
+    }
 
     private static class InstanceHolder {
-        private static final OrderService instance = new OrderServiceImpl();
+        private static final OrderService instance = new OrderServiceImpl(DaoFactory.getInstance());
     }
 
     public static OrderService getInstance(){
@@ -49,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void create(Order order) {
-        checkEmptyOrder(Optional.of(order));
+        checkEmptyOrder(Optional.ofNullable(order));
         checkIfIsUserInBlacklist(order.getUser());
         try(ConnectionWrapper wrapper = daoFactory.getConnection() ) {
             OrderDao orderDao = daoFactory.getOrderDao(wrapper);
@@ -117,6 +124,10 @@ public class OrderServiceImpl implements OrderService {
             logger.error(String.format("User %d from blacklist tried to make purchase", user.getId()));
             throw new ServiceException(ErrorMessages.BLACK_LIST_USER);
         }
+    }
+
+    public void setDaoFactory(DaoFactory daoFactory) {
+        this.daoFactory = daoFactory;
     }
 }
 

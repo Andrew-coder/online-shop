@@ -13,6 +13,25 @@ public class User extends BaseEntity{
     private Date birthDate;
     private RoleType role;
 
+    public User(String name, String surname, String email, String password, Date birthDate, RoleType role) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.birthDate = birthDate;
+        this.role = role;
+    }
+
+    public User(int id, String name, String surname, String email, String password, Date birthDate, RoleType role) {
+        super(id);
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.birthDate = birthDate;
+        this.role = role;
+    }
+
     public String getName() {
         return name;
     }

@@ -105,7 +105,6 @@ public class Goods extends BaseEntity{
         if (getPrice() != goods.getPrice()) return false;
         if (!getTitle().equals(goods.getTitle())) return false;
         if (!getDescription().equals(goods.getDescription())) return false;
-        if (!getSubcategory().equals(goods.getSubcategory())) return false;
         if (getImage() != null ? !getImage().equals(goods.getImage()) : goods.getImage() != null) return false;
         return getGoodsStatus() == goods.getGoodsStatus();
 
@@ -116,7 +115,6 @@ public class Goods extends BaseEntity{
         int result = getTitle().hashCode();
         result = 31 * result + (int) (getPrice() ^ (getPrice() >>> 32));
         result = 31 * result + getDescription().hashCode();
-        result = 31 * result + getSubcategory().hashCode();
         result = 31 * result + (getImage() != null ? getImage().hashCode() : 0);
         result = 31 * result + getGoodsStatus().hashCode();
         return result;

@@ -50,15 +50,12 @@ public class Subcategory extends BaseEntity {
 
         Subcategory that = (Subcategory) o;
 
-        if (!getCategory().equals(that.getCategory())) return false;
         return getTitle().equals(that.getTitle());
 
     }
 
     @Override
     public int hashCode() {
-        int result = getCategory().hashCode();
-        result = 31 * result + getTitle().hashCode();
-        return result;
+        return getTitle().hashCode();
     }
 }
