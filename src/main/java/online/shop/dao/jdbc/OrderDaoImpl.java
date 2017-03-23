@@ -24,7 +24,7 @@ public class OrderDaoImpl implements OrderDao{
             "        subcategoryTitle, categoryID, categoryTitle from (" +
             "  orders join users using(userID)" +
             "    join (" +
-            "    orderinfo join (" +
+            "    orderInfo join (" +
             "      goods join (" +
             "        subcategory_list join categories using(categoryID)" +
             "            )using(subcategoryID)" +

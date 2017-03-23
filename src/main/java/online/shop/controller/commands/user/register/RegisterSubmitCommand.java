@@ -48,8 +48,8 @@ public class RegisterSubmitCommand extends CommandExecuter {
         }
         userService.create(user);
         logger.info(String.format("User %s %s was successfully registered",user.getName(), user.getSurname()));
-        request.getRequestDispatcher(PagesPaths.REGISTER_SUCCESFULL_PAGE).forward(request, response);
         clearRegisterDataFromRequest(request);
+        request.getRequestDispatcher(PagesPaths.REGISTER_SUCCESFULL_PAGE).forward(request, response);
         return PagesPaths.FORWARD;
     }
 

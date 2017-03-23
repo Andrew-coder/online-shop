@@ -22,13 +22,13 @@ public final class PagesPaths {
 
     public static final String LOGIN_PAGE = VIEW_JSP_CLASSPATH + "login.jsp";
     public static final String REGISTER_PAGE = VIEW_JSP_CLASSPATH + "/user/register.jsp";
-    public static final String REGISTER_SUCCESFULL_PAGE = VIEW_JSP_CLASSPATH + "/user/registerComplete.jsp";
+    public static final String REGISTER_SUCCESFULL_PAGE = VIEW_JSP_CLASSPATH + "user/registerComplete.jsp";
     public static final String HOME_PAGE = VIEW_JSP_CLASSPATH +"index.jsp";
-    public static final String BASKET_PAGE = VIEW_JSP_CLASSPATH + "/user/basket.jsp";
-    public static final String SUBCATEGORY_PAGE = VIEW_JSP_CLASSPATH + "/user/subcategoryPage.jsp";
-    public static final String PURCHASE_PAGE = VIEW_JSP_CLASSPATH + "/user/purchase.jsp";
-    public static final String GOODS_PAGE = VIEW_JSP_CLASSPATH + "/user/goodsView.jsp";
-    public static final String ADMIN_PAGE = VIEW_JSP_CLASSPATH + "/admin/dashboard.jsp";
+    public static final String BASKET_PAGE = VIEW_JSP_CLASSPATH + "user/basket.jsp";
+    public static final String SUBCATEGORY_PAGE = VIEW_JSP_CLASSPATH + "user/subcategoryPage.jsp";
+    public static final String PURCHASE_PAGE = VIEW_JSP_CLASSPATH + "user/purchase.jsp";
+    public static final String GOODS_PAGE = VIEW_JSP_CLASSPATH + "user/goodsView.jsp";
+    public static final String ADMIN_PAGE = VIEW_JSP_CLASSPATH + "admin/dashboard.jsp";
     public static final String GOODS_ADMINISTRATION_PAGE = VIEW_JSP_CLASSPATH + "admin/goodsAdministration.jsp";
     public static final String USERS_ADMINISTRATION_PAGE = VIEW_JSP_CLASSPATH + "admin/usersAdministration.jsp";
     public static final String ORDER_ADMINISTRATION_PAGE = VIEW_JSP_CLASSPATH + "admin/orderAdministration.jsp";

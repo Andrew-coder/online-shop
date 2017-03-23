@@ -1,6 +1,7 @@
 package online.shop.controller.commands.login;
 
 import online.shop.controller.commands.Command;
+import online.shop.controller.commands.CommandExecuter;
 import online.shop.model.entity.RoleType;
 import online.shop.model.entity.User;
 import online.shop.services.UserService;
@@ -15,18 +16,14 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 
-
-/**
- * Created by andri on 1/21/2017.
- */
-public class LoginSubmitCommand implements Command {
+public class LoginSubmitCommand extends CommandExecuter {
     public static final String PARAM_EMAIL = "login";
     public static final String PARAM_PASSWORD ="password";
 
     private UserService userService = UserServiceImpl.getInstance();
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pageToGo = PagesPaths.LOGIN;
         String email = request.getParameter(PARAM_EMAIL);
         String password = request.getParameter(PARAM_PASSWORD);
@@ -45,4 +42,6 @@ public class LoginSubmitCommand implements Command {
 
         return pageToGo;
     }
+
+
 }

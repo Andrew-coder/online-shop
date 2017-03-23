@@ -4,6 +4,7 @@ import online.shop.controller.commands.Command;
 import online.shop.controller.commands.CommandExecuter;
 import online.shop.controller.validators.Errors;
 import online.shop.controller.validators.OrderValidator;
+import online.shop.model.dto.Basket;
 import online.shop.model.entity.Goods;
 import online.shop.model.entity.Order;
 import online.shop.model.entity.User;
@@ -39,10 +40,7 @@ public class PurchaseSubmitCommand extends CommandExecuter {
     @Override
     public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Order order = extractOrder(request);
-        String payeeType = request.getParameter(Attributes.PAYEE_TYPE).toString();
-        if(!payeeType.equals(Attributes.PAY_ON_DELIVERY)){
-            order.setPaid(true);
-        }
+
         Errors errors = orderValidator.validate(order);
         if(errors.hasErrors()){
             request.setAttribute(Attributes.ERRORS, errors);
@@ -60,8 +58,13 @@ public class PurchaseSubmitCommand extends CommandExecuter {
         HttpSession session = request.getSession();
         Order order = new Order();
         order.setUser((User)session.getAttribute(Attributes.USER));
-        order.setGoodsItems((Map<Goods, Integer>)session.getAttribute(Attributes.GOODS));
+        Basket basket = (Basket) session.getAttribute(Attributes.BASKET);
+        order.setGoodsItems(basket.getGoodsItems());
         order.setOrderDate(new Date());
+        String payeeType = request.getParameter(Attributes.PAYEE_TYPE).toString();
+        if(!payeeType.equals(Attributes.PAY_ON_DELIVERY)){
+            order.setPaid(true);
+        }
         return order;
     }
 }
